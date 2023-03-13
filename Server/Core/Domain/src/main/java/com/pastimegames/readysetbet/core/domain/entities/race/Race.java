@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Race {
-    private List<Horse> horses = new ArrayList<>();
+    private final List<Horse> horses = new ArrayList<>();
     private Horse previouslyMovedHorse = null;
     private int numberOfHorsesAcrossBettingLine = 0;
     private static final float BET_LINE = 9.5f;
