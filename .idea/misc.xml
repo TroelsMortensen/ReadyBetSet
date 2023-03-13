@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/Server/Core.Domain/pom.xml" />
+        <option value="$PROJECT_DIR$/Server/Infrastructure/DiceRolling/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Client/pom.xml" />
+        <option value="$PROJECT_DIR$/Core.Application/pom.xml" />
+        <option value="$PROJECT_DIR$/Core.Domain/pom.xml" />
+        <option value="$PROJECT_DIR$/Domain/pom.xml" />
+        <option value="$PROJECT_DIR$/Server/Core/pom.xml" />
+        <option value="$PROJECT_DIR$/Server/Infrastructure/pom.xml" />
+        <option value="$PROJECT_DIR$/Server/pom.xml" />
+        <option value="$PROJECT_DIR$/Shared/pom.xml" />
+        <option value="$PROJECT_DIR$/SocketServer/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" default="true" project-jdk-name="openjdk-16" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

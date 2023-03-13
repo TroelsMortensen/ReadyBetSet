@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.pastimegames.readysetbet</groupId>
+    <artifactId>ReadySetBet</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>Server/Core/Application</module>
+        <module>Server/Core/Domain</module>
+        <module>Server/Presentation/Sockets</module>
+        <module>Client/Clients/ClientSockets</module>
+        <module>Client/Gui/JavaFxGui</module>
+        <module>Server/Presentation/ConsoleUi</module>
+        <module>Server/Infrastructure/DiceRolling</module>
+        <module>Shared/ViewModels</module>
+    </modules>
+
+
+    <properties>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+    </properties>
+
+</project>
