@@ -1,7 +1,7 @@
 package com.pastimegames.readysetbet.server.presentation.consoleui;
 
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
-import com.pastimegames.readysetbet.infrastructure.dicerolling.JavaRandomDiceRoller;
+import com.pastimegames.readysetbet.infrastructure.javarandomdiceroller.JavaRandomDiceRoller;
 
 public class RunApp {
 
