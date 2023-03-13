@@ -34,13 +34,13 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void joinPlayer(PlayerVM playerdto) {
+    public void joinPlayer(PlayerVM playerVM) {
         if(currentGameState != GameState.IN_LOBBY){
             throw new RuntimeException("Cannot join a game, when it is not in lobby");
         }
 
         System.out.println("Player joined");
-        Player player = new Player(playerdto.playerName(), playerdto.colorCode());
+        Player player = new Player(playerVM.playerName(), playerVM.colorCode());
 
         synchronized (lobby) {
             lobby.joinLobby(player);
@@ -77,6 +77,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void displayResults() {
         // TODO what to do here? Something with BookMaker
+
     }
 
     @Override
