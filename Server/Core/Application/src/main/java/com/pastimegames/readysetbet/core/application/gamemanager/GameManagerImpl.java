@@ -39,7 +39,7 @@ public class GameManagerImpl implements GameManager {
         Player player = new Player(playerdto.playerName(), playerdto.colorCode());
 
         synchronized (lobby) {
-            lobby.join(player);
+            lobby.joinLobby(player);
         }
     }
 
@@ -63,6 +63,13 @@ public class GameManagerImpl implements GameManager {
         currentGameState = GameState.RACE_IN_PROGRESS;
         RaceRunner raceRunner = new RaceRunner(options);
         raceRunner.run(race, diceRoller);
+    }
+
+    @Override
+    public void removePlayerFromLobby(String playerName) {
+        synchronized (lobby) {
+            lobby.leaveLobby(playerName);
+        }
     }
 
 }

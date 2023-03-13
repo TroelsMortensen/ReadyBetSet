@@ -8,5 +8,8 @@ public interface GameManager {
     void initializeRace(RaceOptions options);
 
     void startRace();
+
+    void removePlayerFromLobby(String playerName);
+
 }
 
