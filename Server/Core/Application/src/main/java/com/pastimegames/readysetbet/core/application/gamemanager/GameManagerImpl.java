@@ -5,6 +5,8 @@ import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
+import com.pastimegames.readysetbet.core.domain.events.NewRaceReady;
 import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
 
 public class GameManagerImpl implements GameManager {
@@ -22,6 +24,8 @@ public class GameManagerImpl implements GameManager {
     private GameState currentGameState;
     private Race race;
     private RaceOptions options;
+
+    private int raceNumber = 1;
 
     public GameManagerImpl(DiceRoller diceRoller) {
         this.diceRoller = diceRoller;
@@ -44,15 +48,13 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void initializeRace(RaceOptions options) {
+    public void prepareForRacing(RaceOptions options) {
         this.options = options;
         if(currentGameState != GameState.IN_LOBBY){
             throw new RuntimeException("Cannot initialize a race outside of the lobby");
         }
-        System.out.println("Race initialized");
-        race = new Race();
-        race.initializeRace();
-        currentGameState = GameState.RACE_READY;
+
+        setupRace();
     }
 
     @Override
@@ -70,6 +72,29 @@ public class GameManagerImpl implements GameManager {
         synchronized (lobby) {
             lobby.leaveLobby(playerName);
         }
+    }
+
+    @Override
+    public void displayResults() {
+        // TODO what to do here? Something with BookMaker
+    }
+
+    @Override
+    public void nextRace() {
+        if(options.numberOfRaces() >= raceNumber){
+            throw new RuntimeException("You cannot start more races than initially planned");
+        }
+        raceNumber++;
+        setupRace();
+    }
+
+    private void setupRace() {
+        System.out.println("Race initialized");
+        race = new Race();
+        race.initializeRace();
+        currentGameState = GameState.RACE_READY;
+        DomainEventPublisher.instance().publish(new NewRaceReady(raceNumber));
+
     }
 
 }

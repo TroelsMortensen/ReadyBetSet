@@ -28,7 +28,7 @@ public class ConsoleUi {
         RaceOptions options = new RaceOptions()
                 .setMoveTickTimeInMs(500);
 
-        gameManager.initializeRace(options);
+        gameManager.prepareForRacing(options);
         gameManager.startRace();
     }
 

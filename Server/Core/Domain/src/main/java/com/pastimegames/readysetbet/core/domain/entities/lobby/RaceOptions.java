@@ -2,12 +2,14 @@ package com.pastimegames.readysetbet.core.domain.entities.lobby;
 
 public class RaceOptions {
 
-    private int moveTickTime = 1000;
+    private int moveTickTimeInMs = 1000;
     private int startCoins = 0;
     private int numberOfAllowedBidsPerCell = 1;
 
-    public RaceOptions setMoveTickTimeInMs(int moveTickTime) {
-        this.moveTickTime = moveTickTime;
+    private int numberOfRaces = 4;
+
+    public RaceOptions setMoveTickTimeInMs(int oveTickTimeInMs) {
+        this.moveTickTimeInMs = oveTickTimeInMs;
         return this;
     }
 
@@ -21,8 +23,17 @@ public class RaceOptions {
         return this;
     }
 
+    public int numberOfRaces() {
+        return numberOfRaces;
+    }
+
+    public RaceOptions setNumberOfRaces(int numberOfRaces) {
+        this.numberOfRaces = numberOfRaces;
+        return this;
+    }
+
     public int moveTickTime(){
-        return moveTickTime;
+        return moveTickTimeInMs;
     }
 
     public int startCoins(){
@@ -32,4 +43,6 @@ public class RaceOptions {
     public int numberOfAllowedBidsPerCell() {
         return numberOfAllowedBidsPerCell;
     }
+
+
 }
