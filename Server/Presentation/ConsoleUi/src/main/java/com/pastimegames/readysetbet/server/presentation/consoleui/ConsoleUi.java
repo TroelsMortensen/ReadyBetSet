@@ -3,11 +3,9 @@ package com.pastimegames.readysetbet.server.presentation.consoleui;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
-import com.pastimegames.readysetbet.core.domain.entities.Horse;
-import com.pastimegames.readysetbet.core.domain.entities.Race;
+import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
 import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
-import com.pastimegames.readysetbet.infrastructure.dicerolling.JavaRandomDiceRoller;
 import com.pastimegames.readysetbet.shared.viewmodels.HorseVM;
 
 import java.util.ArrayList;
