@@ -5,7 +5,7 @@ import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
-import com.pastimegames.shared.datatransferobjects.PlayerDto;
+import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
 
 public class GameManagerImpl implements GameManager{
 
@@ -24,7 +24,7 @@ public class GameManagerImpl implements GameManager{
     }
 
     @Override
-    public void joinPlayer(PlayerDto playerdto) {
+    public void joinPlayer(PlayerVM playerdto) {
         System.out.println("Player joined");
         Player player = new Player(playerdto.playerName(), playerdto.colorCode());
         lobby.join(player);

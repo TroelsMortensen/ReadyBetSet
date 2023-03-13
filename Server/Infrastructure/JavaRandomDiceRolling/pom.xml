@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pastimegames.readysetbet.server.infrastructure.javarandomdicerolling</groupId>
-    <artifactId>DiceRolling</artifactId>
+    <artifactId>JavaRandomDiceRolling</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.pastimegames.readysetbet.server.core.domain</groupId>

@@ -1,9 +1,9 @@
 package com.pastimegames.readysetbet.core.application.gamemanager;
 
-import com.pastimegames.shared.datatransferobjects.PlayerDto;
+import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
 
 public interface GameManager {
-    void joinPlayer(PlayerDto playerdto);
+    void joinPlayer(PlayerVM playerdto);
 
     void initializeRace();
 }
