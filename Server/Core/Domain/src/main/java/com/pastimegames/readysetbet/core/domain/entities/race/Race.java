@@ -53,14 +53,14 @@ public class Race {
         checkForWinner(horseToMove);
     }
 
-    private void moveHorse(Horse horse) {
-        int prevPosition = horse.position();
+    private void moveHorse(Horse horseToMove) {
+        int prevPosition = horseToMove.position();
 
-        executeMove(horse);
-        int newPosition = horse.position();
+        executeMove(horseToMove);
+        int newPosition = horseToMove.position();
 
-        DomainEventPublisher.instance().publish(new HorseMoved(horse.name(), horse.position()));
-        updateNumberOfHorsesAcrossBetLine(prevPosition, newPosition, horse);
+        DomainEventPublisher.instance().publish(new HorseMoved(horseToMove.name(), horseToMove.position()));
+        updateNumberOfHorsesAcrossBetLine(prevPosition, newPosition, horseToMove);
     }
 
     private void updateNumberOfHorsesAcrossBetLine(int prevPosition, int newPosition, Horse horse) {
@@ -70,23 +70,23 @@ public class Race {
             DomainEventPublisher.instance().publish(new HorseCrossedBetLine(horse.name()));
         }
         if (numberOfHorsesAcrossBettingLine == 3) {
-            DomainEventPublisher.instance().publish(BetsAreClosed.class.getName());
+            DomainEventPublisher.instance().publish(new BetsAreClosed());
         }
     }
 
-    private void executeMove(Horse horse) {
-        if (horse.equals(previouslyMovedHorse)) {
-            horse.sprint();
+    private void executeMove(Horse horseBeingMoved) {
+        if (horseBeingMoved.equals(previouslyMovedHorse)) {
+            horseBeingMoved.sprint();
             previouslyMovedHorse = null;
         } else {
-            horse.move();
-            previouslyMovedHorse = horse;
+            horseBeingMoved.move();
+            previouslyMovedHorse = horseBeingMoved;
         }
     }
 
-    private void checkForWinner(Horse horse) {
-        if (horse.position() == FINISH_LINE_INDEX) {
-            DomainEventPublisher.instance().publish(new RaceFinished(horse.name()));
+    private void checkForWinner(Horse potentialWinnerHorse) {
+        if (potentialWinnerHorse.position() == FINISH_LINE_INDEX) {
+            DomainEventPublisher.instance().publish(new RaceFinished(potentialWinnerHorse.name()));
         }
     }
 
