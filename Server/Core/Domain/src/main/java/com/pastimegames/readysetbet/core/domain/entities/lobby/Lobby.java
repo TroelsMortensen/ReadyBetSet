@@ -1,7 +1,7 @@
 package com.pastimegames.readysetbet.core.domain.entities.lobby;
 
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoined;
+import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,6 @@ public class Lobby {
             throw new RuntimeException("Player name '" + player.name() + "' already in lobby. It must be unique");
         }
         players.add(player);
-        DomainEventPublisher.instance().publish(new PlayerJoined(player.name(), player.colorCode()));
+        DomainEventPublisher.instance().publish(new PlayerJoinedLobby(player.name(), player.colorCode()));
     }
 }

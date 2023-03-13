@@ -66,7 +66,7 @@ public class ConsoleUi {
                             .equals(horseMoved.horseName()))
                     .findFirst()
                     .get();
-            horseBeingMoved.updatePosition(horseMoved.position());
+            horseBeingMoved.updatePosition(horseMoved.currentPosition());
         });
 
         DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) raceFinished -> {
