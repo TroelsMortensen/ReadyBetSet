@@ -6,7 +6,7 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListen
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
 import com.pastimegames.readysetbet.core.domain.events.RaceStarted;
-import com.pastimegames.readysetbet.core.domain.valueobjects.RaceOptions;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 
 public class RaceRunner {
 

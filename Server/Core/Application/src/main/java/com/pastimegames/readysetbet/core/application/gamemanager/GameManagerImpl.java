@@ -4,7 +4,7 @@ import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
-import com.pastimegames.readysetbet.core.domain.valueobjects.RaceOptions;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
 
 public class GameManagerImpl implements GameManager {

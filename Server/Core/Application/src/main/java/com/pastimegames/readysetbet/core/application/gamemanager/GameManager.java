@@ -1,6 +1,6 @@
 package com.pastimegames.readysetbet.core.application.gamemanager;
 
-import com.pastimegames.readysetbet.core.domain.valueobjects.RaceOptions;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
 
 public interface GameManager {

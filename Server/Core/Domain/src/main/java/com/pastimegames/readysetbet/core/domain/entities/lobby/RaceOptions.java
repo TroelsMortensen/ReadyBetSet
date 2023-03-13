@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.core.domain.valueobjects;
+package com.pastimegames.readysetbet.core.domain.entities.lobby;
 
 public class RaceOptions {
 
