@@ -15,7 +15,7 @@
         <module>JavaFxClient/Clients/ClientSockets</module>
         <module>JavaFxClient/Gui/JavaFxGui</module>
         <module>Server/Presentation/ConsoleUi</module>
-        <module>Server/Infrastructure/DiceRolling</module>
+        <module>Server/Infrastructure/JavaRandomDiceRolling</module>
         <module>Shared/ViewModels</module>
         <module>Server/Presentation/ServerJfxGui</module>
         <module>Shared/DataTransferObjects</module>
