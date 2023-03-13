@@ -67,6 +67,10 @@ public class ConsoleUi {
                     .get();
             horseBeingMoved.updatePosition(horseMoved.position());
         });
+
+        DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) raceFinished -> {
+            raceIsWon = true;
+        });
     }
 
     private void printBoard() {
