@@ -6,14 +6,19 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListen
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
 import com.pastimegames.readysetbet.core.domain.events.RaceStarted;
+import com.pastimegames.readysetbet.core.domain.valueobjects.RaceOptions;
 
 public class RaceRunner {
 
     private boolean raceIsFinished = false;
+    private int moveTickTime;
+    private Thread thread;
 
-    public RaceRunner() {
+    public RaceRunner(RaceOptions options) {
+        moveTickTime = options.moveTickTime();
         DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) raceFinished -> {
             raceIsFinished = true;
+            thread.interrupt();
         });
     }
 
@@ -21,12 +26,17 @@ public class RaceRunner {
 
         DomainEventPublisher.instance().publish(new RaceStarted());
 
+        thread = new Thread(() -> runRace(race, diceRoller));
+        thread.start();
+    }
+
+    private void runRace(Race race, DiceRoller diceRoller) {
         try {
             Thread.sleep(2500);
 
             while (!raceIsFinished) {
                 race.moveHorse(diceRoller);
-                Thread.sleep(2500);
+                Thread.sleep(moveTickTime);
             }
         } catch (InterruptedException ignored) {
         }

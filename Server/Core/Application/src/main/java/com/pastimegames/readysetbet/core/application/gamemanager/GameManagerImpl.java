@@ -4,6 +4,7 @@ import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
+import com.pastimegames.readysetbet.core.domain.valueobjects.RaceOptions;
 import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
 
 public class GameManagerImpl implements GameManager {
@@ -20,7 +21,7 @@ public class GameManagerImpl implements GameManager {
     private final Lobby lobby;
     private GameState currentGameState;
     private Race race;
-
+    private RaceOptions options;
 
     public GameManagerImpl(DiceRoller diceRoller) {
         this.diceRoller = diceRoller;
@@ -43,7 +44,8 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void initializeRace() {
+    public void initializeRace(RaceOptions options) {
+        this.options = options;
         if(currentGameState != GameState.IN_LOBBY){
             throw new RuntimeException("Cannot initialize a race outside of the lobby");
         }
@@ -59,11 +61,8 @@ public class GameManagerImpl implements GameManager {
             throw new RuntimeException("Cannot start er race, before it is ready");
         }
         currentGameState = GameState.RACE_IN_PROGRESS;
-        RaceRunner raceRunner = new RaceRunner();
+        RaceRunner raceRunner = new RaceRunner(options);
         raceRunner.run(race, diceRoller);
     }
-
-
-
 
 }
