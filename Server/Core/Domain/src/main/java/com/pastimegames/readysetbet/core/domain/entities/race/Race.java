@@ -2,10 +2,7 @@ package com.pastimegames.readysetbet.core.domain.entities.race;
 
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
-import com.pastimegames.readysetbet.core.domain.events.BetsAreClosed;
-import com.pastimegames.readysetbet.core.domain.events.HorseCrossedBetLine;
-import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
-import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
+import com.pastimegames.readysetbet.core.domain.events.*;
 import com.pastimegames.readysetbet.core.domain.valueobjects.DiceRoll;
 
 import java.util.ArrayList;
@@ -24,8 +21,9 @@ public class Race {
 
     }
 
-    public void startRace() {
+    public void initializeRace() {
         createHorses();
+        DomainEventPublisher.instance().publish(new RaceInitialized());
     }
 
     private void createHorses() {
@@ -51,7 +49,6 @@ public class Race {
 
         moveHorse(horseToMove);
         checkForWinner(horseToMove);
-
     }
 
     private void updateNumberOfHorsesAcrossBetLine(int prevPosition, int newPosition, Horse horse) {

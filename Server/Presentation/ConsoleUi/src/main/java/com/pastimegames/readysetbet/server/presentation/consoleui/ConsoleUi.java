@@ -27,7 +27,7 @@ public class ConsoleUi {
         setupHorses();
 
         Race race = new Race();
-        race.startRace();
+        race.initializeRace();
 
         while (!raceIsWon) {
             race.moveHorse(diceRoller);
