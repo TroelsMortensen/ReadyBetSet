@@ -1,5 +1,6 @@
 package com.pastimegames.readysetbet.server.entry.consoleui;
 
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.entities.Horse;
@@ -53,20 +54,18 @@ public class ConsoleUi {
     }
 
     private void setupListeners() {
-        DomainEventPublisher.instance().subscribe(RaceFinished.type(), horse ->
+        DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) raceFinished ->
         {
-//            raceIsWon = true;
-//            System.out.println(horse);
+            System.out.println("Race finished, "+ raceFinished.winnerHorseName() + " won the race");
         });
 
-        DomainEventPublisher.instance().subscribe(HorseMoved.type(), horseObj -> {
-//            Horse horse = (Horse)horseObj;
-//            HorseVM horseBeingMoved = horses.stream()
-//                    .filter(horseVM -> horseVM.name()
-//                            .equals(horse.name()))
-//                    .findFirst()
-//                    .get();
-//            horseBeingMoved.updatePosition(horse.position());
+        DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horseMoved -> {
+            HorseVM horseBeingMoved = horses.stream()
+                    .filter(horseVM -> horseVM.name()
+                            .equals(horseMoved.horseName()))
+                    .findFirst()
+                    .get();
+            horseBeingMoved.updatePosition(horseMoved.position());
         });
     }
 
