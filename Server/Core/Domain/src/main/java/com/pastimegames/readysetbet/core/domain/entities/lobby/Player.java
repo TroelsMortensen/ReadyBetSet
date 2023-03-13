@@ -11,4 +11,12 @@ public class Player {
         this.colorCode = colorCode;
         coins = 0;
     }
+
+    public String name(){
+        return name;
+    }
+
+    public String colorCode() {
+        return colorCode;
+    }
 }
