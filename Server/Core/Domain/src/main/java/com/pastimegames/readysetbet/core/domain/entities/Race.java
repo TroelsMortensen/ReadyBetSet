@@ -15,7 +15,6 @@ import java.util.List;
 public class Race {
     private List<Horse> horses = new ArrayList<>();
     private Horse previouslyMovedHorse = null;
-    private boolean canBet = true;
     private int numberOfHorsesAcrossBettingLine = 0;
     private static final float BET_LINE = 9.5f;
     private static final int FINISH_LINE_INDEX = 15;

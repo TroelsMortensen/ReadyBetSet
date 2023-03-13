@@ -55,18 +55,18 @@ public class ConsoleUi {
     private void setupListeners() {
         DomainEventPublisher.instance().subscribe(RaceFinished.type(), horse ->
         {
-            raceIsWon = true;
-            System.out.println(horse);
+//            raceIsWon = true;
+//            System.out.println(horse);
         });
 
         DomainEventPublisher.instance().subscribe(HorseMoved.type(), horseObj -> {
-            Horse horse = (Horse)horseObj;
-            HorseVM horseBeingMoved = horses.stream()
-                    .filter(horseVM -> horseVM.name()
-                            .equals(horse.name()))
-                    .findFirst()
-                    .get();
-            horseBeingMoved.updatePosition(horse.position());
+//            Horse horse = (Horse)horseObj;
+//            HorseVM horseBeingMoved = horses.stream()
+//                    .filter(horseVM -> horseVM.name()
+//                            .equals(horse.name()))
+//                    .findFirst()
+//                    .get();
+//            horseBeingMoved.updatePosition(horse.position());
         });
     }
 

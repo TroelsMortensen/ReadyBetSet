@@ -12,17 +12,18 @@
         <module>Server/Core/Application</module>
         <module>Server/Core/Domain</module>
         <module>Server/Presentation/Sockets</module>
-        <module>Client/Clients/ClientSockets</module>
-        <module>Client/Gui/JavaFxGui</module>
+        <module>JavaFxClient/Clients/ClientSockets</module>
+        <module>JavaFxClient/Gui/JavaFxGui</module>
         <module>Server/Presentation/ConsoleUi</module>
         <module>Server/Infrastructure/DiceRolling</module>
         <module>Shared/ViewModels</module>
+        <module>TestModule</module>
     </modules>
 
 
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
     </properties>
 
 </project>
