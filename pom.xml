@@ -17,7 +17,6 @@
         <module>Server/Presentation/ConsoleUi</module>
         <module>Server/Infrastructure/DiceRolling</module>
         <module>Shared/ViewModels</module>
-        <module>TestModule</module>
     </modules>
 
 
