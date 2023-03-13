@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.core.domain.entities;
+package com.pastimegames.readysetbet.core.domain.entities.race;
 
 public class Horse {
 

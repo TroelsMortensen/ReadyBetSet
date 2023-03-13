@@ -11,12 +11,14 @@
     <modules>
         <module>Server/Core/Application</module>
         <module>Server/Core/Domain</module>
-        <module>Server/Presentation/Sockets</module>
+        <module>Server/Presentation/SocketsServer</module>
         <module>JavaFxClient/Clients/ClientSockets</module>
         <module>JavaFxClient/Gui/JavaFxGui</module>
         <module>Server/Presentation/ConsoleUi</module>
-        <module>Server/Infrastructure/DiceRolling</module>
+        <module>Server/Infrastructure/JavaRandomDiceRolling</module>
         <module>Shared/ViewModels</module>
+        <module>Server/Presentation/ServerJfxGui</module>
+        <module>Shared/DataTransferObjects</module>
     </modules>
 
 

@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.core.domain.entities;
+package com.pastimegames.readysetbet.core.domain.entities.race;
 
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
