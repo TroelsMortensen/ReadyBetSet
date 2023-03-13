@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.server.entry.consoleui;
+package com.pastimegames.readysetbet.server.presentation.consoleui;
 
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
@@ -15,13 +15,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ConsoleUi {
+    private final DiceRoller diceRoller;
     private boolean raceIsWon = false;
     private List<HorseVM> horses = new ArrayList<>();
 
+    public ConsoleUi(DiceRoller diceRoller) {
+        this.diceRoller = diceRoller;
+    }
+
     public void start() {
         setupListeners();
-        DiceRoller diceRoller;
-        diceRoller = new JavaRandomDiceRoller();
 
         setupHorses();
 
