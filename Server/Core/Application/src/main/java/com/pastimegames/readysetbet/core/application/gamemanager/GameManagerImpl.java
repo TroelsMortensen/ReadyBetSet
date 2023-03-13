@@ -49,6 +49,7 @@ public class GameManagerImpl implements GameManager {
         }
         System.out.println("Race initialized");
         race = new Race();
+        race.initializeRace();
         currentGameState = GameState.RACE_READY;
     }
 

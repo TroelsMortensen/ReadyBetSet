@@ -42,13 +42,25 @@ public class Race {
     }
 
     public void moveHorse(DiceRoller diceRoller) {
-        System.out.println("Moving horse");
-        DiceRoll diceRoll = rolleDice(diceRoller);
-        System.out.println("Rolled " + diceRoll.sumAsHorseId());
-        Horse horseToMove = findHorse(diceRoll);
+
+        DiceRoll diceRoll = diceRoller.rollDice();
+
+        DomainEventPublisher.instance().publish(new DiceRolled(diceRoll.firstDice(), diceRoll.secondDice()));
+
+        Horse horseToMove = findHorse(diceRoll.sumAsHorseId());
 
         moveHorse(horseToMove);
         checkForWinner(horseToMove);
+    }
+
+    private void moveHorse(Horse horse) {
+        int prevPosition = horse.position();
+
+        executeMove(horse);
+        int newPosition = horse.position();
+
+        DomainEventPublisher.instance().publish(new HorseMoved(horse.name(), horse.position()));
+        updateNumberOfHorsesAcrossBetLine(prevPosition, newPosition, horse);
     }
 
     private void updateNumberOfHorsesAcrossBetLine(int prevPosition, int newPosition, Horse horse) {
@@ -60,16 +72,6 @@ public class Race {
         if (numberOfHorsesAcrossBettingLine == 3) {
             DomainEventPublisher.instance().publish(BetsAreClosed.class.getName());
         }
-    }
-
-    private void moveHorse(Horse horse) {
-        int prevPosition = horse.position();
-
-        executeMove(horse);
-        int newPosition = horse.position();
-
-        DomainEventPublisher.instance().publish(new HorseMoved(horse.name(), horse.position()));
-        updateNumberOfHorsesAcrossBetLine(prevPosition, newPosition, horse);
     }
 
     private void executeMove(Horse horse) {
@@ -88,16 +90,12 @@ public class Race {
         }
     }
 
-    private Horse findHorse(DiceRoll diceRoll) {
+    private Horse findHorse(String horseName) {
         Horse horseToMove = horses
                 .stream()
-                .filter(horse -> horse.name().equals(diceRoll.sumAsHorseId()))
+                .filter(horse -> horse.name().equals(horseName))
                 .findFirst()
                 .get();
         return horseToMove;
-    }
-
-    private DiceRoll rolleDice(DiceRoller diceRoller) {
-        return diceRoller.rollDice();
     }
 }

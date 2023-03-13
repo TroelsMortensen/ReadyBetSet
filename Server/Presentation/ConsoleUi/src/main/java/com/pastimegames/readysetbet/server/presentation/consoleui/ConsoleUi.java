@@ -1,9 +1,8 @@
 package com.pastimegames.readysetbet.server.presentation.consoleui;
 
+import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
-import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
 import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
 import com.pastimegames.readysetbet.shared.viewmodels.HorseVM;
@@ -13,12 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ConsoleUi {
-    private final DiceRoller diceRoller;
-    private boolean raceIsWon = false;
+    private final GameManager gameManager;
     private List<HorseVM> horses = new ArrayList<>();
 
-    public ConsoleUi(DiceRoller diceRoller) {
-        this.diceRoller = diceRoller;
+    public ConsoleUi(GameManager diceRoller) {
+        this.gameManager = diceRoller;
     }
 
     public void start() {
@@ -26,17 +24,8 @@ public class ConsoleUi {
 
         setupHorses();
 
-        Race race = new Race();
-        race.initializeRace();
-
-        while (!raceIsWon) {
-            race.moveHorse(diceRoller);
-            printBoard();
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ignored) {}
-        }
+        gameManager.initializeRace();
+        gameManager.startRace();
     }
 
     private void setupHorses() {
@@ -67,11 +56,9 @@ public class ConsoleUi {
                     .findFirst()
                     .get();
             horseBeingMoved.updatePosition(horseMoved.currentPosition());
+            printBoard();
         });
 
-        DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) raceFinished -> {
-            raceIsWon = true;
-        });
     }
 
     private void printBoard() {
