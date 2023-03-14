@@ -1,10 +1,10 @@
 package com.pastimegames.readysetbet.core.application.gamemanager;
 
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
-import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
+import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public interface GameManager {
-    void joinPlayer(PlayerVM playerdto);
+    void joinPlayer(PlayerDto playerdto);
 
     /**
      * Use when lobby stuff is done, and you want to start the races

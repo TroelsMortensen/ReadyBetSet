@@ -7,7 +7,7 @@ import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.NewRaceReady;
-import com.pastimegames.readysetbet.shared.viewmodels.PlayerVM;
+import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public class GameManagerImpl implements GameManager {
 
@@ -34,13 +34,13 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void joinPlayer(PlayerVM playerVM) {
+    public void joinPlayer(PlayerDto playerDto) {
         if(currentGameState != GameState.IN_LOBBY){
             throw new RuntimeException("Cannot join a game, when it is not in lobby");
         }
 
         System.out.println("Player joined");
-        Player player = new Player(playerVM.playerName(), playerVM.colorCode());
+        Player player = new Player(playerDto.playerName(), playerDto.colorCode());
 
         synchronized (lobby) {
             lobby.joinLobby(player);

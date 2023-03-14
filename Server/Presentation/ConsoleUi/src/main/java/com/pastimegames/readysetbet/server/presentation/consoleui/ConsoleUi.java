@@ -6,7 +6,7 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublis
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
 import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
-import com.pastimegames.readysetbet.shared.viewmodels.HorseVM;
+import com.pastimegames.shared.datatransferobjects.HorseDto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ConsoleUi {
     private final GameManager gameManager;
-    private List<HorseVM> horses = new ArrayList<>();
+    private List<HorseDto> horses = new ArrayList<>();
 
     public ConsoleUi(GameManager diceRoller) {
         this.gameManager = diceRoller;
@@ -33,16 +33,16 @@ public class ConsoleUi {
     }
 
     private void setupHorses() {
-        HorseVM[] horseArray = {
-                new HorseVM("2/3", "blue"),
-                new HorseVM("4", "black"),
-                new HorseVM("5", "orange"),
-                new HorseVM("6", "red"),
-                new HorseVM("7", "black"),
-                new HorseVM("8", "red"),
-                new HorseVM("9", "orange"),
-                new HorseVM("10", "blue"),
-                new HorseVM("11/12", "blue")
+        HorseDto[] horseArray = {
+                new HorseDto("2/3", "blue"),
+                new HorseDto("4", "black"),
+                new HorseDto("5", "orange"),
+                new HorseDto("6", "red"),
+                new HorseDto("7", "black"),
+                new HorseDto("8", "red"),
+                new HorseDto("9", "orange"),
+                new HorseDto("10", "blue"),
+                new HorseDto("11/12", "blue")
         };
         horses.addAll(Arrays.asList(horseArray));
     }
@@ -54,8 +54,8 @@ public class ConsoleUi {
         });
 
         DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horseMoved -> {
-            HorseVM horseBeingMoved = horses.stream()
-                    .filter(horseVM -> horseVM.name()
+            HorseDto horseBeingMoved = horses.stream()
+                    .filter(horseDto -> horseDto.name()
                             .equals(horseMoved.horseName()))
                     .findFirst()
                     .get();
@@ -68,7 +68,7 @@ public class ConsoleUi {
     private void printBoard() {
         StringBuilder sb = new StringBuilder();
         sb.append(topRow()).append("\n");
-        for (HorseVM horse : horses) {
+        for (HorseDto horse : horses) {
             sb.append(createHorseRow(horse));
             sb.append("\n");
         }
@@ -79,7 +79,7 @@ public class ConsoleUi {
         System.out.println(sb);
     }
 
-    private String createHorseRow(HorseVM horse) {
+    private String createHorseRow(HorseDto horse) {
 
         String row = "";
         for (int i = 0; i < horse.position(); i++) {
