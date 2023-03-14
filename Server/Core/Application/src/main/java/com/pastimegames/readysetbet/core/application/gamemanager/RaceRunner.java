@@ -27,6 +27,7 @@ public class RaceRunner {
         DomainEventPublisher.instance().publish(new RaceStarted());
 
         thread = new Thread(() -> runRace(race, diceRoller));
+        thread.setDaemon(true);
         thread.start();
     }
 
