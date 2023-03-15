@@ -1,34 +1,33 @@
 package com.pastimegames.readysetbet.core.application.gamemanager;
 
-import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
-import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
-public class GameManager {
+public interface GameManager {
+    void joinPlayer(PlayerDto playerdto);
 
-    private enum GameState{
-        IN_LOBBY,
-        IN_RACE,
-        IN_RESULTS
-    }
+    /**
+     * Use when lobby stuff is done, and you want to start the races
+     * @param options
+     */
+    void prepareForRacing(RaceOptions options);
 
-    private Lobby lobby;
-    private GameState currenGameState;
-    public GameManager() {
-        currenGameState = GameState.IN_LOBBY;
-        lobby = new Lobby();
-    }
+    /**
+     * Start a race
+     */
+    void startRace();
 
-    public void joinPlayer(PlayerDto playerdto) {
-        System.out.println("Player joined");
-        Player player = new Player(playerdto.playerName(), playerdto.colorCode());
-        lobby.join(player);
-    }
+    void removePlayerFromLobby(String playerName);
 
-    public void initializeRace(){
-        System.out.println("Race initialized");
-        DomainEventPublisher.instance().publish(new RaceInitialized());
-    }
+
+    /**
+     * Use when a race is finished, and you want an overview of the results.
+     */
+    void displayResults();
+
+    /**
+     * After viewing the race results, use this method to start the next race
+     */
+    void nextRace();
 }
+

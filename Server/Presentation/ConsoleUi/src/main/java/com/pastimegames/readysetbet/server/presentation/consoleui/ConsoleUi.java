@@ -1,24 +1,23 @@
 package com.pastimegames.readysetbet.server.presentation.consoleui;
 
+import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
-import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
 import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
-import com.pastimegames.readysetbet.shared.viewmodels.HorseVM;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
+import com.pastimegames.shared.datatransferobjects.HorseDto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ConsoleUi {
-    private final DiceRoller diceRoller;
-    private boolean raceIsWon = false;
-    private List<HorseVM> horses = new ArrayList<>();
+    private final GameManager gameManager;
+    private List<HorseDto> horses = new ArrayList<>();
 
-    public ConsoleUi(DiceRoller diceRoller) {
-        this.diceRoller = diceRoller;
+    public ConsoleUi(GameManager diceRoller) {
+        this.gameManager = diceRoller;
     }
 
     public void start() {
@@ -26,30 +25,24 @@ public class ConsoleUi {
 
         setupHorses();
 
-        Race race = new Race();
-        race.startRace();
+        RaceOptions options = new RaceOptions()
+                .setMoveTickTimeInMs(500);
 
-        while (!raceIsWon) {
-            race.moveHorse(diceRoller);
-            printBoard();
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ignored) {}
-        }
+        gameManager.prepareForRacing(options);
+        gameManager.startRace();
     }
 
     private void setupHorses() {
-        HorseVM[] horseArray = {
-                new HorseVM("2/3", "blue"),
-                new HorseVM("4", "black"),
-                new HorseVM("5", "orange"),
-                new HorseVM("6", "red"),
-                new HorseVM("7", "black"),
-                new HorseVM("8", "red"),
-                new HorseVM("9", "orange"),
-                new HorseVM("10", "blue"),
-                new HorseVM("11/12", "blue")
+        HorseDto[] horseArray = {
+                new HorseDto("2/3", "blue"),
+                new HorseDto("4", "black"),
+                new HorseDto("5", "orange"),
+                new HorseDto("6", "red"),
+                new HorseDto("7", "black"),
+                new HorseDto("8", "red"),
+                new HorseDto("9", "orange"),
+                new HorseDto("10", "blue"),
+                new HorseDto("11/12", "blue")
         };
         horses.addAll(Arrays.asList(horseArray));
     }
@@ -61,23 +54,21 @@ public class ConsoleUi {
         });
 
         DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horseMoved -> {
-            HorseVM horseBeingMoved = horses.stream()
-                    .filter(horseVM -> horseVM.name()
+            HorseDto horseBeingMoved = horses.stream()
+                    .filter(horseDto -> horseDto.name()
                             .equals(horseMoved.horseName()))
                     .findFirst()
                     .get();
-            horseBeingMoved.updatePosition(horseMoved.position());
+            horseBeingMoved.updatePosition(horseMoved.currentPosition());
+            printBoard();
         });
 
-        DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) raceFinished -> {
-            raceIsWon = true;
-        });
     }
 
     private void printBoard() {
         StringBuilder sb = new StringBuilder();
         sb.append(topRow()).append("\n");
-        for (HorseVM horse : horses) {
+        for (HorseDto horse : horses) {
             sb.append(createHorseRow(horse));
             sb.append("\n");
         }
@@ -88,7 +79,7 @@ public class ConsoleUi {
         System.out.println(sb);
     }
 
-    private String createHorseRow(HorseVM horse) {
+    private String createHorseRow(HorseDto horse) {
 
         String row = "";
         for (int i = 0; i < horse.position(); i++) {

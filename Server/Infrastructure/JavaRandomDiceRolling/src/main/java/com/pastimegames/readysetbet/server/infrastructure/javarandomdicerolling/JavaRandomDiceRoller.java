@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.infrastructure.javarandomdiceroller;
+package com.pastimegames.readysetbet.server.infrastructure.javarandomdicerolling;
 
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.valueobjects.DiceRoll;

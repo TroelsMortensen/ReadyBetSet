@@ -1,11 +1,11 @@
-package com.pastimegames.readysetbet.shared.viewmodels;
+package com.pastimegames.shared.datatransferobjects;
 
-public class HorseVM {
+public class HorseDto {
     private String name;
     private String color;
     private int position;
 
-    public HorseVM(String name, String color) {
+    public HorseDto(String name, String color) {
         this.name = name;
         this.color = color;
     }

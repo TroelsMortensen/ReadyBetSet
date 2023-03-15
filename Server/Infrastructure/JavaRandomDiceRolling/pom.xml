@@ -10,8 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.pastimegames.readysetbet.server.infrastructure.dicerolling</groupId>
-    <artifactId>DiceRolling</artifactId>
+    <groupId>com.pastimegames.readysetbet.server.infrastructure.javarandomdicerolling</groupId>
+    <artifactId>JavaRandomDiceRolling</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.pastimegames.readysetbet.server.core.domain</groupId>

@@ -2,10 +2,7 @@ package com.pastimegames.readysetbet.core.domain.entities.race;
 
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
-import com.pastimegames.readysetbet.core.domain.events.BetsAreClosed;
-import com.pastimegames.readysetbet.core.domain.events.HorseCrossedBetLine;
-import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
-import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
+import com.pastimegames.readysetbet.core.domain.events.*;
 import com.pastimegames.readysetbet.core.domain.valueobjects.DiceRoll;
 
 import java.util.ArrayList;
@@ -13,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Race {
-    private List<Horse> horses = new ArrayList<>();
+    private final List<Horse> horses = new ArrayList<>();
     private Horse previouslyMovedHorse = null;
     private int numberOfHorsesAcrossBettingLine = 0;
     private static final float BET_LINE = 9.5f;
@@ -24,8 +21,9 @@ public class Race {
 
     }
 
-    public void startRace() {
+    public void initializeRace() {
         createHorses();
+        DomainEventPublisher.instance().publish(new RaceInitialized());
     }
 
     private void createHorses() {
@@ -44,14 +42,25 @@ public class Race {
     }
 
     public void moveHorse(DiceRoller diceRoller) {
-        System.out.println("Moving horse");
-        DiceRoll diceRoll = rolleDice(diceRoller);
-        System.out.println("Rolled " + diceRoll.sumAsHorseId());
-        Horse horseToMove = findHorse(diceRoll);
+
+        DiceRoll diceRoll = diceRoller.rollDice();
+
+        DomainEventPublisher.instance().publish(new DiceRolled(diceRoll.firstDice(), diceRoll.secondDice()));
+
+        Horse horseToMove = findHorse(diceRoll.sumAsHorseId());
 
         moveHorse(horseToMove);
         checkForWinner(horseToMove);
+    }
 
+    private void moveHorse(Horse horseToMove) {
+        int prevPosition = horseToMove.position();
+
+        executeMove(horseToMove);
+        int newPosition = horseToMove.position();
+
+        DomainEventPublisher.instance().publish(new HorseMoved(horseToMove.name(), horseToMove.position()));
+        updateNumberOfHorsesAcrossBetLine(prevPosition, newPosition, horseToMove);
     }
 
     private void updateNumberOfHorsesAcrossBetLine(int prevPosition, int newPosition, Horse horse) {
@@ -61,46 +70,32 @@ public class Race {
             DomainEventPublisher.instance().publish(new HorseCrossedBetLine(horse.name()));
         }
         if (numberOfHorsesAcrossBettingLine == 3) {
-            DomainEventPublisher.instance().publish(BetsAreClosed.class.getName());
+            DomainEventPublisher.instance().publish(new BetsAreClosed());
         }
     }
 
-    private void moveHorse(Horse horse) {
-        int prevPosition = horse.position();
-
-        executeMove(horse);
-        int newPosition = horse.position();
-
-        DomainEventPublisher.instance().publish(new HorseMoved(horse.name(), horse.position()));
-        updateNumberOfHorsesAcrossBetLine(prevPosition, newPosition, horse);
-    }
-
-    private void executeMove(Horse horse) {
-        if (horse.equals(previouslyMovedHorse)) {
-            horse.sprint();
+    private void executeMove(Horse horseBeingMoved) {
+        if (horseBeingMoved.equals(previouslyMovedHorse)) {
+            horseBeingMoved.sprint();
             previouslyMovedHorse = null;
         } else {
-            horse.move();
-            previouslyMovedHorse = horse;
+            horseBeingMoved.move();
+            previouslyMovedHorse = horseBeingMoved;
         }
     }
 
-    private void checkForWinner(Horse horse) {
-        if (horse.position() == FINISH_LINE_INDEX) {
-            DomainEventPublisher.instance().publish(new RaceFinished(horse.name()));
+    private void checkForWinner(Horse potentialWinnerHorse) {
+        if (potentialWinnerHorse.position() == FINISH_LINE_INDEX) {
+            DomainEventPublisher.instance().publish(new RaceFinished(potentialWinnerHorse.name()));
         }
     }
 
-    private Horse findHorse(DiceRoll diceRoll) {
+    private Horse findHorse(String horseName) {
         Horse horseToMove = horses
                 .stream()
-                .filter(horse -> horse.name().equals(diceRoll.sumAsHorseId()))
+                .filter(horse -> horse.name().equals(horseName))
                 .findFirst()
                 .get();
         return horseToMove;
-    }
-
-    private DiceRoll rolleDice(DiceRoller diceRoller) {
-        return diceRoller.rollDice();
     }
 }

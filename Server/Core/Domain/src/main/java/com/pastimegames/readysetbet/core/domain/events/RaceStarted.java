@@ -1,8 +1,8 @@
 package com.pastimegames.readysetbet.core.domain.events;
 
-public record RaceInitialized() {
+public record RaceStarted() {
 
     public static String type(){
-        return RaceInitialized.class.getName();
+        return RaceStarted.class.getName();
     }
 }

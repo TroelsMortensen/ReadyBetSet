@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.pastimegames.readysetbet.server.entry.sockets</groupId>
+    <groupId>com.pastimegames.readysetbet.server.presentation.sockets</groupId>
     <artifactId>Sockets</artifactId>
 
     <properties>
