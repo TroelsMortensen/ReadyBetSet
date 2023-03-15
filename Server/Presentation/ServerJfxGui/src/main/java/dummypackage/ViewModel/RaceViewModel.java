@@ -10,4 +10,7 @@ public class RaceViewModel
   {
     this.model = model;
   }
+
+  //test
+
 }
