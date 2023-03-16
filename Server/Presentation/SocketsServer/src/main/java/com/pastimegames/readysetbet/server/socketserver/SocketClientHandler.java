@@ -1,18 +1,17 @@
 package com.pastimegames.readysetbet.server.socketserver;
 
-import com.google.gson.Gson;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
-import com.pastimegames.shared.datatransferobjects.socketmessages.SocketRequest;
-import com.pastimegames.shared.datatransferobjects.socketmessages.SocketResponse;
+import com.pastimegames.shared.datatransferobjects.socketmessages.Request;
+import com.pastimegames.shared.datatransferobjects.socketmessages.Response;
 
 import java.io.*;
 import java.net.Socket;
 
 public class SocketClientHandler {
 
-    private final BufferedWriter output;
-    private final BufferedReader input;
+    private final ObjectInputStream input;
+    private final ObjectOutputStream output;
 
     private String playerName;
     private final GameManager gameManager;
@@ -20,8 +19,8 @@ public class SocketClientHandler {
     public SocketClientHandler(Socket socket, GameManager gameManager) throws IOException {
         setupListeners();
         this.gameManager = gameManager;
-        input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        input = new ObjectInputStream(socket.getInputStream());
+        output = new ObjectOutputStream(socket.getOutputStream());
     }
 
     private void setupListeners() {
@@ -31,9 +30,8 @@ public class SocketClientHandler {
     public void handleClient() {
         try {
             while (true) {
-                String s = input.readLine();
-                SocketRequest request = new Gson().fromJson(s, SocketRequest.class);
-                switch (request.commandType()) {
+                Request request = (Request) input.readObject();
+                switch (request.getCommandType()) {
                     case "JoinLobby": {
                         joinLobby(request);
                         break;
@@ -45,16 +43,16 @@ public class SocketClientHandler {
         }
     }
 
-    private void joinLobby(SocketRequest request) throws IOException {
-        PlayerDto playerDto = request.content(PlayerDto.class);
+    private void joinLobby(Request request) throws IOException {
+        PlayerDto playerDto = (PlayerDto) request.getContent();
         playerName = playerDto.playerName();
         try {
             gameManager.joinPlayer(playerDto);
-            SocketResponse success = SocketResponse.Success("JoinLobby", "Success");
-            output.write(new Gson().toJson(success));
+            Response success = Response.Success("JoinLobby", "Success");
+            output.writeObject(success);
         } catch (Exception e) {
-            String response = new Gson().toJson(SocketResponse.Failure("JoinLobby", e.getMessage()));
-            output.write(response);
+            Response failure = Response.Failure("JoinLobby", "Failure");
+            output.writeObject(failure);
         }
     }
 }

@@ -12,6 +12,14 @@
 
     <groupId>com.pastimegames.readysetbet.client.clients.clientsockets</groupId>
     <artifactId>ClientSockets</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.pastimegames.readysetbet.shared.datatransferobjects</groupId>
+            <artifactId>DataTransferObjects</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>

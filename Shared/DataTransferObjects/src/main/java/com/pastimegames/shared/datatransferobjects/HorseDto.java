@@ -1,6 +1,8 @@
 package com.pastimegames.shared.datatransferobjects;
 
-public class HorseDto {
+import java.io.Serializable;
+
+public class HorseDto implements Serializable {
     private String name;
     private String color;
     private int position;

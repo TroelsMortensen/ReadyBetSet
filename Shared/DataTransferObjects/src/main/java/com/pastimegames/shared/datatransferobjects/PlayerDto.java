@@ -1,4 +1,6 @@
 package com.pastimegames.shared.datatransferobjects;
 
-public record PlayerDto(String playerName, String colorCode) {
+import java.io.Serializable;
+
+public record PlayerDto(String playerName, String colorCode) implements Serializable {
 }
