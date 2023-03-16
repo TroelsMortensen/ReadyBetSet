@@ -10,8 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.pastimegames.readysetbet.client.clients.clientsockets</groupId>
-    <artifactId>ClientSockets</artifactId>
+    <groupId>com.pastimegames.readysetbet.javafxclient.socketclient</groupId>
+    <artifactId>SocketClient</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.pastimegames.readysetbet.shared.datatransferobjects</groupId>

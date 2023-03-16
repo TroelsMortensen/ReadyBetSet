@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.client.socketclient;
+package com.pastimegames.readysetbet.javafxclient.socketclient;
 
 import com.pastimegames.shared.datatransferobjects.socketmessages.Request;
 import com.pastimegames.shared.datatransferobjects.socketmessages.Response;

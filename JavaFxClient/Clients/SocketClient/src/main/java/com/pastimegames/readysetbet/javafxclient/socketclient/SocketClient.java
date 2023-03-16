@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.client.socketclient;
+package com.pastimegames.readysetbet.javafxclient.socketclient;
 
 import java.io.*;
 import java.net.Socket;
