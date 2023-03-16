@@ -13,22 +13,21 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class RunServer extends Application
+public class RunServerGui extends Application
 {
-  @Override public void start(Stage stage) throws IOException
-  {
-
-    //TESTING
-    DiceRoller diceRoller = new JavaRandomDiceRoller();
-    GameManager gm = new GameManagerImpl(diceRoller);
-    gm.prepareForRacing(new RaceOptions().setMoveTickTimeInMs(500));
-    gm.startRace();
-
-    //FINAL
-    Model model = new Model();
-    ViewModelFactory viewModelFactory = new ViewModelFactory(model);
-    ViewHandler viewHandler = new ViewHandler(viewModelFactory);
-    viewHandler.start(stage);
+  @Override public void start(Stage stage) throws IOException {
+  }
+//    //TESTING
+//    DiceRoller diceRoller = new JavaRandomDiceRoller();
+//    GameManager gm = new GameManagerImpl(diceRoller);
+//    gm.prepareForRacing(new RaceOptions().setMoveTickTimeInMs(500));
+//    gm.startRace();
+//
+//    //FINAL
+//    Model model = new Model();
+//    ViewModelFactory viewModelFactory = new ViewModelFactory(model);
+//    ViewHandler viewHandler = new ViewHandler(viewModelFactory);
+//    viewHandler.start(stage);
 
 /*    //DEBUG
     FXMLLoader fxmlLoaderForTest = new FXMLLoader(
@@ -48,10 +47,10 @@ public class RunServer extends Application
     testStage.setTitle("TEST");
     testStage.setScene(testScene);
     testStage.show();*/
-  }
+//  }
 
-  public static void main(String[] args)
-  {
-    launch();
-  }
+//  public static void main(String[] args)
+//  {
+//    launch();
+//  }
 }

@@ -3,7 +3,7 @@ package com.pastimegames.readysetbet.server.presentation.javafxgui.Core;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.RaceViewController;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerLobbyViewController;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerMainViewController;
-import com.pastimegames.readysetbet.server.presentation.javafxgui.RunServer;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.RunServerGui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -31,7 +31,7 @@ public class ViewHandler
   public void openViewMain()
   {
     FXMLLoader fxmlLoader = new FXMLLoader(
-        RunServer.class.getResource("ServerMainView.fxml"));
+        RunServerGui.class.getResource("ServerMainView.fxml"));
     Scene scene = null;
     try
     {
@@ -51,7 +51,7 @@ public class ViewHandler
   public void openViewLobby()
   {
     FXMLLoader fxmlLoader = new FXMLLoader(
-        RunServer.class.getResource("ServerLobbyView.fxml"));
+        RunServerGui.class.getResource("ServerLobbyView.fxml"));
     Scene scene = null;
     try
     {
@@ -71,7 +71,7 @@ public class ViewHandler
   public void openRaceView()
   {
     FXMLLoader fxmlLoader = new FXMLLoader(
-        RunServer.class.getResource("RaceView.fxml"));
+        RunServerGui.class.getResource("RaceView.fxml"));
     Scene scene = null;
     try
     {
