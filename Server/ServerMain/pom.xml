@@ -6,21 +6,22 @@
         <artifactId>ReadySetBet</artifactId>
         <groupId>com.pastimegames.readysetbet</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.pastimegames.readysetbet.server.presentation.sockets</groupId>
-    <artifactId>Sockets</artifactId>
+    <groupId>com.pastimegames.readysetbet.server.servermain</groupId>
+    <artifactId>ServerMain</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.pastimegames.readysetbet.shared.datatransferobjects</groupId>
-            <artifactId>DataTransferObjects</artifactId>
+            <groupId>com.pastimegames.readysetbet.server.presentation.sockets</groupId>
+            <artifactId>Sockets</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.pastimegames.readysetbet.server.core.application</groupId>
-            <artifactId>Application</artifactId>
+            <groupId>com.pastimegames.readysetbet.server.infrastructure.javarandomdicerolling</groupId>
+            <artifactId>JavaRandomDiceRolling</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

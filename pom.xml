@@ -19,6 +19,7 @@
         <module>Shared/ViewModels</module>
         <module>Server/Presentation/ServerJfxGui</module>
         <module>Shared/DataTransferObjects</module>
+        <module>Server/ServerMain</module>
     </modules>
 
 

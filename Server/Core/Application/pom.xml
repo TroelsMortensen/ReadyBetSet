@@ -24,12 +24,6 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.pastimegames.readysetbet.shared.viewmodels</groupId>
-            <artifactId>ViewModels</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <properties>
