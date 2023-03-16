@@ -1,4 +1,4 @@
-package dummypackage.ViewModel;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -10,10 +10,12 @@ public class ViewModelHorse
   private StringProperty name;
   private IntegerProperty position;
 
-  public ViewModelHorse()
+  public ViewModelHorse(String name, int position)
   {
-    name = new SimpleStringProperty();
-    position = new SimpleIntegerProperty();
+    this.name = new SimpleStringProperty();
+    this.position = new SimpleIntegerProperty();
+    this.name.set(name);
+    this.position.set(position);
   }
 
   public String getName()

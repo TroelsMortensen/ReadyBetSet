@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="255.0" prefWidth="268.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dummypackage.TESTClientSimulator">
+<AnchorPane prefHeight="255.0" prefWidth="268.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pastimegames.readysetbet.server.presentation.javafxgui.TESTClientSimulator">
    <children>
       <Button layoutX="14.0" layoutY="34.0" mnemonicParsing="false" onAction="#player1Join" text="ADD PLAYER 1" />
       <Button layoutX="14.0" layoutY="84.0" mnemonicParsing="false" onAction="#player2Join" text="ADD PLAYER 2" />

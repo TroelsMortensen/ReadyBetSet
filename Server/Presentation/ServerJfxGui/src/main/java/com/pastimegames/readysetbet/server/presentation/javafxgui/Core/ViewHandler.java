@@ -1,10 +1,9 @@
-package dummypackage.Core;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.Core;
 
-import dummypackage.RunServer;
-import dummypackage.TESTClientSimulator;
-import dummypackage.View.RaceViewController;
-import dummypackage.View.ServerLobbyViewController;
-import dummypackage.View.ServerMainViewController;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.View.RaceViewController;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerLobbyViewController;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerMainViewController;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.RunServer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -25,7 +24,7 @@ public class ViewHandler
   public void start(Stage stage)
   {
     mainStage = stage;
-    openViewMain();
+    openRaceView();
   }
 
   public void openViewMain()
@@ -75,7 +74,7 @@ public class ViewHandler
     Scene scene = null;
     try
     {
-      scene = new Scene(fxmlLoader.load(), 320, 240);
+      scene = new Scene(fxmlLoader.load(), 600, 600);
     }
     catch (IOException e)
     {

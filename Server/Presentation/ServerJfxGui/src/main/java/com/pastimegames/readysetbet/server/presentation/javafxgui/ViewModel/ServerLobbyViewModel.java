@@ -1,6 +1,6 @@
-package dummypackage.ViewModel;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel;
 
-import dummypackage.Model.Model;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.Model.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

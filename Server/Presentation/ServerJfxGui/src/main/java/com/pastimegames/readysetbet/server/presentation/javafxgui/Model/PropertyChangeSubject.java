@@ -1,4 +1,4 @@
-package dummypackage.Model;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.Model;
 
 import java.beans.PropertyChangeListener;
 

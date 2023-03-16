@@ -1,6 +1,6 @@
-package dummypackage;
+package com.pastimegames.readysetbet.server.presentation.javafxgui;
 
-import dummypackage.Model.Model;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.Model.Model;
 import javafx.event.ActionEvent;
 
 public class TESTClientSimulator

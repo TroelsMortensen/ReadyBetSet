@@ -4,7 +4,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dummypackage.View.ServerLobbyViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerLobbyViewController">
    <children>
       <ListView fx:id="playerList" layoutX="31.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="89.0" layoutY="250.0" mnemonicParsing="false" onAction="#onButtonStartRace" text="Button" />

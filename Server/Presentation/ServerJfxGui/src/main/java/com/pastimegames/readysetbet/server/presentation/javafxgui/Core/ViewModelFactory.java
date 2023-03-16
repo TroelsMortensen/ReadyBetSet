@@ -1,8 +1,8 @@
-package dummypackage.Core;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.Core;
 
-import dummypackage.Model.Model;
-import dummypackage.ViewModel.RaceViewModel;
-import dummypackage.ViewModel.ServerLobbyViewModel;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.Model.Model;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.RaceViewModel;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.ServerLobbyViewModel;
 
 public class ViewModelFactory
 {

@@ -1,6 +1,6 @@
-package dummypackage.View;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.View;
 
-import dummypackage.Core.ViewHandler;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.Core.ViewHandler;
 import javafx.event.ActionEvent;
 
 public class ServerMainViewController

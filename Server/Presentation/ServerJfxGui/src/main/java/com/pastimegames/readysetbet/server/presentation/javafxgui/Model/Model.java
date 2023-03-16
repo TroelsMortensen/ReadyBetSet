@@ -1,4 +1,8 @@
-package dummypackage.Model;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.Model;
+
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
+import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -10,6 +14,7 @@ public class Model implements PropertyChangeSubject
   public Model()
   {
     propertyChangeSupport = new PropertyChangeSupport(this);
+    initializeListeners();
   }
 
   public void playerJoin(String name)
@@ -46,5 +51,11 @@ public class Model implements PropertyChangeSubject
   @Override
   public void removePropertyChangeListener(PropertyChangeListener listener) {
     propertyChangeSupport.removePropertyChangeListener(listener);
+  }
+
+  private void initializeListeners() {
+    DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horseMovedEvent -> {
+      propertyChangeSupport.firePropertyChange("HORSE_MOVED", null, horseMovedEvent);
+    } );
   }
 }

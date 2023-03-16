@@ -1,12 +1,10 @@
-package dummypackage.View;
+package com.pastimegames.readysetbet.server.presentation.javafxgui.View;
 
-import dummypackage.Core.ViewHandler;
-import dummypackage.ViewModel.ServerLobbyViewModel;
-import javafx.beans.Observable;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.Core.ViewHandler;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.ServerLobbyViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.GridPane;
 
 public class ServerLobbyViewController
 {
