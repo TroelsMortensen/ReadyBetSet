@@ -25,7 +25,7 @@ public class SocketClientHandler {
     }
 
     private void setupListeners() {
-
+        // TODO setup listeners her.
     }
 
     public void handleClient() {
