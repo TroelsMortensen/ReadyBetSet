@@ -16,10 +16,15 @@ public class SocketClient {
         while(true) {
             Scanner keyboard = new Scanner(System.in);
             String stringToSend = keyboard.nextLine();
-            if(stringToSend.equals("JoinLobby"))
+            if(stringToSend.equals("join"))
             {
                 Request joinLobbyRequest = new Request("JoinLobby", new PlayerDto("NeoGeo", "purple"));
                 clientConnection.sendRequest(joinLobbyRequest);
+            }
+            if(stringToSend.equals("leave"))
+            {
+                Request leaveLobbyRequest = new Request("LeaveLobby", new PlayerDto("NeoGeo", "purple"));
+                clientConnection.sendRequest(leaveLobbyRequest);
             }
         }
     }

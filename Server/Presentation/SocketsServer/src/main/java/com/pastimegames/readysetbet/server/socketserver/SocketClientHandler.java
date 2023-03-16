@@ -36,10 +36,28 @@ public class SocketClientHandler {
                         joinLobby(request);
                         break;
                     }
+                    case "LeaveLobby": {
+                        leavyLobby(request);
+                        break;
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void leavyLobby(Request request) throws IOException {
+        PlayerDto playerDto = (PlayerDto) request.getContent();
+        playerName = playerDto.playerName();
+        try {
+            gameManager.removePlayerFromLobby(playerName);
+            Response success = Response.Success("LeaveLobby", "Success");
+            output.writeObject(success);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Response failure = Response.Failure("LeaveLobby", "Failure");
+            output.writeObject(failure);
         }
     }
 
@@ -51,6 +69,7 @@ public class SocketClientHandler {
             Response success = Response.Success("JoinLobby", "Success");
             output.writeObject(success);
         } catch (Exception e) {
+            e.printStackTrace();
             Response failure = Response.Failure("JoinLobby", "Failure");
             output.writeObject(failure);
         }

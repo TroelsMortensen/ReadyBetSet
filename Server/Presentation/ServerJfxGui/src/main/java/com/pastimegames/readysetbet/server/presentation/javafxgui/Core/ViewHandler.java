@@ -24,7 +24,8 @@ public class ViewHandler
   public void start(Stage stage)
   {
     mainStage = stage;
-    openRaceView();
+    //openRaceView();
+    openViewLobby();
   }
 
   public void openViewMain()

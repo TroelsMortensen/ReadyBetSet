@@ -3,6 +3,8 @@ package com.pastimegames.readysetbet.server.presentation.javafxgui.Model;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
+import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
+import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobby;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -57,5 +59,11 @@ public class Model implements PropertyChangeSubject
     DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horseMovedEvent -> {
       propertyChangeSupport.firePropertyChange("HORSE_MOVED", null, horseMovedEvent);
     } );
+    DomainEventPublisher.instance().subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) playerJoinedLobby -> {
+      propertyChangeSupport.firePropertyChange("PLAYER_JOIN", null, playerJoinedLobby);
+    });
+    DomainEventPublisher.instance().subscribe(PlayerLeftLobby.type(), (DomainEventListener<PlayerLeftLobby>) playerLeftLobby -> {
+      propertyChangeSupport.firePropertyChange("PLAYER_LEAVE", null, playerLeftLobby);
+    });
   }
 }
