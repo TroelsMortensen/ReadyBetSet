@@ -21,12 +21,20 @@ public class RunServer extends Application {
     public void start(Stage primaryStage) throws Exception {
         DiceRoller diceRoller = new JavaRandomDiceRoller();
         GameManager gameManager = new GameManagerImpl(diceRoller);
-        SocketServer socketServer = new SocketServer(gameManager);
-        new Thread(socketServer::runServer).start();
+        startSocketServer(gameManager);
 
+        startServerUI(primaryStage);
+    }
+
+    private void startServerUI(Stage primaryStage) {
         Model model = new Model();
         ViewModelFactory viewModelFactory = new ViewModelFactory(model);
         ViewHandler viewHandler = new ViewHandler(viewModelFactory);
         viewHandler.start(primaryStage);
+    }
+
+    private void startSocketServer(GameManager gameManager) {
+        SocketServer socketServer = new SocketServer(gameManager);
+        new Thread(socketServer::runServer).start();
     }
 }

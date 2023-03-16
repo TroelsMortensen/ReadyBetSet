@@ -19,14 +19,14 @@ public class SocketServer {
         try (ServerSocket serverSocket = new ServerSocket(2910)) {
             System.out.println("Server started");
             System.out.println("Server ip:" + InetAddress.getLocalHost().getHostAddress());
-            listenForClients(serverSocket);
+            listenForIncomingClients(serverSocket);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    private void listenForClients(ServerSocket serverSocket) throws IOException {
+    private void listenForIncomingClients(ServerSocket serverSocket) throws IOException {
         while (true) {
             Socket socketToClient = serverSocket.accept();
             System.out.println("Client connected");
