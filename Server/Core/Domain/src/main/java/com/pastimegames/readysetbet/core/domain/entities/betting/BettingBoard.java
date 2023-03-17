@@ -1,5 +1,7 @@
 package com.pastimegames.readysetbet.core.domain.entities.betting;
 
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class BettingBoard {
 
     public void betOnCell() {
 
+
+//        DomainEventPublisher.instance().publish();
     }
 
     public void betOnExoticFinish() {
