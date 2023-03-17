@@ -1,5 +1,6 @@
 package com.pastimegames.readysetbet.server.presentation.javafxgui.Model;
 
+import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
@@ -12,9 +13,11 @@ import java.beans.PropertyChangeSupport;
 public class Model implements PropertyChangeSubject
 {
   private PropertyChangeSupport propertyChangeSupport;
+  private GameManager gameManager;
 
-  public Model()
+  public Model(GameManager gameManager)
   {
+    this.gameManager = gameManager;
     propertyChangeSupport = new PropertyChangeSupport(this);
     initializeListeners();
   }

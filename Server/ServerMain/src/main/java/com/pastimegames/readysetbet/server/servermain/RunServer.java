@@ -23,11 +23,11 @@ public class RunServer extends Application {
         GameManager gameManager = new GameManagerImpl(diceRoller);
         startSocketServer(gameManager);
 
-        startServerUI(primaryStage);
+        startServerUI(primaryStage, gameManager);
     }
 
-    private void startServerUI(Stage primaryStage) {
-        Model model = new Model();
+    private void startServerUI(Stage primaryStage, GameManager gameManager) {
+        Model model = new Model(gameManager);
         ViewModelFactory viewModelFactory = new ViewModelFactory(model);
         ViewHandler viewHandler = new ViewHandler(viewModelFactory);
         viewHandler.start(primaryStage);

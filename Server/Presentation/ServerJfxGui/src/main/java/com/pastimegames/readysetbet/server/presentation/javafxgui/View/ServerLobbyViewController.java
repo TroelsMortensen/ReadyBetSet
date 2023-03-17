@@ -22,6 +22,7 @@ public class ServerLobbyViewController
 
   public void onButtonStartRace(ActionEvent actionEvent)
   {
+
     viewHandler.openRaceView();
   }
 }
