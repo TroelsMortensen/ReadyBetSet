@@ -83,7 +83,7 @@ public class GameManagerImpl implements GameManager {
     public void displayResults() {
         bookMaker.deliverWinnings(race.getRaceResult(), lobby);
         bookMaker.deliverPenalties(race.getRaceResult(), lobby);
-        // TODO what to do here? Something with BookMaker
+
         DomainEventPublisher.instance().publish(new WinningsAndPenaltiesDelivered());
     }
 
