@@ -21,7 +21,10 @@ public class Lobby {
     }
 
     public void leave(String playerNameToRemove) {
-        lobbyPlayerList.removeIf(player -> player.name().equals(playerNameToRemove));
+        boolean wasRemoved = lobbyPlayerList.removeIf(player -> player.name().equals(playerNameToRemove));
+        if(!wasRemoved){
+            throw new DomainLogicException("Could not find player '" + playerNameToRemove + "' to be removed from lobby.");
+        }
         DomainEventPublisher.instance().publish(new PlayerLeftLobby(playerNameToRemove));
     }
 }
