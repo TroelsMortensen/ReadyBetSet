@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.server.socketserver;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
+import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.Request;
 import com.pastimegames.shared.datatransferobjects.socketmessages.Response;
@@ -31,15 +32,21 @@ public class SocketClientHandler {
         try {
             while (true) {
                 Request request = (Request) input.readObject();
-                switch (request.getCommandType()) {
-                    case "JoinLobby": {
-                        joinLobby(request);
-                        break;
+                try {
+
+                    switch (request.getCommandType()) {
+                        case "JoinLobby": {
+                            joinLobby(request);
+                            break;
+                        }
+                        case "LeaveLobby": {
+                            leaveLobby(request);
+                            break;
+                        }
                     }
-                    case "LeaveLobby": {
-                        leavyLobby(request);
-                        break;
-                    }
+                } catch (DomainLogicException dlex) {
+                    Response failure = Response.Failure("Failure", dlex.getMessage());
+                    output.writeObject(failure);
                 }
             }
         } catch (Exception e) {
@@ -47,31 +54,22 @@ public class SocketClientHandler {
         }
     }
 
-    private void leavyLobby(Request request) throws IOException {
+    private void leaveLobby(Request request) throws IOException {
         PlayerDto playerDto = (PlayerDto) request.getContent();
         playerName = playerDto.playerName();
-        try {
-            gameManager.removePlayerFromLobby(playerName);
-            Response success = Response.Success("LeaveLobby", "Success");
-            output.writeObject(success);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Response failure = Response.Failure("LeaveLobby", "Failure");
-            output.writeObject(failure);
-        }
+        gameManager.removePlayerFromLobby(playerName);
+        writeBackSuccessResponse(Response.Success(request.getCommandType(), "Success"));
     }
 
     private void joinLobby(Request request) throws IOException {
         PlayerDto playerDto = (PlayerDto) request.getContent();
         playerName = playerDto.playerName();
-        try {
-            gameManager.joinPlayer(playerDto);
-            Response success = Response.Success("JoinLobby", "Success");
-            output.writeObject(success);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Response failure = Response.Failure("JoinLobby", "Failure");
-            output.writeObject(failure);
-        }
+        gameManager.joinPlayer(playerDto);
+        writeBackSuccessResponse(Response.Success(request.getCommandType(), "Success"));
+    }
+
+    private void writeBackSuccessResponse(Response request) throws IOException {
+        Response success = request;
+        output.writeObject(success);
     }
 }

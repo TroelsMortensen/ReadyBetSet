@@ -11,7 +11,7 @@ import java.util.List;
 public class Lobby {
     private final List<Player> lobbyPlayerList = new ArrayList<>();
 
-    public void joinLobby(Player player){
+    public void join(Player player){
         boolean playerNameTaken = lobbyPlayerList.stream().anyMatch(p -> p.name().equals(player.name()));
         if(playerNameTaken){
             throw new DomainLogicException("Player name '" + player.name() + "' already in lobby. Name must be unique");
@@ -20,7 +20,7 @@ public class Lobby {
         DomainEventPublisher.instance().publish(new PlayerJoinedLobby(player.name(), player.colorCode()));
     }
 
-    public void leaveLobby(String playerNameToRemove) {
+    public void leave(String playerNameToRemove) {
         lobbyPlayerList.removeIf(player -> player.name().equals(playerNameToRemove));
         DomainEventPublisher.instance().publish(new PlayerLeftLobby(playerNameToRemove));
     }

@@ -44,7 +44,7 @@ public class GameManagerImpl implements GameManager {
         Player player = new Player(playerDto.playerName(), playerDto.colorCode());
 
         synchronized (lobby) {
-            lobby.joinLobby(player);
+            lobby.join(player);
         }
     }
 
@@ -71,7 +71,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void removePlayerFromLobby(String playerName) {
         synchronized (lobby) {
-            lobby.leaveLobby(playerName);
+            lobby.leave(playerName);
         }
     }
 
