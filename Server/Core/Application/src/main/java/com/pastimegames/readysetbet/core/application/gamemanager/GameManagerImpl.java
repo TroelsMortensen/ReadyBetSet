@@ -7,6 +7,7 @@ import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.NewRaceReady;
+import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public class GameManagerImpl implements GameManager {
@@ -36,7 +37,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void joinPlayer(PlayerDto playerDto) {
         if(currentGameState != GameState.IN_LOBBY){
-            throw new RuntimeException("Cannot join a game, when it is not in lobby");
+            throw new DomainLogicException("Cannot join a game, when it is not in lobby");
         }
 
         System.out.println("Player joined");
@@ -51,7 +52,7 @@ public class GameManagerImpl implements GameManager {
     public void prepareForRacing(RaceOptions options) {
         this.options = options;
         if(currentGameState != GameState.IN_LOBBY){
-            throw new RuntimeException("Cannot initialize a race outside of the lobby");
+            throw new DomainLogicException("Cannot initialize a race outside of the lobby");
         }
 
         setupRace();
@@ -60,7 +61,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void startRace() {
         if(currentGameState != GameState.RACE_READY){
-            throw new RuntimeException("Cannot start er race, before it is ready");
+            throw new DomainLogicException("Cannot start er race, before it is ready");
         }
         currentGameState = GameState.RACE_IN_PROGRESS;
         RaceRunner raceRunner = new RaceRunner(options);
@@ -83,7 +84,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void nextRace() {
         if(options.numberOfRaces() >= raceNumber){
-            throw new RuntimeException("You cannot start more races than initially planned");
+            throw new DomainLogicException("You cannot start more races than initially planned");
         }
         raceNumber++;
         setupRace();

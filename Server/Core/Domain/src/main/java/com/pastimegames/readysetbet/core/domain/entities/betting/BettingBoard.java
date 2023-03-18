@@ -2,6 +2,7 @@ package com.pastimegames.readysetbet.core.domain.entities.betting;
 
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.BetPlacedOnCell;
+import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ class BettingBoard {
     void placeBetOnCell(int index, Coin coin) {
         BetCell betCell = betCells.get(index);
         if(betCell.containsCoin()) {
-            throw new RuntimeException("Cannot place two coins on one cell");
+            throw new DomainLogicException("Cannot place two coins on one cell");
         }
 
         DomainEventPublisher.instance().publish(new BetPlacedOnCell(index, coin.value(), coin.owningPlayer()));
