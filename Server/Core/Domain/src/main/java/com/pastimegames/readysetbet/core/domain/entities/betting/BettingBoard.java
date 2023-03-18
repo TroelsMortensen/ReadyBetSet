@@ -21,7 +21,6 @@ class BettingBoard {
             /* 9 */ new BetCell(4, -4), new BetCell(4, -3), new BetCell(5, -4), new BetCell(5, -3), new BetCell(7, -2), new BetCell(8, -2), new BetCell(9, -2)
     };
 
-// TODO make the rest of the rows here
 
     BettingBoard() {
         for (int i = 0; i < cells.length; i++) {
@@ -32,20 +31,22 @@ class BettingBoard {
 
     void placeBetOnCell(int index, Coin coin) {
         BetCell betCell = betCells.get(index);
-        if(betCell.containsCoin()) throw new RuntimeException("Cannot place two coins on one cell");
+        if(betCell.containsCoin()) {
+            throw new RuntimeException("Cannot place two coins on one cell");
+        }
 
         DomainEventPublisher.instance().publish(new BetPlacedOnCell(index, coin.value(), coin.owningPlayer()));
     }
 
     void betOnExoticFinish() {
-
+        throw new UnsupportedOperationException();
     }
 
     void betOnPropBet() {
-
+        throw new UnsupportedOperationException();
     }
 
     void betOnColorFinish() {
-
+        throw new UnsupportedOperationException();
     }
 }

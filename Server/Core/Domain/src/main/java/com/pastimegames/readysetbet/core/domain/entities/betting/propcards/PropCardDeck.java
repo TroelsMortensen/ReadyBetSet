@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.core.domain.entities.betting;
+package com.pastimegames.readysetbet.core.domain.entities.betting.propcards;
 
 import com.pastimegames.readysetbet.core.domain.entities.race.HorseColor;
 import com.pastimegames.readysetbet.core.domain.entities.race.RaceResult;
