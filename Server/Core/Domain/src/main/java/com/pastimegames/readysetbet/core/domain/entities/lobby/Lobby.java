@@ -27,4 +27,8 @@ public class Lobby {
         }
         DomainEventPublisher.instance().publish(new PlayerLeftLobby(playerNameToRemove));
     }
+
+    public Player getPlayer(String playerName) {
+        return lobbyPlayerList.stream().filter(p -> p.name().equals(playerName)).findFirst().get();
+    }
 }

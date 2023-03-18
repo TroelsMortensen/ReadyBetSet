@@ -1,17 +1,21 @@
 package com.pastimegames.readysetbet.core.application.gamemanager;
 
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
+import com.pastimegames.readysetbet.core.domain.entities.betting.BookMaker;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.NewRaceReady;
+import com.pastimegames.readysetbet.core.domain.events.WinningsAndPenaltiesDelivered;
 import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public class GameManagerImpl implements GameManager {
 
+
+    private BookMaker bookMaker;
 
     private enum GameState {
         IN_LOBBY,
@@ -77,8 +81,10 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public void displayResults() {
+        bookMaker.deliverWinnings(race.getRaceResult(), lobby);
+        bookMaker.deliverPenalties(race.getRaceResult(), lobby);
         // TODO what to do here? Something with BookMaker
-
+        DomainEventPublisher.instance().publish(new WinningsAndPenaltiesDelivered());
     }
 
     @Override
@@ -95,6 +101,7 @@ public class GameManagerImpl implements GameManager {
         race = new Race();
         race.initializeRace();
         currentGameState = GameState.RACE_READY;
+        bookMaker = new BookMaker();
         DomainEventPublisher.instance().publish(new NewRaceReady(raceNumber));
 
     }

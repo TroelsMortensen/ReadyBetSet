@@ -5,10 +5,7 @@ import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.events.*;
 import com.pastimegames.readysetbet.core.domain.valueobjects.DiceRoll;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Race {
@@ -29,13 +26,10 @@ public class Race {
     }
 
     public RaceResult getRaceResult() {
-        List<RaceResult.Horse> results = horses.stream()
-                .map(horse -> new RaceResult.Horse(horse.name(), horse.color(), horse.position()))
-                .collect(Collectors.toList());
+        Map<String, RaceResult.HorseData> map = horses.stream()
+                .collect(Collectors.toMap(Horse::name, horse -> new RaceResult.HorseData(horse.name(), horse.color(), horse.position())));
 
-        results.sort(Comparator.comparingInt(RaceResult.Horse::finalPosition));
-
-        return new RaceResult(results);
+        return new RaceResult(map);
     }
 
     private void createHorses() {

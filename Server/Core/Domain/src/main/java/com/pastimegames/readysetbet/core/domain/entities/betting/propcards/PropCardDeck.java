@@ -15,16 +15,13 @@ public class PropCardDeck {
             new PropCard("PurpleAheadOfAllBlues", 3, -3, raceResult
                     ->
             {
-                RaceResult.Horse purpleHorse = raceResult.horses().stream()
-                        .filter(horseResult -> horseResult.color() == HorseColor.PURPLE)
-                        .findFirst()
-                        .get();
+                RaceResult.HorseData purpleHorse = raceResult.horses().get("7");
 
-                List<RaceResult.Horse> blueHorses = raceResult.horses().stream()
+                List<RaceResult.HorseData> blueHorses = raceResult.horses().values().stream()
                         .filter(horse -> horse.color() == HorseColor.BLUE)
                         .toList();
 
-                for (RaceResult.Horse blueHorse : blueHorses) {
+                for (RaceResult.HorseData blueHorse : blueHorses) {
                     if (blueHorse.finalPosition() >= purpleHorse.finalPosition()) return false;
                 }
 
@@ -35,15 +32,15 @@ public class PropCardDeck {
             new PropCard("RedsAheadOfAllBlues", 5, -2, raceResult
                     ->
             {
-                List<RaceResult.Horse> redHorses = raceResult.horses().stream()
+                List<RaceResult.HorseData> redHorses = raceResult.horses().values().stream()
                         .filter(horse -> horse.color() == HorseColor.RED)
                         .toList();
 
-                List<RaceResult.Horse> blueHorses = raceResult.horses().stream()
+                List<RaceResult.HorseData> blueHorses = raceResult.horses().values().stream()
                         .filter(horse -> horse.color() == HorseColor.BLUE)
                         .toList();
 
-                for (RaceResult.Horse blueHorse : blueHorses) {
+                for (RaceResult.HorseData blueHorse : blueHorses) {
                     if (redHorses.stream()
                             .anyMatch(redHorse -> blueHorse.finalPosition() >= redHorse.finalPosition())
                     ) {

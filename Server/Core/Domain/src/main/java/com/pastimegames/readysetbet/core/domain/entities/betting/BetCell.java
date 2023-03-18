@@ -27,4 +27,20 @@ public class BetCell {
     public boolean containsCoin() {
         return coins.size()>0;
     }
+
+    public int id() {
+        return id;
+    }
+
+    public List<Coin> coins() {
+        return coins;
+    }
+
+    public int payoutMultiplier() {
+        return payoutMultiplyer;
+    }
+
+    public int penalty() {
+        return penalty;
+    }
 }

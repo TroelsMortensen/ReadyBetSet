@@ -6,6 +6,8 @@ public class Player {
 
     private int coins;
 
+    private int saldo = 0;
+
     public Player(String name, String colorCode) {
         this.name = name;
         this.colorCode = colorCode;
@@ -18,5 +20,14 @@ public class Player {
 
     public String colorCode() {
         return colorCode;
+    }
+
+    public void addWinning(int amount){
+        saldo += amount;
+    }
+
+    public void applyPenalty(int amount){
+        saldo -= amount;
+        saldo = Math.max(saldo, 0);
     }
 }
