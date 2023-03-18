@@ -24,4 +24,7 @@ public class BetCell {
         coins.add(coin);
     }
 
+    public boolean containsCoin() {
+        return coins.size()>0;
+    }
 }

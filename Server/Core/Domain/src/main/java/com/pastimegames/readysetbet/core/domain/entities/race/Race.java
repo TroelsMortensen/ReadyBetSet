@@ -7,7 +7,9 @@ import com.pastimegames.readysetbet.core.domain.valueobjects.DiceRoll;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Race {
     private final List<Horse> horses = new ArrayList<>();
@@ -26,17 +28,27 @@ public class Race {
         DomainEventPublisher.instance().publish(new RaceInitialized());
     }
 
+    public RaceResult getRaceResult() {
+        List<RaceResult.Horse> results = horses.stream()
+                .map(horse -> new RaceResult.Horse(horse.name(), horse.color(), horse.position()))
+                .collect(Collectors.toList());
+
+        results.sort(Comparator.comparingInt(RaceResult.Horse::finalPosition));
+
+        return new RaceResult(results);
+    }
+
     private void createHorses() {
         Horse[] horseArray = {
-                new Horse("2/3", HorseColors.BLUE, 3),
-                new Horse("4", HorseColors.BLUE, 3),
-                new Horse("5", HorseColors.ORANGE, 2),
-                new Horse("6", HorseColors.RED, 1),
-                new Horse("7", HorseColors.BLACK, 0),
-                new Horse("8", HorseColors.RED, 1),
-                new Horse("9", HorseColors.ORANGE, 2),
-                new Horse("10", HorseColors.BLUE, 3),
-                new Horse("11/12", HorseColors.BLUE, 3)
+                new Horse("2/3", HorseColor.BLUE, 3),
+                new Horse("4", HorseColor.BLUE, 3),
+                new Horse("5", HorseColor.ORANGE, 2),
+                new Horse("6", HorseColor.RED, 1),
+                new Horse("7", HorseColor.PURPLE, 0),
+                new Horse("8", HorseColor.RED, 1),
+                new Horse("9", HorseColor.ORANGE, 2),
+                new Horse("10", HorseColor.BLUE, 3),
+                new Horse("11/12", HorseColor.BLUE, 3)
         };
         horses.addAll(Arrays.asList(horseArray));
     }

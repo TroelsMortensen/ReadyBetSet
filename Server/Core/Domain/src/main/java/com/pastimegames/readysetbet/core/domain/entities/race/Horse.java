@@ -3,11 +3,11 @@ package com.pastimegames.readysetbet.core.domain.entities.race;
 public class Horse {
 
     private final String name;
-    private final HorseColors color;
+    private final HorseColor color;
     private final int bonusMoves;
     private int position;
 
-    public Horse(String name, HorseColors color, int bonusMoves) {
+    public Horse(String name, HorseColor color, int bonusMoves) {
         this.name = name;
         this.color = color;
         this.bonusMoves = bonusMoves;
@@ -41,5 +41,9 @@ public class Horse {
     @Override
     public String toString() {
         return name;
+    }
+
+    public HorseColor color() {
+        return color;
     }
 }
