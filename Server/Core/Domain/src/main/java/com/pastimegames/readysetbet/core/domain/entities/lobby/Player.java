@@ -4,14 +4,13 @@ public class Player {
     private String name;
     private String colorCode;
 
-    private int coins;
 
     private int saldo = 0;
 
     public Player(String name, String colorCode) {
         this.name = name;
         this.colorCode = colorCode;
-        coins = 0;
+        saldo = 0;
     }
 
     public String name(){

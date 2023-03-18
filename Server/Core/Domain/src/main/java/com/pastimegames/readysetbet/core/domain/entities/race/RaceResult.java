@@ -8,7 +8,7 @@ public record RaceResult(Map<String, HorseData> horses) {
     public record HorseData(String name, HorseColor color, int finalPosition) {
 
     }
-
+    // TODO I need unit tests for these calculations
     public boolean isWIN(String horseName) {
         return horses.get(horseName).finalPosition == 15;
     }
