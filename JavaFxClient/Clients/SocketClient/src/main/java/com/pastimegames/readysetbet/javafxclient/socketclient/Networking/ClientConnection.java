@@ -1,5 +1,7 @@
-package com.pastimegames.readysetbet.javafxclient.socketclient;
+package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ViewModelPlayer;
+import com.pastimegames.shared.datatransferobjects.PlayerDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.io.*;
@@ -36,10 +38,15 @@ public class ClientConnection implements Runnable{
             }
     }
 
-    public void sendRequest(SocketDto request)
+    public void joinLobby(ViewModelPlayer player) {
+        SocketDto joinLobbyRequest = new SocketDto("Lobby/join", new PlayerDto(player.getName(), player.getColour()));
+        sendSocketDto(joinLobbyRequest);
+    }
+
+    private void sendSocketDto(SocketDto socketDto)
     {
         try {
-            outToServer.writeObject(request);
+            outToServer.writeObject(socketDto);
         } catch (IOException e) {
             e.printStackTrace();
         }
