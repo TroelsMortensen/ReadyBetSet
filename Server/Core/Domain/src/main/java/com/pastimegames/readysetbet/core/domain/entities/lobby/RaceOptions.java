@@ -3,7 +3,7 @@ package com.pastimegames.readysetbet.core.domain.entities.lobby;
 public class RaceOptions {
 
     private int moveTickTimeInMs = 1000;
-    private int startSaldo = 0;
+    private int startMoney = 0;
     private int numberOfAllowedBidsPerCell = 1;
 
     private int numberOfRaces = 4;
@@ -13,8 +13,8 @@ public class RaceOptions {
         return this;
     }
 
-    public RaceOptions setStartSaldo(int startSaldo) {
-        this.startSaldo = startSaldo;
+    public RaceOptions setStartMoney(int startMoney) {
+        this.startMoney = startMoney;
         return this;
     }
 
@@ -36,8 +36,8 @@ public class RaceOptions {
         return moveTickTimeInMs;
     }
 
-    public int startSaldo(){
-        return startSaldo;
+    public int startMoney(){
+        return startMoney;
     }
 
     public int numberOfAllowedBidsPerCell() {
