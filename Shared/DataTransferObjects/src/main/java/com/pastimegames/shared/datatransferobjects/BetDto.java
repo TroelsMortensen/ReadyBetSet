@@ -1,4 +1,6 @@
 package com.pastimegames.shared.datatransferobjects;
 
-public record BetDto(int betPosition, CoinDto coin) {
+import java.io.Serializable;
+
+public record BetDto(int betPosition, CoinDto coin) implements Serializable {
 }
