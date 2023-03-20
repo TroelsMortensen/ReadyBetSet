@@ -1,10 +1,8 @@
 package com.pastimegames.readysetbet.server.socketserver;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
+import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.readysetbet.server.socketserver.handlers.BettingSocketHandler;
 import com.pastimegames.readysetbet.server.socketserver.handlers.LobbySocketHandler;
 import com.pastimegames.readysetbet.server.socketserver.handlers.RaceSocketHandler;
@@ -45,7 +43,7 @@ public class SocketClientHandler {
 
                 try {
                     handlers.get(handlerType).handle(commandType, request.content());
-                } catch (DomainLogicException dlex) {
+                } catch (DomainLogicException | GameLogicException dlex) {
                     output.writeObject(new SocketDto("ERROR", dlex.getMessage()));
                 }
             }
