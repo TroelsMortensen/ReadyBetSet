@@ -24,7 +24,7 @@ class BettingBoard {
 
 
     BettingBoard() {
-        for (int i = 1; i <= cells.length; i++) {
+        for (int i = 0; i < cells.length; i++) {
             cells[i].setId(i);
             betCells.add(cells[i]);
         }
