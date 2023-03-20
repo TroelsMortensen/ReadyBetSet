@@ -27,9 +27,15 @@ public class SocketClientHandler {
     public SocketClientHandler(Socket socket, GameManager gameManager) throws IOException {
         input = new ObjectInputStream(socket.getInputStream());
         output = new ObjectOutputStream(socket.getOutputStream());
-        handlers.put("lobby",new LobbySocketHandler(gameManager));
-        handlers.put("race",new RaceSocketHandler(gameManager, output));
-        handlers.put("betting", new BettingSocketHandler(gameManager, output));
+
+        addHandler(new LobbySocketHandler(gameManager));
+        addHandler(new RaceSocketHandler(gameManager, output));
+        addHandler(new BettingSocketHandler(gameManager, output));
+    }
+
+    private void addHandler(SocketHandlerBase handler) {
+        String type = handler.type();
+        handlers.put(type, handler);
     }
 
     public void handleClient() {
@@ -42,6 +48,10 @@ public class SocketClientHandler {
                 String commandType = handlerAndCommand[1];
 
                 try {
+                    if (!handlers.containsKey(handlerType)) {
+                        output.writeObject(new SocketDto("ERROR", buildHandlerNotFoundErrorMessage(handlerType)));
+                        continue;
+                    }
                     handlers.get(handlerType).handle(commandType, request.content());
                 } catch (DomainLogicException | GameLogicException dlex) {
                     output.writeObject(new SocketDto("ERROR", dlex.getMessage()));
@@ -50,6 +60,15 @@ public class SocketClientHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String buildHandlerNotFoundErrorMessage(String handlerType) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("No handler registered as '").append(handlerType).append("'. Available handlers are:\n");
+        for (String s : handlers.keySet()) {
+            sb.append(s).append("\n");
+        }
+        return sb.toString();
     }
 
 }

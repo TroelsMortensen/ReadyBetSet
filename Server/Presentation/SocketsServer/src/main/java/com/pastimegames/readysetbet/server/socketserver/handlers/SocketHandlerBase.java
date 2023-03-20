@@ -13,4 +13,8 @@ public abstract class SocketHandlerBase {
     protected abstract void setupListeners();
 
     public abstract void handle(String command, Object content);
+
+    public String type(){
+        return getClass().getSimpleName().toLowerCase().replace("socket", "").replace("handler", "");
+    }
 }
