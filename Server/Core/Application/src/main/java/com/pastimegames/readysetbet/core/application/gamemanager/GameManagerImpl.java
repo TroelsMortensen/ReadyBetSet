@@ -7,7 +7,8 @@ import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.NewRaceReady;
+import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
+import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
 import com.pastimegames.readysetbet.core.domain.events.WinningsAndPenaltiesDelivered;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
@@ -53,13 +54,14 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void prepareForRacing(RaceOptions options) {
+    public void initializeRacing(RaceOptions options) {
         this.options = options;
         if(currentGameState != GameState.IN_LOBBY){
             throw new GameLogicException("Cannot initialize a race outside of the lobby");
         }
 
         setupRace();
+        DomainEventPublisher.instance().publish(new RaceInitialized(options));
     }
 
     @Override
@@ -94,6 +96,7 @@ public class GameManagerImpl implements GameManager {
         }
         raceNumber++;
         setupRace();
+        DomainEventPublisher.instance().publish(new NextRaceReady(raceNumber));
     }
 
     private void setupRace() {
@@ -102,7 +105,6 @@ public class GameManagerImpl implements GameManager {
         currentGameState = GameState.RACE_READY;
         bookMaker = new BookMaker();
         // TODO reset noget betting mht coins?
-        DomainEventPublisher.instance().publish(new NewRaceReady(raceNumber));
     }
 
 }

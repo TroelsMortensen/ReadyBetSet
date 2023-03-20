@@ -22,7 +22,6 @@ public class Race {
 
     public void initializeRace() {
         createHorses();
-        DomainEventPublisher.instance().publish(new RaceInitialized());
     }
 
     public RaceResult getRaceResult() {

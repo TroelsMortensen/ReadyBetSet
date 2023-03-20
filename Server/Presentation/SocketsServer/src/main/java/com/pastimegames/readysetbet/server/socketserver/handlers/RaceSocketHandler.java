@@ -3,10 +3,13 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.NewRaceReady;
+import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
+import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
+import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
+import com.pastimegames.readysetbet.core.domain.events.RaceStarted;
+import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.function.Consumer;
 
@@ -20,11 +23,27 @@ public class RaceSocketHandler extends SocketHandlerBase {
     }
 
     protected void setupListeners() {
-        DomainEventPublisher.instance().subscribe(NewRaceReady.type(), (DomainEventListener<NewRaceReady>) event -> {
+        DomainEventPublisher.instance().subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
             writeToClient.accept(new SocketDto("gotoraceview", null));
         });
-    }
 
+        DomainEventPublisher.instance().subscribe(RaceStarted.type(), (DomainEventListener<RaceStarted>) event -> {
+            writeToClient.accept(new SocketDto("racestarted", null));
+        });
+
+        DomainEventPublisher.instance().subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
+            writeToClient.accept(new SocketDto("newraceready", event.raceNumber()));
+        });
+
+        DomainEventPublisher.instance().subscribe(RaceInitialized.type(), (DomainEventListener<RaceInitialized>) event -> {
+            writeToClient.accept(new SocketDto("raceinitialized", event.options()));
+        });
+
+        DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horse -> {
+            writeToClient.accept(new SocketDto("horsemoved", new HorseMovedDto(horse.horseName(), horse.currentPosition())));
+        });
+
+    }
 
     @Override
     public void handle(String command, Object content) {

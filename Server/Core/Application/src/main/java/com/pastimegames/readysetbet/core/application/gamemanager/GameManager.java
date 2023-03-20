@@ -10,7 +10,7 @@ public interface GameManager {
      * Use when lobby stuff is done, and you want to start the races
      * @param options
      */
-    void prepareForRacing(RaceOptions options);
+    void initializeRacing(RaceOptions options);
 
     /**
      * Start a race

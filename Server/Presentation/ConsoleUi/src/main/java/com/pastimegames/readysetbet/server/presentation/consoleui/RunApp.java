@@ -10,7 +10,7 @@ public class RunApp {
     public static void main(String[] args) {
         DiceRoller diceRoller = new JavaRandomDiceRoller();
         GameManager gm = new GameManagerImpl(diceRoller);
-        new ConsoleUi(gm).start();
+//        new ConsoleUi(gm).start();
     }
 
 }
