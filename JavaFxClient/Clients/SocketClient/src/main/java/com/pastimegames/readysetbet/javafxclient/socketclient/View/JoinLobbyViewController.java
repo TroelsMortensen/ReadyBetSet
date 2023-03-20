@@ -20,6 +20,7 @@ public class JoinLobbyViewController {
     public void init(ViewHandler viewHandler, JoinLobbyViewModel joinLobbyViewModel) {
         this.viewHandler = viewHandler;
         this.joinLobbyViewModel = joinLobbyViewModel;
+        joinLobbyViewModel.setViewHandler(viewHandler);
         initializeColours();
 
         textFieldPlayerName.textProperty().bindBidirectional(joinLobbyViewModel.getPlayer().nameProperty());

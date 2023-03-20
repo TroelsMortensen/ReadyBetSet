@@ -3,10 +3,8 @@ package com.pastimegames.readysetbet.javafxclient.socketclient;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewModelFactory;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
-import com.pastimegames.readysetbet.javafxclient.socketclient.Model.NetworkModel;
+import com.pastimegames.readysetbet.javafxclient.socketclient.Networking.NetworkModel;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
