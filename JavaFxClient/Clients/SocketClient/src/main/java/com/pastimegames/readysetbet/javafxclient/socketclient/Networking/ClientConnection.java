@@ -1,5 +1,6 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
+import com.pastimegames.readysetbet.javafxclient.socketclient.Model.NetworkModel;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ViewModelPlayer;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
@@ -13,8 +14,9 @@ public class ClientConnection implements Runnable{
     private ObjectInputStream inFromServer;
     private ObjectOutputStream outToServer;
     private Socket serverSocket;
+    private NetworkModel networkModel;
 
-    public ClientConnection(Socket serverSocket) {
+    public ClientConnection(Socket serverSocket, NetworkModel networkModel) {
         this.serverSocket = serverSocket;
         try {
             outToServer = new ObjectOutputStream(serverSocket.getOutputStream());
@@ -30,6 +32,12 @@ public class ClientConnection implements Runnable{
                 while(true) {
                     SocketDto response = (SocketDto) inFromServer.readObject();
                     System.out.println("Received from server: " + response.content());
+                    switch (response.commandType())
+                    {
+                        case "gotoraceview" :
+                            networkModel.gotoraceview();
+                            break;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

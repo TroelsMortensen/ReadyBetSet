@@ -19,7 +19,7 @@ public class NetworkModel implements Model{
         propertyChangeSupport = new PropertyChangeSupport(this);
 
         Socket socket = new Socket("localhost", 2910);
-        clientConnection = new ClientConnection(socket);
+        clientConnection = new ClientConnection(socket, this);
         new Thread(clientConnection).start();
     }
 
@@ -52,5 +52,9 @@ public class NetworkModel implements Model{
     @Override
     public void joinLobby(ViewModelPlayer player) {
         clientConnection.joinLobby(player);
+    }
+
+    public void gotoraceview() {
+        propertyChangeSupport.firePropertyChange("LOBBY_CLOSED", null, null);
     }
 }
