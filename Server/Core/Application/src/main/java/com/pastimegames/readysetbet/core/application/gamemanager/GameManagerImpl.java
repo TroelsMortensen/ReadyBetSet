@@ -2,6 +2,7 @@ package com.pastimegames.readysetbet.core.application.gamemanager;
 
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.entities.betting.BookMaker;
+import com.pastimegames.readysetbet.core.domain.entities.betting.Coin;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
@@ -12,6 +13,7 @@ import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
 import com.pastimegames.readysetbet.core.domain.events.WinningsAndPenaltiesDelivered;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.shared.datatransferobjects.BetDto;
+import com.pastimegames.shared.datatransferobjects.CoinDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public class GameManagerImpl implements GameManager {
@@ -84,7 +86,13 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public void placeBet(BetDto betDto) {
-
+        if(currentGameState != GameState.RACE_IN_PROGRESS) {
+            throw new GameLogicException("Cannot bet when race is not in progress.");
+        }
+        CoinDto coin = betDto.coin();
+        synchronized (bookMaker) {
+            bookMaker.betOnCell(betDto.betPosition(), new Coin(coin.value(), coin.playerName(), coin.color()));
+        }
     }
 
     @Override
