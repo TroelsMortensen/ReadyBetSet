@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
+import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.io.OutputStream;
@@ -23,7 +24,13 @@ public class BettingSocketHandler extends SocketHandlerBase {
 
     @Override
     public void handle(String command, Object content) {
+        switch (command) {
+            case "place" -> placeBet((BetDto)content);
+        }
+    }
 
+    private void placeBet(BetDto bet) {
+        gameManager.placeBet(bet);
     }
 
 }
