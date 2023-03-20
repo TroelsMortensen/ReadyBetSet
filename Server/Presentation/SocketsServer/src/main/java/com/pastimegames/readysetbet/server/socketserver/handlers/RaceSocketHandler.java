@@ -47,6 +47,7 @@ public class RaceSocketHandler extends SocketHandlerBase {
             writeToClient.accept(new SocketDto("horsemoved", new HorseMovedDto(horse.horseName(), horse.currentPosition())));
         });
 
+
     }
 
     @Override
