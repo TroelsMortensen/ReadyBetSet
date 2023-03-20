@@ -11,6 +11,7 @@ import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
 import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
 import com.pastimegames.readysetbet.core.domain.events.WinningsAndPenaltiesDelivered;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
+import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public class GameManagerImpl implements GameManager {
@@ -79,6 +80,11 @@ public class GameManagerImpl implements GameManager {
         synchronized (lobby) {
             lobby.leave(playerName);
         }
+    }
+
+    @Override
+    public void placeBet(BetDto betDto) {
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.core.application.gamemanager;
 
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
+import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public interface GameManager {
@@ -19,6 +20,7 @@ public interface GameManager {
 
     void removePlayerFromLobby(String playerName);
 
+    void placeBet(BetDto betDto);
 
     /**
      * Use when a race is finished, and you want an overview of the results.
