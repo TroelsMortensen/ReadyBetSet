@@ -3,11 +3,15 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
-public class LobbySocketHandler {
-    private GameManager gameManager;
+public class LobbySocketHandler extends SocketHandlerBase{
 
     public LobbySocketHandler(GameManager gameManager) {
-        this.gameManager = gameManager;
+        super(gameManager);
+    }
+
+    @Override
+    protected void setupListeners() {
+
     }
 
     public void handle(String actionType, Object content) {

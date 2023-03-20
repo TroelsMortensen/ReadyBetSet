@@ -9,18 +9,16 @@ import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class RaceSocketHandler {
-    private GameManager gameManager;
+public class RaceSocketHandler extends SocketHandlerBase{
     private ObjectOutputStream output;
 
     public RaceSocketHandler(GameManager gameManager, ObjectOutputStream output) {
-
-        this.gameManager = gameManager;
+        super(gameManager);
         this.output = output;
         setupListeners();
     }
 
-    private void setupListeners() {
+    protected void setupListeners() {
         DomainEventPublisher.instance().subscribe(NewRaceReady.type(), (DomainEventListener<NewRaceReady>) event -> {
             try {
                 output.writeObject(new SocketDto("gotoraceview", null));

@@ -22,21 +22,12 @@ public class SocketClientHandler {
     private final RaceSocketHandler raceHandler;
 
     private String playerName;
-//    private final GameManager gameManager;
 
     public SocketClientHandler(Socket socket, GameManager gameManager) throws IOException {
-        setupListeners();
-//        this.gameManager = gameManager;
         input = new ObjectInputStream(socket.getInputStream());
         output = new ObjectOutputStream(socket.getOutputStream());
         lobbyHandler = new LobbySocketHandler(gameManager);
         raceHandler = new RaceSocketHandler(gameManager, output);
-    }
-
-    private void setupListeners() {
-        DomainEventPublisher.instance().subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) evt -> {
-            //output.writeObject();
-        });
     }
 
     public void handleClient() {
