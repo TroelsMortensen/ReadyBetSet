@@ -63,7 +63,7 @@ class BettingBoard {
         throw new RuntimeException("Failure here");
     }
 
-    public String betCellIdPlacement(int id) {
+    public String betCellIdToPlacement(int id) {
         int place = id % 8;
         if(place <= 2) return "SHOW";
         if(place <= 4) return "PLACE";

@@ -51,7 +51,7 @@ public class BookMaker {
             }
 
             String horseName = bettingBoard.betCellIdToHorseName(betCell.id());
-            String placement = bettingBoard.betCellIdPlacement(betCell.id());
+            String placement = bettingBoard.betCellIdToPlacement(betCell.id());
             if (!isWinningBet(horseName, placement, raceResult)) {
                 continue;
             }
