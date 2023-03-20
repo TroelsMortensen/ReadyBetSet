@@ -4,6 +4,7 @@ import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobby;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.Model.Model;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -32,7 +33,7 @@ public class ServerLobbyViewModel
   private void playerJoin(PropertyChangeEvent event)
   {
     String name = ((PlayerJoinedLobby) event.getNewValue()).name();
-    players.add(name);
+    Platform.runLater( ()-> players.add(name) );
   }
 
   public ObservableList<String> getPlayers()
