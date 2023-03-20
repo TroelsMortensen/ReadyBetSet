@@ -1,14 +1,11 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
-import com.pastimegames.readysetbet.javafxclient.socketclient.Networking.ClientConnection;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ViewModelPlayer;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.net.Socket;
 
