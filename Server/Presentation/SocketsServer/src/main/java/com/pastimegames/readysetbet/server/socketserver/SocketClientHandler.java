@@ -1,37 +1,41 @@
 package com.pastimegames.readysetbet.server.socketserver;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
-import com.pastimegames.readysetbet.server.socketserver.handlers.LobbyHandler;
+import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
+import com.pastimegames.readysetbet.server.socketserver.handlers.BettingSocketHandler;
+import com.pastimegames.readysetbet.server.socketserver.handlers.LobbySocketHandler;
+import com.pastimegames.readysetbet.server.socketserver.handlers.RaceSocketHandler;
+import com.pastimegames.readysetbet.server.socketserver.handlers.SocketHandlerBase;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SocketClientHandler {
 
     private final ObjectInputStream input;
     private final ObjectOutputStream output;
 
+    private Map<String, SocketHandlerBase> handlers = new HashMap<>();
     private String playerName;
-    private final GameManager gameManager;
 
     public SocketClientHandler(Socket socket, GameManager gameManager) throws IOException {
-        setupListeners();
-        this.gameManager = gameManager;
         input = new ObjectInputStream(socket.getInputStream());
         output = new ObjectOutputStream(socket.getOutputStream());
+
+        addHandler(new LobbySocketHandler(gameManager, this::writeToClient));
+        addHandler(new RaceSocketHandler(gameManager, output, this::writeToClient));
+        addHandler(new BettingSocketHandler(gameManager, output, this::writeToClient));
     }
 
-    private void setupListeners() {
-        DomainEventPublisher.instance().subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) evt -> {
-            //output.writeObject();
-        });
+    private void addHandler(SocketHandlerBase handler) {
+        String type = handler.type();
+        handlers.put(type, handler);
     }
 
     public void handleClient() {
@@ -39,18 +43,17 @@ public class SocketClientHandler {
             while (true) {
                 SocketDto request = (SocketDto) input.readObject();
                 String uri = request.commandType().toLowerCase();
-                String handlerType = uri.split("/")[0];
-                String actionType = uri.split("/")[1];
+                String[] handlerAndCommand = uri.split("/");
+                String handlerType = handlerAndCommand[0];
+                String commandType = handlerAndCommand[1];
 
                 try {
-                    switch (handlerType) {
-                        case "lobby": {
-                            new LobbyHandler(input).handle(actionType, request.content(), gameManager);
-                            break;
-                        }
-
+                    if (!handlers.containsKey(handlerType)) {
+                        output.writeObject(new SocketDto("ERROR", buildHandlerNotFoundErrorMessage(handlerType)));
+                        continue;
                     }
-                } catch (DomainLogicException dlex) {
+                    handlers.get(handlerType).handle(commandType, request.content());
+                } catch (DomainLogicException | GameLogicException dlex) {
                     output.writeObject(new SocketDto("ERROR", dlex.getMessage()));
                 }
             }
@@ -59,4 +62,23 @@ public class SocketClientHandler {
         }
     }
 
+    private String buildHandlerNotFoundErrorMessage(String handlerType) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("No handler registered as '").append(handlerType).append("'. Available handlers are:\n");
+        for (String s : handlers.keySet()) {
+            sb.append(s).append("\n");
+        }
+        return sb.toString();
+    }
+
+
+    private void writeToClient(SocketDto dto) {
+        try {
+            synchronized (output) {
+                output.writeObject(dto);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
