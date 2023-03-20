@@ -72,9 +72,11 @@ public class SocketClientHandler {
     }
 
 
-    private void writeToClient(SocketDto dto){
+    private void writeToClient(SocketDto dto) {
         try {
-            output.writeObject(dto);
+            synchronized (output) {
+                output.writeObject(dto);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
