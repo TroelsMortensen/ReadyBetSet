@@ -2,11 +2,14 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
+
+import java.util.function.Consumer;
 
 public class LobbySocketHandler extends SocketHandlerBase{
 
-    public LobbySocketHandler(GameManager gameManager) {
-        super(gameManager);
+    public LobbySocketHandler(GameManager gameManager, Consumer<SocketDto> writeToClient) {
+        super(gameManager, writeToClient);
     }
 
     @Override

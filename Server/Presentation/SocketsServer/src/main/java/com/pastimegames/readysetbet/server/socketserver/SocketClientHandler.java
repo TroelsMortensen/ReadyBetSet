@@ -28,9 +28,9 @@ public class SocketClientHandler {
         input = new ObjectInputStream(socket.getInputStream());
         output = new ObjectOutputStream(socket.getOutputStream());
 
-        addHandler(new LobbySocketHandler(gameManager));
-        addHandler(new RaceSocketHandler(gameManager, output));
-        addHandler(new BettingSocketHandler(gameManager, output));
+        addHandler(new LobbySocketHandler(gameManager, this::writeToClient));
+        addHandler(new RaceSocketHandler(gameManager, output, this::writeToClient));
+        addHandler(new BettingSocketHandler(gameManager, output, this::writeToClient));
     }
 
     private void addHandler(SocketHandlerBase handler) {
@@ -71,4 +71,12 @@ public class SocketClientHandler {
         return sb.toString();
     }
 
+
+    private void writeToClient(SocketDto dto){
+        try {
+            output.writeObject(dto);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

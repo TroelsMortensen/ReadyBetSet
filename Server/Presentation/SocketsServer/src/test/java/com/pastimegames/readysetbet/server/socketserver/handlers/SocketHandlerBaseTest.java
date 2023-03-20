@@ -9,7 +9,7 @@ class SocketHandlerBaseTest {
 
     @Test
     public void testTypeMethod() {
-        SocketHandlerBase base = new LobbySocketHandler(null);
+        SocketHandlerBase base = new LobbySocketHandler(null, null);
         System.out.println(base.type());
     }
 }
