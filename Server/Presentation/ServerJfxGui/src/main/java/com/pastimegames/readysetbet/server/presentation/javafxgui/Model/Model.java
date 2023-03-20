@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.server.presentation.javafxgui.Model;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
@@ -30,6 +31,15 @@ public class Model implements PropertyChangeSubject
   public void playerLeave(String name)
   {
     propertyChangeSupport.firePropertyChange("PLAYER_LEAVE", null, name);
+  }
+
+  public void initializeRace(RaceOptions raceOptions)
+  {
+    gameManager.prepareForRacing(raceOptions);
+  }
+
+  public void startRace() {
+    gameManager.startRace();
   }
 
   @Override
@@ -69,4 +79,5 @@ public class Model implements PropertyChangeSubject
       propertyChangeSupport.firePropertyChange("PLAYER_LEAVE", null, playerLeftLobby);
     });
   }
+
 }

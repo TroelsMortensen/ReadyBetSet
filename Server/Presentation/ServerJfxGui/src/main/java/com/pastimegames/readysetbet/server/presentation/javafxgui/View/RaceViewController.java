@@ -4,6 +4,7 @@ import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.View
 import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.RaceViewModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -15,6 +16,8 @@ public class RaceViewController
 
   @FXML
   private GridPane gridRace;
+  @FXML
+  private Button buttonStartRace;
 
   private RaceViewModel raceViewModel;
   private List<Label> horsesAsLabels;
@@ -22,6 +25,7 @@ public class RaceViewController
   public void init(RaceViewModel raceViewModel)
   {
     this.raceViewModel = raceViewModel;
+    buttonStartRace.disableProperty().bind(raceViewModel.getStartButtonProperty());
 
     initializeUIHorses();
     initializeGridPane();
@@ -82,6 +86,12 @@ public class RaceViewController
     horses.add(horse10);
     horses.add(horse1112);
     horsesAsLabels = horses;
+  }
+
+  @FXML
+  private void onButtonStartRace()
+  {
+    raceViewModel.startRace();
   }
 
 }

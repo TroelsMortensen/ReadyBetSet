@@ -1,5 +1,6 @@
 package com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel;
 
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobby;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.Model.Model;
@@ -37,5 +38,10 @@ public class ServerLobbyViewModel
   public ObservableList<String> getPlayers()
   {
     return players;
+  }
+
+  public void initializeRace()
+  {
+    model.initializeRace(new RaceOptions());
   }
 }

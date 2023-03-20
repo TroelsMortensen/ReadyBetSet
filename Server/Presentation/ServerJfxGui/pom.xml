@@ -14,20 +14,8 @@
     <artifactId>ServerJfxGui</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.pastimegames.readysetbet.server.infrastructure.javarandomdicerolling</groupId>
-            <artifactId>JavaRandomDiceRolling</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.pastimegames.readysetbet.server.core.application</groupId>
             <artifactId>Application</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.pastimegames.readysetbet.server.presentation.consoleui</groupId>
-            <artifactId>ConsoleUi</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

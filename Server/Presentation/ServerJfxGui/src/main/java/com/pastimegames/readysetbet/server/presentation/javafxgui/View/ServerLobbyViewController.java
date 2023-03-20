@@ -13,16 +13,19 @@ public class ServerLobbyViewController
   private ListView<String> playerList;
 
   private ViewHandler viewHandler;
+  private ServerLobbyViewModel serverLobbyViewModel;
 
   public void init(ViewHandler viewHandler, ServerLobbyViewModel serverLobbyViewModel)
   {
     this.viewHandler = viewHandler;
+    this.serverLobbyViewModel = serverLobbyViewModel;
     playerList.setItems(serverLobbyViewModel.getPlayers());
   }
 
   public void onButtonStartRace(ActionEvent actionEvent)
   {
-
     viewHandler.openRaceView();
+    serverLobbyViewModel.initializeRace();
   }
+
 }

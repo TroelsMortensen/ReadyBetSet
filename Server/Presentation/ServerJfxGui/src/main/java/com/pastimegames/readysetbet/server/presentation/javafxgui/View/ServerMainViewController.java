@@ -15,8 +15,6 @@ public class ServerMainViewController
 
   public void onButtonStart(ActionEvent actionEvent)
   {
-
       viewHandler.openViewLobby();
-
   }
 }
