@@ -6,24 +6,24 @@ import com.pastimegames.shared.datatransferobjects.PlayerDto;
 import java.io.ObjectInputStream;
 
 public class LobbyHandler {
-    private final ObjectInputStream input;
+    private GameManager gameManager;
 
-    public LobbyHandler(ObjectInputStream input) {
-        this.input = input;
+    public LobbyHandler(GameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
-    public void handle(String actionType, Object content, GameManager gameManager) {
+    public void handle(String actionType, Object content) {
         switch (actionType) {
-            case "join" -> join((PlayerDto) content, gameManager);
-            case "leave" -> leave((PlayerDto) content, gameManager);
+            case "join" -> join((PlayerDto) content);
+            case "leave" -> leave((PlayerDto) content);
         }
     }
 
-    private void leave(PlayerDto content, GameManager gameManager) {
+    private void leave(PlayerDto content) {
         gameManager.removePlayerFromLobby(content.playerName());
     }
 
-    private void join(PlayerDto playerDto, GameManager gameManager)  {
+    private void join(PlayerDto playerDto)  {
         gameManager.joinPlayer(playerDto);
     }
 }

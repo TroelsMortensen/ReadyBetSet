@@ -6,6 +6,7 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublis
 import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
 import com.pastimegames.readysetbet.server.socketserver.handlers.LobbyHandler;
+import com.pastimegames.readysetbet.server.socketserver.handlers.RaceHandler;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.io.IOException;
@@ -17,15 +18,19 @@ public class SocketClientHandler {
 
     private final ObjectInputStream input;
     private final ObjectOutputStream output;
+    private final LobbyHandler lobbyHandler;
+    private final RaceHandler raceHandler;
 
     private String playerName;
-    private final GameManager gameManager;
+//    private final GameManager gameManager;
 
     public SocketClientHandler(Socket socket, GameManager gameManager) throws IOException {
         setupListeners();
-        this.gameManager = gameManager;
+//        this.gameManager = gameManager;
         input = new ObjectInputStream(socket.getInputStream());
         output = new ObjectOutputStream(socket.getOutputStream());
+        lobbyHandler = new LobbyHandler(gameManager);
+        raceHandler = new RaceHandler(gameManager, output);
     }
 
     private void setupListeners() {
@@ -45,7 +50,7 @@ public class SocketClientHandler {
                 try {
                     switch (handlerType) {
                         case "lobby": {
-                            new LobbyHandler(input).handle(actionType, request.content(), gameManager);
+                            lobbyHandler.handle(actionType, request.content());
                             break;
                         }
 

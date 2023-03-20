@@ -97,11 +97,11 @@ public class GameManagerImpl implements GameManager {
     }
 
     private void setupRace() {
-        System.out.println("Race initialized");
         race = new Race();
         race.initializeRace();
         currentGameState = GameState.RACE_READY;
         bookMaker = new BookMaker();
+        // TODO reset noget betting mht coins?
         DomainEventPublisher.instance().publish(new NewRaceReady(raceNumber));
     }
 
