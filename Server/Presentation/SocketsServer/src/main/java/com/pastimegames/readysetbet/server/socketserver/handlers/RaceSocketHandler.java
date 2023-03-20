@@ -9,11 +9,11 @@ import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class RaceHandler {
+public class RaceSocketHandler {
     private GameManager gameManager;
     private ObjectOutputStream output;
 
-    public RaceHandler(GameManager gameManager, ObjectOutputStream output) {
+    public RaceSocketHandler(GameManager gameManager, ObjectOutputStream output) {
 
         this.gameManager = gameManager;
         this.output = output;

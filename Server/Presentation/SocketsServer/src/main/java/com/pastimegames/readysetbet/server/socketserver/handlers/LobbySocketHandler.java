@@ -3,12 +3,10 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
-import java.io.ObjectInputStream;
-
-public class LobbyHandler {
+public class LobbySocketHandler {
     private GameManager gameManager;
 
-    public LobbyHandler(GameManager gameManager) {
+    public LobbySocketHandler(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
