@@ -103,7 +103,6 @@ public class GameManagerImpl implements GameManager {
         currentGameState = GameState.RACE_READY;
         bookMaker = new BookMaker();
         DomainEventPublisher.instance().publish(new NewRaceReady(raceNumber));
-
     }
 
 }

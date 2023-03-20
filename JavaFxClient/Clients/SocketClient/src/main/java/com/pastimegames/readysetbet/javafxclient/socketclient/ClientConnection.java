@@ -1,7 +1,6 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient;
 
-import com.pastimegames.shared.datatransferobjects.socketmessages.Request;
-import com.pastimegames.shared.datatransferobjects.socketmessages.Response;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.io.*;
 import java.net.Socket;
@@ -27,8 +26,8 @@ public class ClientConnection implements Runnable{
     public void run() {
             try {
                 while(true) {
-                    Response response = (Response) inFromServer.readObject();
-                    System.out.println("Received from server: " + response.isSuccess());
+                    SocketDto response = (SocketDto) inFromServer.readObject();
+                    System.out.println("Received from server: " + response.content());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -37,7 +36,7 @@ public class ClientConnection implements Runnable{
             }
     }
 
-    public void sendRequest(Request request)
+    public void sendRequest(SocketDto request)
     {
         try {
             outToServer.writeObject(request);

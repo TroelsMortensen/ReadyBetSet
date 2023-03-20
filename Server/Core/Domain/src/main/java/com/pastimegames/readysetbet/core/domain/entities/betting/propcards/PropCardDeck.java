@@ -8,7 +8,6 @@ import java.util.List;
 
 public class PropCardDeck {
 
-
     public static List<PropCard> cards = Arrays.asList(
 
             /* PurpleAheadOfAllBlues */

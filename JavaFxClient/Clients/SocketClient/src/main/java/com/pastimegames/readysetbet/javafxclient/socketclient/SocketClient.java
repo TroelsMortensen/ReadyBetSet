@@ -3,8 +3,9 @@ package com.pastimegames.readysetbet.javafxclient.socketclient;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
-import com.pastimegames.shared.datatransferobjects.socketmessages.Request;
+
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 public class SocketClient {
 
@@ -18,12 +19,12 @@ public class SocketClient {
             String stringToSend = keyboard.nextLine();
             if(stringToSend.equals("join"))
             {
-                Request joinLobbyRequest = new Request("JoinLobby", new PlayerDto("NeoGeo", "purple"));
+                SocketDto joinLobbyRequest = new SocketDto("JoinLobby", new PlayerDto("NeoGeo", "purple"));
                 clientConnection.sendRequest(joinLobbyRequest);
             }
             if(stringToSend.equals("leave"))
             {
-                Request leaveLobbyRequest = new Request("LeaveLobby", new PlayerDto("NeoGeo", "purple"));
+                SocketDto leaveLobbyRequest = new SocketDto("LeaveLobby", new PlayerDto("NeoGeo", "purple"));
                 clientConnection.sendRequest(leaveLobbyRequest);
             }
         }

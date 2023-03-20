@@ -1,12 +1,16 @@
 package com.pastimegames.readysetbet.server.socketserver;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
+import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
 import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
-import com.pastimegames.shared.datatransferobjects.PlayerDto;
-import com.pastimegames.shared.datatransferobjects.socketmessages.Request;
-import com.pastimegames.shared.datatransferobjects.socketmessages.Response;
+import com.pastimegames.readysetbet.server.socketserver.handlers.LobbyHandler;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class SocketClientHandler {
@@ -25,28 +29,29 @@ public class SocketClientHandler {
     }
 
     private void setupListeners() {
-        // TODO setup listeners her.
+        DomainEventPublisher.instance().subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) evt -> {
+            //output.writeObject();
+        });
     }
 
     public void handleClient() {
         try {
             while (true) {
-                Request request = (Request) input.readObject();
-                try {
+                SocketDto request = (SocketDto) input.readObject();
+                String uri = request.commandType().toLowerCase();
+                String handlerType = uri.split("/")[0];
+                String actionType = uri.split("/")[1];
 
-                    switch (request.getCommandType()) {
-                        case "JoinLobby": {
-                            joinLobby(request);
+                try {
+                    switch (handlerType) {
+                        case "lobby": {
+                            new LobbyHandler(input).handle(actionType, request.content(), gameManager);
                             break;
                         }
-                        case "LeaveLobby": {
-                            leaveLobby(request);
-                            break;
-                        }
+
                     }
                 } catch (DomainLogicException dlex) {
-                    Response failure = Response.Failure("Failure", dlex.getMessage());
-                    output.writeObject(failure);
+                    output.writeObject(new SocketDto("ERROR", dlex.getMessage()));
                 }
             }
         } catch (Exception e) {
@@ -54,22 +59,4 @@ public class SocketClientHandler {
         }
     }
 
-    private void leaveLobby(Request request) throws IOException {
-        PlayerDto playerDto = (PlayerDto) request.getContent();
-        playerName = playerDto.playerName();
-        gameManager.removePlayerFromLobby(playerName);
-        writeBackSuccessResponse(Response.Success(request.getCommandType(), "Success"));
-    }
-
-    private void joinLobby(Request request) throws IOException {
-        PlayerDto playerDto = (PlayerDto) request.getContent();
-        playerName = playerDto.playerName();
-        gameManager.joinPlayer(playerDto);
-        writeBackSuccessResponse(Response.Success(request.getCommandType(), "Success"));
-    }
-
-    private void writeBackSuccessResponse(Response request) throws IOException {
-        Response success = request;
-        output.writeObject(success);
-    }
 }
