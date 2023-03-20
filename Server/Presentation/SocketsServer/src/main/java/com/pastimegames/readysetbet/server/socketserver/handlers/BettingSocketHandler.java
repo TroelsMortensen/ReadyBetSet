@@ -18,4 +18,10 @@ public class BettingSocketHandler extends SocketHandlerBase {
     protected void setupListeners() {
 
     }
+
+    @Override
+    public void handle(String command, Object content) {
+
+    }
+
 }

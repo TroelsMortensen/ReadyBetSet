@@ -11,4 +11,6 @@ public abstract class SocketHandlerBase {
     }
 
     protected abstract void setupListeners();
+
+    public abstract void handle(String command, Object content);
 }
