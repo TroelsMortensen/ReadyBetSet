@@ -1,4 +1,4 @@
 package com.pastimegames.shared.datatransferobjects;
 
-public record CoinDto(int value, String playerName) {
+public record CoinDto(int value, String playerName, String color) {
 }
