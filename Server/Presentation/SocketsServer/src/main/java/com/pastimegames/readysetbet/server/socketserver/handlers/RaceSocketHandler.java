@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
@@ -8,6 +9,7 @@ import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
 import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
 import com.pastimegames.readysetbet.core.domain.events.RaceStarted;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
+import com.pastimegames.shared.datatransferobjects.RaceOptionsDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.io.ObjectOutputStream;
@@ -36,7 +38,9 @@ public class RaceSocketHandler extends SocketHandlerBase {
         });
 
         DomainEventPublisher.instance().subscribe(RaceInitialized.type(), (DomainEventListener<RaceInitialized>) event -> {
-            writeToClient.accept(new SocketDto("raceinitialized", event.options()));
+            RaceOptions op = event.options();
+            RaceOptionsDto options = new RaceOptionsDto(op.numberOfRaces(), op.moveTickTime(), op.numberOfAllowedBidsPerCell());
+            writeToClient.accept(new SocketDto("raceinitialized", options));
         });
 
         DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horse -> {
