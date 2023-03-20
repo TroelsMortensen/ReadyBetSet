@@ -3,6 +3,7 @@ package com.pastimegames.readysetbet.server.servermain;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManagerImpl;
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
+import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.server.infrastructure.javarandomdicerolling.JavaRandomDiceRoller;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.Core.ViewHandler;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.Core.ViewModelFactory;
@@ -31,6 +32,10 @@ public class RunServer extends Application {
         ViewModelFactory viewModelFactory = new ViewModelFactory(model);
         ViewHandler viewHandler = new ViewHandler(viewModelFactory);
         viewHandler.start(primaryStage);
+
+        //skip straight to race
+        model.initializeRace(new RaceOptions());
+        model.startRace();
     }
 
     private void startSocketServer(GameManager gameManager) {
