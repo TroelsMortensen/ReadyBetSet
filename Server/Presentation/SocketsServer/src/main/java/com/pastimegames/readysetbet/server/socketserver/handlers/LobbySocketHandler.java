@@ -21,6 +21,7 @@ public class LobbySocketHandler extends SocketHandlerBase{
         switch (actionType) {
             case "join" -> join((PlayerDto) content);
             case "leave" -> leave((PlayerDto) content);
+            default -> noEndPointFound(actionType);
         }
     }
 

@@ -49,7 +49,7 @@ public class SocketClientHandler {
 
                 try {
                     if (!handlers.containsKey(handlerType)) {
-                        output.writeObject(new SocketDto("ERROR", buildHandlerNotFoundErrorMessage(handlerType)));
+                        output.writeObject(new SocketDto("ERROR", constructHandlerNotFoundErrorMessage(handlerType)));
                         continue;
                     }
                     handlers.get(handlerType).handle(commandType, request.content());
@@ -62,7 +62,7 @@ public class SocketClientHandler {
         }
     }
 
-    private String buildHandlerNotFoundErrorMessage(String handlerType) {
+    private String constructHandlerNotFoundErrorMessage(String handlerType) {
         StringBuilder sb = new StringBuilder();
         sb.append("No handler registered as '").append(handlerType).append("'. Available handlers are:\n");
         for (String s : handlers.keySet()) {

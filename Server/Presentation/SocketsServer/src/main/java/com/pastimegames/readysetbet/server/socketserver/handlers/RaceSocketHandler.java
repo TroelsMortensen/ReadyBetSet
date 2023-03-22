@@ -52,6 +52,8 @@ public class RaceSocketHandler extends SocketHandlerBase {
 
     @Override
     public void handle(String command, Object content) {
-
+        switch (command){
+            default -> noEndPointFound(command);
+        }
     }
 }
