@@ -3,15 +3,11 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
-import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
-import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
-import com.pastimegames.readysetbet.core.domain.events.RaceStarted;
+import com.pastimegames.readysetbet.core.domain.events.*;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
-import java.io.ObjectOutputStream;
 import java.util.function.Consumer;
 
 public class RaceSocketHandler extends SocketHandlerBase {
@@ -23,7 +19,7 @@ public class RaceSocketHandler extends SocketHandlerBase {
 
     protected void setupListeners() {
         DomainEventPublisher.instance().subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Race.GO_TO_RACE_VIEW, null));
+            writeToClient.accept(new SocketDto(SocketMessages.Events.Result.RACE_VIEW_SELECTED, null));
         });
 
         DomainEventPublisher.instance().subscribe(RaceStarted.type(), (DomainEventListener<RaceStarted>) event -> {
@@ -39,11 +35,11 @@ public class RaceSocketHandler extends SocketHandlerBase {
         DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) event -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Race.RACE_FINISHED, event.winnerHorseName()));
         });
-
     }
 
     @Override
     public void handle(String command, Object content) {
+
         switch (command) {
             default -> noEndPointFound(command);
         }

@@ -5,12 +5,12 @@ public class Player {
     private String colorCode;
 
 
-    private int saldo = 0;
+    private int balance = 0;
 
     public Player(String name, String colorCode) {
         this.name = name;
         this.colorCode = colorCode;
-        saldo = 0;
+        balance = 0;
     }
 
     public String name(){
@@ -22,11 +22,15 @@ public class Player {
     }
 
     public void addWinning(int amount){
-        saldo += amount;
+        balance += amount;
     }
 
     public void applyPenalty(int amount){
-        saldo -= amount;
-        saldo = Math.max(saldo, 0);
+        balance -= amount;
+        balance = Math.max(balance, 0);
+    }
+
+    public int balance() {
+        return balance;
     }
 }

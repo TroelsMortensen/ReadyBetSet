@@ -9,7 +9,6 @@ public class SocketMessages {
             public static final String HORSE_MOVED = "horse_moved";
             public static final String RACE_FINISHED = "race_finished";
             public static final String RACE_STARTED = "race_started";
-            public static final String GO_TO_RACE_VIEW = "go_to_race_view";
             public static final String NEXT_RACE_READY = "next_race_ready";
         }
 
@@ -22,6 +21,11 @@ public class SocketMessages {
             public static final String PLAYER_JOINED = "player_joined";
             public static final String PLAYER_LEFT = "player_left";
             public static final String LOBBY_FINALIZED = "lobby_finalized";
+        }
+
+        public static class Result {
+            public static final String RESULTS_CALCULATED = "results_calculated";
+            public static final String RACE_VIEW_SELECTED = "go_to_race_view";
         }
 
     }

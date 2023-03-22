@@ -22,7 +22,7 @@ public class BookMaker {
     public void deliverWinnings(RaceResult raceResult, Lobby lobby) {
 
         List<Winning> winnings = getWinningBets(raceResult);
-        deliverPayoutToPlayer(winnings, lobby);
+        deliverPayoutToPlayers(winnings, lobby);
     }
 
     public void deliverPenalties(RaceResult raceResult, Lobby lobby) {
@@ -31,10 +31,11 @@ public class BookMaker {
     }
 
     private List<Penalty> getPenalties(RaceResult raceResult) {
+        // TODO do this stuff
         return null;
     }
 
-    private void deliverPayoutToPlayer(List<Winning> winnings, Lobby lobby) {
+    private void deliverPayoutToPlayers(List<Winning> winnings, Lobby lobby) {
         for (Winning winning : winnings) {
             Player player = lobby.getPlayer(winning.playerName);
             player.addWinning(winning.payout());

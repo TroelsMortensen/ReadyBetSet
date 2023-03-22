@@ -10,11 +10,13 @@ import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
 import com.pastimegames.readysetbet.core.domain.events.LobbyFinalized;
-import com.pastimegames.readysetbet.core.domain.events.WinningsAndPenaltiesDelivered;
+import com.pastimegames.readysetbet.core.domain.events.ResultsCalculated;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.CoinDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
+
+import java.util.Map;
 
 public class GameManagerImpl implements GameManager {
 
@@ -99,8 +101,8 @@ public class GameManagerImpl implements GameManager {
     public void displayResults() {
         bookMaker.deliverWinnings(race.getRaceResult(), lobby);
         bookMaker.deliverPenalties(race.getRaceResult(), lobby);
-
-        DomainEventPublisher.instance().publish(new WinningsAndPenaltiesDelivered());
+        Map<String, Integer> saldos = lobby.getPlayerBalances();
+        DomainEventPublisher.instance().publish(new ResultsCalculated(saldos));
     }
 
     @Override

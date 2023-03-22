@@ -7,6 +7,8 @@ import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Lobby {
     private final List<Player> lobbyPlayerList = new ArrayList<>();
@@ -30,5 +32,9 @@ public class Lobby {
 
     public Player getPlayer(String playerName) {
         return lobbyPlayerList.stream().filter(p -> p.name().equals(playerName)).findFirst().get();
+    }
+
+    public Map<String, Integer> getPlayerBalances() {
+        return lobbyPlayerList.stream().collect(Collectors.toMap(Player::name, Player::balance));
     }
 }
