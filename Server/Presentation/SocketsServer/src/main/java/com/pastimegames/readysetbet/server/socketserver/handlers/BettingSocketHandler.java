@@ -1,7 +1,11 @@
 package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
+import com.pastimegames.readysetbet.core.domain.events.BetPlacedOnCell;
 import com.pastimegames.shared.datatransferobjects.BetDto;
+import com.pastimegames.shared.datatransferobjects.BetPlacedOnCellDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.io.OutputStream;
@@ -19,17 +23,26 @@ public class BettingSocketHandler extends SocketHandlerBase {
 
     @Override
     protected void setupListeners() {
-
+        DomainEventPublisher.instance().subscribe(BetPlacedOnCell.type(), (DomainEventListener<BetPlacedOnCell>) event -> {
+            BetPlacedOnCellDto content = new BetPlacedOnCellDto(event.index(), event.coinValue(), event.owningPlayer(), event.color());
+            writeToClient.accept(new SocketDto("BetPlacedOnCell", content));
+        });
     }
 
     @Override
     public void handle(String command, Object content) {
         switch (command) {
-            case "place" -> placeBet((BetDto)content);
+            case "cellbet" -> placeCellBet((BetDto)content);
+            case "propcardbet" -> placePropCardBet((BetDto) content);
+
         }
     }
 
-    private void placeBet(BetDto bet) {
+    private void placePropCardBet(BetDto content) {
+
+    }
+
+    private void placeCellBet(BetDto bet) {
         gameManager.placeBet(bet);
     }
 
