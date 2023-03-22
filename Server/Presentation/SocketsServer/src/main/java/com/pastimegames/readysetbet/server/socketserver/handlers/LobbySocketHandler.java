@@ -6,7 +6,7 @@ import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
 import java.util.function.Consumer;
 
-public class LobbySocketHandler extends SocketHandlerBase{
+public class LobbySocketHandler extends SocketHandlerBase {
 
     public LobbySocketHandler(GameManager gameManager, Consumer<SocketDto> writeToClient) {
         super(gameManager, writeToClient);
@@ -21,6 +21,7 @@ public class LobbySocketHandler extends SocketHandlerBase{
         switch (actionType) {
             case "join" -> join((PlayerDto) content);
             case "leave" -> leave((PlayerDto) content);
+            default -> noEndPointFound(actionType);
         }
     }
 
@@ -28,7 +29,7 @@ public class LobbySocketHandler extends SocketHandlerBase{
         gameManager.removePlayerFromLobby(content.playerName());
     }
 
-    private void join(PlayerDto playerDto)  {
+    private void join(PlayerDto playerDto) {
         gameManager.joinPlayer(playerDto);
     }
 }

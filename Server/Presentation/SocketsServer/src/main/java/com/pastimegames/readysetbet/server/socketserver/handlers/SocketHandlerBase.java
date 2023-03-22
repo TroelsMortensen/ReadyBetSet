@@ -17,6 +17,11 @@ public abstract class SocketHandlerBase {
 
     protected abstract void setupListeners();
 
+    protected void noEndPointFound(String command) {
+        SocketDto error = new SocketDto("ERROR", "No endpoint matching " + command);
+        writeToClient.accept(error);
+    }
+
     public abstract void handle(String command, Object content);
 
     public String type(){

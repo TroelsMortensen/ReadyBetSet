@@ -34,9 +34,11 @@ public class BettingSocketHandler extends SocketHandlerBase {
         switch (command) {
             case "cellbet" -> placeCellBet((BetDto)content);
             case "propcardbet" -> placePropCardBet((BetDto) content);
-
+            default -> noEndPointFound(command);
         }
     }
+
+
 
     private void placePropCardBet(BetDto content) {
 
