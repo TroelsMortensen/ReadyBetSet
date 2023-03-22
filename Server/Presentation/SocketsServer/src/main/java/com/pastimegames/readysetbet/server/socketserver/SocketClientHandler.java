@@ -8,6 +8,7 @@ import com.pastimegames.readysetbet.server.socketserver.handlers.LobbySocketHand
 import com.pastimegames.readysetbet.server.socketserver.handlers.RaceSocketHandler;
 import com.pastimegames.readysetbet.server.socketserver.handlers.SocketHandlerBase;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,13 +30,12 @@ public class SocketClientHandler {
         output = new ObjectOutputStream(socket.getOutputStream());
 
         addHandler(new LobbySocketHandler(gameManager, this::writeToClient));
-        addHandler(new RaceSocketHandler(gameManager, output, this::writeToClient));
-        addHandler(new BettingSocketHandler(gameManager, output, this::writeToClient));
+        addHandler(new RaceSocketHandler(gameManager, this::writeToClient));
+        addHandler(new BettingSocketHandler(gameManager, this::writeToClient));
     }
 
     private void addHandler(SocketHandlerBase handler) {
-        String type = handler.type();
-        handlers.put(type, handler);
+        handlers.put(handler.type(), handler);
     }
 
     public void handleClient() {
@@ -45,16 +45,15 @@ public class SocketClientHandler {
                 String uri = request.commandType().toLowerCase();
                 String[] handlerAndCommand = uri.split("/");
                 String handlerType = handlerAndCommand[0];
-                String commandType = handlerAndCommand[1];
 
                 try {
                     if (!handlers.containsKey(handlerType)) {
-                        output.writeObject(new SocketDto("ERROR", constructHandlerNotFoundErrorMessage(handlerType)));
+                        output.writeObject(new SocketDto(SocketMessages.Events.ERROR, constructHandlerNotFoundErrorMessage(handlerType)));
                         continue;
                     }
-                    handlers.get(handlerType).handle(commandType, request.content());
+                    handlers.get(handlerType).handle(uri, request.content());
                 } catch (DomainLogicException | GameLogicException dlex) {
-                    output.writeObject(new SocketDto("ERROR", dlex.getMessage()));
+                    output.writeObject(new SocketDto(SocketMessages.Events.ERROR, dlex.getMessage()));
                 }
             }
         } catch (Exception e) {

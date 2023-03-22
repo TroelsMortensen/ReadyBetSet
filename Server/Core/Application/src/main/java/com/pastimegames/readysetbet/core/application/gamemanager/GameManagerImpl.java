@@ -9,7 +9,7 @@ import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
-import com.pastimegames.readysetbet.core.domain.events.RaceInitialized;
+import com.pastimegames.readysetbet.core.domain.events.LobbyFinalized;
 import com.pastimegames.readysetbet.core.domain.events.WinningsAndPenaltiesDelivered;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.shared.datatransferobjects.BetDto;
@@ -64,7 +64,7 @@ public class GameManagerImpl implements GameManager {
         }
 
         setupRace();
-        DomainEventPublisher.instance().publish(new RaceInitialized(options));
+        DomainEventPublisher.instance().publish(new LobbyFinalized(options));
     }
 
     @Override

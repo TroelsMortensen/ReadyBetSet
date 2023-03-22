@@ -2,6 +2,7 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
 import java.util.function.Consumer;
 
@@ -18,13 +19,11 @@ public abstract class SocketHandlerBase {
     protected abstract void setupListeners();
 
     protected void noEndPointFound(String command) {
-        SocketDto error = new SocketDto("ERROR", "No endpoint matching " + command);
+        SocketDto error = new SocketDto(SocketMessages.Events.ERROR, "No endpoint matching " + command);
         writeToClient.accept(error);
     }
 
     public abstract void handle(String command, Object content);
 
-    public String type(){
-        return getClass().getSimpleName().toLowerCase().replace("socket", "").replace("handler", "");
-    }
+    public abstract String type();
 }
