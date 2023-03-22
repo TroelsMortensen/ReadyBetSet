@@ -5,6 +5,7 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListen
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
 import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
+import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
 import com.pastimegames.readysetbet.core.domain.events.RaceStarted;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
@@ -35,6 +36,10 @@ public class RaceSocketHandler extends SocketHandlerBase {
         DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horse -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Race.HORSE_MOVED, new HorseMovedDto(horse.horseName(), horse.currentPosition())));
         });
+        DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) event -> {
+            writeToClient.accept(new SocketDto(SocketMessages.Events.Race.RACE_FINISHED, event.winnerHorseName()));
+        });
+
     }
 
     @Override
