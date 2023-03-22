@@ -23,13 +23,13 @@ public class RaceOptions {
         return this;
     }
 
-    public int numberOfRaces() {
-        return numberOfRaces;
-    }
-
     public RaceOptions setNumberOfRaces(int numberOfRaces) {
         this.numberOfRaces = numberOfRaces;
         return this;
+    }
+
+    public int numberOfRaces() {
+        return numberOfRaces;
     }
 
     public int moveTickTime(){
