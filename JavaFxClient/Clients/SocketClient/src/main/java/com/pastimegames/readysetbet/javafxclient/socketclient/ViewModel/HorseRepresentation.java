@@ -5,12 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ViewModelHorse
+public class HorseRepresentation
 {
   private StringProperty name;
   private IntegerProperty position;
 
-  public ViewModelHorse(String name, int position)
+  public HorseRepresentation(String name, int position)
   {
     this.name = new SimpleStringProperty();
     this.position = new SimpleIntegerProperty();

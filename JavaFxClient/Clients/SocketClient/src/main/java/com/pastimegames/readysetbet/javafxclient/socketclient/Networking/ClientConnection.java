@@ -2,9 +2,9 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.HorseMovedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.PropertyChangeSubject;
-import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -36,10 +36,10 @@ public class ClientConnection implements Runnable, PropertyChangeSubject {
                     System.out.println("Received from server: " + response.content());
                     switch (response.commandType())
                     {
-                        case "gotoraceview" : case "raceinitialized" :
+                        case "gotoraceview" : case SocketMessages.Events.Lobby.LOBBY_FINALIZED:
                             gotoraceview();
                             break;
-                        case "horsemoved" :
+                        case SocketMessages.Events.Race.HORSE_MOVED:
                             horsemoved((HorseMovedDto) response.content());
                             break;
                     }

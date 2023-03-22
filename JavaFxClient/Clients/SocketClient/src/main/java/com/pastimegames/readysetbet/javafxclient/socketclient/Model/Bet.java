@@ -1,4 +1,6 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.Model;
 
-public record Bet (int betPosition, Coin bettingCoin){
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.CoinRepresentation;
+
+public record Bet (int betPosition, CoinRepresentation bettingCoin){
 }

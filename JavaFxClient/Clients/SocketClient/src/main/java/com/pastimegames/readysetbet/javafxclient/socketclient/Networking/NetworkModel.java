@@ -2,11 +2,12 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Bet;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
-import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ViewModelPlayer;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.PlayerRepresentation;
 import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.CoinDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
+import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -55,16 +56,16 @@ public class NetworkModel implements Model {
     }
 
     @Override
-    public void joinLobby(ViewModelPlayer player) {
-        SocketDto joinLobbyRequest = new SocketDto("Lobby/join", new PlayerDto(player.getName(), player.getColour()));
+    public void joinLobby(PlayerRepresentation player) {
+        SocketDto joinLobbyRequest = new SocketDto(SocketMessages.Events.Lobby.PLAYER_JOINED, new PlayerDto(player.getName(), player.getColour()));
         clientConnection.sendData(joinLobbyRequest);
     }
 
     @Override
     public void placeBet(Bet bet) {
-        CoinDto coinDto = new CoinDto(bet.bettingCoin().value(), bet.bettingCoin().playerName(), bet.bettingCoin().colour());
+        CoinDto coinDto = new CoinDto(bet.bettingCoin().getValue(), bet.bettingCoin().getPlayerName(), bet.bettingCoin().getColour());
         BetDto betDto = new BetDto(bet.betPosition(), coinDto);
-        clientConnection.sendData(new SocketDto("Betting/place", betDto));
+        clientConnection.sendData(new SocketDto(SocketMessages.Commands.Betting.BET_ON_CELL, betDto));
     }
 
 
