@@ -16,6 +16,7 @@ public abstract class SocketHandlerBase {
     public SocketHandlerBase(GameManager gameManager, Consumer<SocketDto> writeToClient) {
         this.gameManager = gameManager;
         this.writeToClient = writeToClient;
+        setupListeners();
     }
 
     protected abstract void setupListeners();

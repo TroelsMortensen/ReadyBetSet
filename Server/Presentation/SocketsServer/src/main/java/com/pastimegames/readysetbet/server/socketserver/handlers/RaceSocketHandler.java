@@ -13,7 +13,6 @@ public class RaceSocketHandler extends SocketHandlerBase {
 
     public RaceSocketHandler(GameManager gameManager, Consumer<SocketDto> writeToClient) {
         super(gameManager, writeToClient);
-        setupListeners();
     }
 
     protected void setupListeners() {
