@@ -21,28 +21,50 @@ public class BookMaker {
 
     public void deliverWinnings(RaceResult raceResult, Lobby lobby) {
 
-        List<Winning> winnings = getWinningBets(raceResult);
-        deliverPayoutToPlayers(winnings, lobby);
+        List<Winning> winnings = collectWinningBets(raceResult);
+        deliverPayoutsToPlayers(winnings, lobby);
     }
 
     public void deliverPenalties(RaceResult raceResult, Lobby lobby) {
-        List<Penalty> penalties = getPenalties(raceResult);
-        // TODO Here fix penalties
+        List<Penalty> penalties = collectPenalties(raceResult);
+        deliverWinningsToPLayers(penalties, lobby);
     }
 
-    private List<Penalty> getPenalties(RaceResult raceResult) {
-        // TODO do this stuff
-        return null;
+    private void deliverWinningsToPLayers(List<Penalty> penalties, Lobby lobby) {
+        for (Penalty penalty : penalties) {
+            Player player = lobby.getPlayer(penalty.playerName);
+            player.applyPenalty(penalty.penalty());
+        }
     }
 
-    private void deliverPayoutToPlayers(List<Winning> winnings, Lobby lobby) {
+    private List<Penalty> collectPenalties(RaceResult raceResult) {
+        List<Penalty> penalties = new LinkedList<>();
+        for (BetCell betCell : bettingBoard.betCells()) {
+            List<Coin> coins = betCell.coins();
+            if (coins.isEmpty()) {
+                continue;
+            }
+            String horseName = bettingBoard.betCellIdToHorseName(betCell.id());
+            String placement = bettingBoard.betCellIdToPlacement(betCell.id());
+            if (isWinningBet(horseName, placement, raceResult)) {
+                continue;
+            }
+            for (Coin coin : coins) {
+                penalties.add(new Penalty(coin.owningPlayer(), betCell.penalty()));
+            }
+        }
+
+        return penalties;
+    }
+
+    private void deliverPayoutsToPlayers(List<Winning> winnings, Lobby lobby) {
         for (Winning winning : winnings) {
             Player player = lobby.getPlayer(winning.playerName);
             player.addWinning(winning.payout());
         }
     }
 
-    private List<Winning> getWinningBets(RaceResult raceResult) {
+    private List<Winning> collectWinningBets(RaceResult raceResult) {
         List<Winning> winnings = new LinkedList<>();
         for (BetCell betCell : bettingBoard.betCells()) {
             List<Coin> coins = betCell.coins();
