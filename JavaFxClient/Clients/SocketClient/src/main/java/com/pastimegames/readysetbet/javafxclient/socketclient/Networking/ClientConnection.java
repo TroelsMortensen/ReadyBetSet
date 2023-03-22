@@ -2,6 +2,7 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.HorseMovedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.PropertyChangeSubject;
+import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 
@@ -55,10 +56,10 @@ public class ClientConnection implements Runnable, PropertyChangeSubject {
         propertyChangeSupport.firePropertyChange("HORSE_MOVED",null, horseMovedEvent);
     }
 
-    public void sendSocketDto(SocketDto socketDto)
+    public void sendData(SocketDto data)
     {
         try {
-            outToServer.writeObject(socketDto);
+            outToServer.writeObject(data);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,4 +4,6 @@ import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ViewMode
 
 public interface Model extends PropertyChangeSubject{
     void joinLobby(ViewModelPlayer player);
+
+    void placeBet(Bet bet);
 }
