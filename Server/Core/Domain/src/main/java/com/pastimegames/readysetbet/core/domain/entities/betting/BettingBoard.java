@@ -30,7 +30,7 @@ class BettingBoard {
         }
     }
 
-    void placeBetOnCell(int index, Coin coin) {
+    void betOnCell(int index, Coin coin) {
         BetCell betCell = betCells.get(index);
         if (betCell.containsCoin()) { // leaking domain logic? Should I perhaps check this in BookMaker
             throw new DomainLogicException("Cannot place two coins on one cell");

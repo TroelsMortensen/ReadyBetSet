@@ -16,7 +16,7 @@ public class BookMaker {
     }
 
     public void betOnCell(int index, Coin coin) {
-        bettingBoard.placeBetOnCell(index, coin);
+        bettingBoard.betOnCell(index, coin);
     }
 
     public void deliverWinnings(RaceResult raceResult, Lobby lobby) {
