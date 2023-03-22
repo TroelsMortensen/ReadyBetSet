@@ -24,16 +24,16 @@ public class LobbySocketHandler extends SocketHandlerBase {
 
     @Override
     protected void setupListeners() {
-        DomainEventPublisher.instance().subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) event ->{
+        subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) event ->{
             PlayerJoinedLobbyDto dto = new PlayerJoinedLobbyDto(event.name(), event.colorCode());
             writeToClient.accept(new SocketDto(SocketMessages.Events.Lobby.PLAYER_JOINED, dto));
         });
 
-        DomainEventPublisher.instance().subscribe(PlayerLeftLobby.type(), (DomainEventListener<PlayerLeftLobby>) event -> {
+        subscribe(PlayerLeftLobby.type(), (DomainEventListener<PlayerLeftLobby>) event -> {
             PlayerLeftLobbyDto dto = new PlayerLeftLobbyDto(event.name());
             writeToClient.accept(new SocketDto(SocketMessages.Events.Lobby.PLAYER_LEFT, dto));
         });
-        DomainEventPublisher.instance().subscribe(LobbyFinalized.type(), (DomainEventListener<LobbyFinalized>) event -> {
+        subscribe(LobbyFinalized.type(), (DomainEventListener<LobbyFinalized>) event -> {
             RaceOptions op = event.options();
             RaceOptionsDto options = new RaceOptionsDto(op.numberOfRaces(), op.moveTickTime(), op.numberOfAllowedBidsPerCell());
             writeToClient.accept(new SocketDto(SocketMessages.Events.Lobby.LOBBY_FINALIZED, options));

@@ -1,6 +1,9 @@
 package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
+import com.pastimegames.readysetbet.core.domain.events.BetPlacedOnCell;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
@@ -26,4 +29,8 @@ public abstract class SocketHandlerBase {
     public abstract void handle(String command, Object content);
 
     public abstract String type();
+
+    protected <T> void subscribe(String eventType, DomainEventListener<T> listener){
+        DomainEventPublisher.instance().subscribe(eventType, listener);
+    }
 }

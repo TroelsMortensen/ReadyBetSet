@@ -21,12 +21,13 @@ public class BettingSocketHandler extends SocketHandlerBase {
 
     @Override
     protected void setupListeners() {
-        DomainEventPublisher.instance().subscribe(BetPlacedOnCell.type(), (DomainEventListener<BetPlacedOnCell>) event -> {
+        subscribe(BetPlacedOnCell.type(), (DomainEventListener<BetPlacedOnCell>) event -> {
             BetPlacedOnCellDto content = new BetPlacedOnCellDto(event.index(), event.coinValue(), event.owningPlayer(), event.color());
             writeToClient.accept(new SocketDto(SocketMessages.Events.Betting.BET_PLACED, content));
         });
 
-        DomainEventPublisher.instance().subscribe(BetsAreClosed.type(), (DomainEventListener<BetsAreClosed>) event -> {
+
+        subscribe(BetsAreClosed.type(), (DomainEventListener<BetsAreClosed>) event -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Betting.BETS_ARE_CLOSED, null));
         });
     }

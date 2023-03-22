@@ -17,7 +17,7 @@ public class ResultSocketHandler extends SocketHandlerBase {
 
     @Override
     protected void setupListeners() {
-        DomainEventPublisher.instance().subscribe(ResultsCalculated.type(), (DomainEventListener<ResultsCalculated>) event -> {
+        subscribe(ResultsCalculated.type(), (DomainEventListener<ResultsCalculated>) event -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Result.RESULTS_CALCULATED, new ResultsCalculatedDto(event.playerSaldos())));
         });
     }

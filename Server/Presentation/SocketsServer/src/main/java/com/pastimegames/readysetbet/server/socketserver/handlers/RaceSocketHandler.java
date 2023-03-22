@@ -18,21 +18,21 @@ public class RaceSocketHandler extends SocketHandlerBase {
     }
 
     protected void setupListeners() {
-        DomainEventPublisher.instance().subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
+        subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Result.RACE_VIEW_SELECTED, null));
         });
 
-        DomainEventPublisher.instance().subscribe(RaceStarted.type(), (DomainEventListener<RaceStarted>) event -> {
+        subscribe(RaceStarted.type(), (DomainEventListener<RaceStarted>) event -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Race.RACE_STARTED, null));
         });
 
-        DomainEventPublisher.instance().subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
+        subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Race.NEXT_RACE_READY, event.raceNumber()));
         });
-        DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horse -> {
+        subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horse -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Race.HORSE_MOVED, new HorseMovedDto(horse.horseName(), horse.currentPosition())));
         });
-        DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) event -> {
+        subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) event -> {
             writeToClient.accept(new SocketDto(SocketMessages.Events.Race.RACE_FINISHED, event.winnerHorseName()));
         });
     }
