@@ -35,7 +35,7 @@ public class Model implements PropertyChangeSubject
 
   public void initializeRace(RaceOptions raceOptions)
   {
-    gameManager.initializeRacing(raceOptions);
+    gameManager.lobbyFinalized(raceOptions);
   }
 
   public void startRace() {
