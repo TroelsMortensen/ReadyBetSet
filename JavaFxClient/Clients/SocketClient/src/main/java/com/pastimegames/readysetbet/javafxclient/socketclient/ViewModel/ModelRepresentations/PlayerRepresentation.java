@@ -66,7 +66,7 @@ public class PlayerRepresentation
   {
     for (CoinRepresentation coin : coins)
     {
-      if (coin.getValue() == valueOfCoin)
+      if (coin.getValue() == valueOfCoin && coin.isUsed().get() == false)
       {
         coin.isUsed().set(true);
         break;

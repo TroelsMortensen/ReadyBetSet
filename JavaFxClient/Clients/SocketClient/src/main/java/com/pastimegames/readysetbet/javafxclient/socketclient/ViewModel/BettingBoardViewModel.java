@@ -7,11 +7,13 @@ import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRep
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class BettingBoardViewModel {
     private Model model;
     private PlayerRepresentation player;
     private CoinRepresentation selectedCoin;
+    private Consumer<Integer> onBetPlaced;
 
     public BettingBoardViewModel(Model model, PlayerRepresentation player)
     {
@@ -27,7 +29,7 @@ public class BettingBoardViewModel {
         {
             player.markCoinAsUsed(betPlacedEvent.coinValue());
         }
-        //TODO: Mark cell with coin and disable for bets
+        onBetPlaced.accept(betPlacedEvent.index());
     }
 
     public void placeBet(int bettingPosition) {
@@ -42,5 +44,10 @@ public class BettingBoardViewModel {
     public void setSelectedCoin(CoinRepresentation coin)
     {
         selectedCoin = coin;
+    }
+
+    public void setOnBetPlaced(Consumer<Integer> onBetPlaced)
+    {
+        this.onBetPlaced = onBetPlaced;
     }
 }

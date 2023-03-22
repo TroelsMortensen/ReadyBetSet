@@ -8,22 +8,41 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BettingBoardViewController {
 
     @FXML
-    private Button button;
-    @FXML
     private HBox hBoxCoins;
     @FXML
     private GridPane gridPaneBettingBoard;
     private BettingBoardViewModel bettingBoardViewModel;
+    private List<Button> bettingButtons;
 
-    public void init(ViewHandler viewHandler, BettingBoardViewModel bettingBoardViewModel) {
-        //gridPaneBettingBoard.add(new Button("test"), 1,1);
+    public void init(BettingBoardViewModel bettingBoardViewModel) {
+        createBettingGrid();
         this.bettingBoardViewModel = bettingBoardViewModel;
         createButtonsForCoins();
+        bettingBoardViewModel.setOnBetPlaced(index -> disableButtonForBet(index));
+    }
+
+    private void createBettingGrid()
+    {
+        bettingButtons = new ArrayList<>();
+        int index = 0;
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 1; j < 8; j++)
+            {
+                final int indexForPlaceBetMethod = index;
+                Button buttonForBet = new Button(Integer.toString(index++));
+                buttonForBet.setPrefSize(40,40);
+                buttonForBet.setOnAction(event -> placeBet(indexForPlaceBetMethod));
+                gridPaneBettingBoard.add(buttonForBet, j,i);
+                bettingButtons.add(buttonForBet);
+            }
+        }
     }
 
     private void createButtonsForCoins()
@@ -43,9 +62,13 @@ public class BettingBoardViewController {
         bettingBoardViewModel.setSelectedCoin(coin);
     }
 
-    @FXML
-    private void placeBet()
+    private void placeBet(int index)
     {
-        bettingBoardViewModel.placeBet(2);
+        bettingBoardViewModel.placeBet(index);
+    }
+
+    private void disableButtonForBet(int index)
+    {
+        bettingButtons.get(index).setDisable(true);
     }
 }
