@@ -1,10 +1,9 @@
 package com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel;
 
-import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
+import com.pastimegames.readysetbet.core.domain.events.HorseMovedEvent;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.Model.Model;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class RaceViewModel
   }
 
   private void onHorseMoved(PropertyChangeEvent propertyChangeEvent) {
-    HorseMoved horseMovedEvent = (HorseMoved) propertyChangeEvent.getNewValue();
+    HorseMovedEvent horseMovedEvent = (HorseMovedEvent) propertyChangeEvent.getNewValue();
     for (ViewModelHorse horse : horses) {
       if(horse.getName().equals(horseMovedEvent.horseName()))
       {

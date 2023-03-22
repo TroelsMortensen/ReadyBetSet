@@ -4,9 +4,9 @@ import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
-import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobby;
+import com.pastimegames.readysetbet.core.domain.events.HorseMovedEvent;
+import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobbyEvent;
+import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobbyEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -69,13 +69,13 @@ public class Model implements PropertyChangeSubject
   }
 
   private void initializeListeners() {
-    DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horseMovedEvent -> {
+    DomainEventPublisher.instance().subscribe(HorseMovedEvent.type(), (DomainEventListener<HorseMovedEvent>) horseMovedEvent -> {
       propertyChangeSupport.firePropertyChange("HORSE_MOVED", null, horseMovedEvent);
     } );
-    DomainEventPublisher.instance().subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) playerJoinedLobby -> {
+    DomainEventPublisher.instance().subscribe(PlayerJoinedLobbyEvent.type(), (DomainEventListener<PlayerJoinedLobbyEvent>) playerJoinedLobby -> {
       propertyChangeSupport.firePropertyChange("PLAYER_JOIN", null, playerJoinedLobby);
     });
-    DomainEventPublisher.instance().subscribe(PlayerLeftLobby.type(), (DomainEventListener<PlayerLeftLobby>) playerLeftLobby -> {
+    DomainEventPublisher.instance().subscribe(PlayerLeftLobbyEvent.type(), (DomainEventListener<PlayerLeftLobbyEvent>) playerLeftLobby -> {
       propertyChangeSupport.firePropertyChange("PLAYER_LEAVE", null, playerLeftLobby);
     });
   }

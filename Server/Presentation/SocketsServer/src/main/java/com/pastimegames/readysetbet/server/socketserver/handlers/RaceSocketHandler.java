@@ -2,7 +2,6 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.*;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
@@ -18,22 +17,22 @@ public class RaceSocketHandler extends SocketHandlerBase {
     }
 
     protected void setupListeners() {
-        subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Result.RACE_VIEW_SELECTED, null));
+        subscribe(NextRaceReadyEvent.type(), (DomainEventListener<NextRaceReadyEvent>) event -> {
+            writeToClient(SocketMessages.Events.Result.RACE_VIEW_SELECTED, null);
         });
 
-        subscribe(RaceStarted.type(), (DomainEventListener<RaceStarted>) event -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Race.RACE_STARTED, null));
+        subscribe(RaceStartedEvent.type(), (DomainEventListener<RaceStartedEvent>) event -> {
+            writeToClient(SocketMessages.Events.Race.RACE_STARTED, null);
         });
 
-        subscribe(NextRaceReady.type(), (DomainEventListener<NextRaceReady>) event -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Race.NEXT_RACE_READY, event.raceNumber()));
+        subscribe(NextRaceReadyEvent.type(), (DomainEventListener<NextRaceReadyEvent>) event -> {
+            writeToClient(SocketMessages.Events.Race.NEXT_RACE_READY, event.raceNumber());
         });
-        subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) horse -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Race.HORSE_MOVED, new HorseMovedDto(horse.horseName(), horse.currentPosition())));
+        subscribe(HorseMovedEvent.type(), (DomainEventListener<HorseMovedEvent>) horse -> {
+            writeToClient(SocketMessages.Events.Race.HORSE_MOVED, new HorseMovedDto(horse.horseName(), horse.currentPosition()));
         });
-        subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) event -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Race.RACE_FINISHED, event.winnerHorseName()));
+        subscribe(RaceFinishedEvent.type(), (DomainEventListener<RaceFinishedEvent>) event -> {
+            writeToClient(SocketMessages.Events.Race.RACE_FINISHED, event.winnerHorseName());
         });
     }
 

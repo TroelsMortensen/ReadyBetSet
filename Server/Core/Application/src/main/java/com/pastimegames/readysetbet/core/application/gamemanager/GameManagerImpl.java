@@ -8,9 +8,9 @@ import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.NextRaceReady;
-import com.pastimegames.readysetbet.core.domain.events.LobbyFinalized;
-import com.pastimegames.readysetbet.core.domain.events.ResultsCalculated;
+import com.pastimegames.readysetbet.core.domain.events.NextRaceReadyEvent;
+import com.pastimegames.readysetbet.core.domain.events.LobbyFinalizedEvent;
+import com.pastimegames.readysetbet.core.domain.events.ResultsCalculatedEvent;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.CoinDto;
@@ -66,7 +66,7 @@ public class GameManagerImpl implements GameManager {
         }
 
         setupRace();
-        DomainEventPublisher.instance().publish(new LobbyFinalized(options));
+        DomainEventPublisher.instance().publish(new LobbyFinalizedEvent(options));
     }
 
     @Override
@@ -102,7 +102,7 @@ public class GameManagerImpl implements GameManager {
         bookMaker.deliverWinnings(race.getRaceResult(), lobby);
         bookMaker.deliverPenalties(race.getRaceResult(), lobby);
         Map<String, Integer> saldos = lobby.getPlayerBalances();
-        DomainEventPublisher.instance().publish(new ResultsCalculated(saldos));
+        DomainEventPublisher.instance().publish(new ResultsCalculatedEvent(saldos));
     }
 
     @Override
@@ -112,7 +112,7 @@ public class GameManagerImpl implements GameManager {
         }
         raceNumber++;
         setupRace();
-        DomainEventPublisher.instance().publish(new NextRaceReady(raceNumber));
+        DomainEventPublisher.instance().publish(new NextRaceReadyEvent(raceNumber));
     }
 
     private void setupRace() {

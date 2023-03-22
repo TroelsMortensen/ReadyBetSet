@@ -1,8 +1,8 @@
 package com.pastimegames.readysetbet.core.domain.entities.lobby;
 
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
-import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobby;
+import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobbyEvent;
+import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobbyEvent;
 import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Lobby {
             throw new DomainLogicException("Player name '" + player.name() + "' already in lobby. Name must be unique");
         }
         lobbyPlayerList.add(player);
-        DomainEventPublisher.instance().publish(new PlayerJoinedLobby(player.name(), player.colorCode()));
+        DomainEventPublisher.instance().publish(new PlayerJoinedLobbyEvent(player.name(), player.colorCode()));
     }
 
     public void leave(String playerNameToRemove) {
@@ -27,7 +27,7 @@ public class Lobby {
         if(!wasRemoved){
             throw new DomainLogicException("Could not find player '" + playerNameToRemove + "' to be removed from lobby.");
         }
-        DomainEventPublisher.instance().publish(new PlayerLeftLobby(playerNameToRemove));
+        DomainEventPublisher.instance().publish(new PlayerLeftLobbyEvent(playerNameToRemove));
     }
 
     public Player getPlayer(String playerName) {

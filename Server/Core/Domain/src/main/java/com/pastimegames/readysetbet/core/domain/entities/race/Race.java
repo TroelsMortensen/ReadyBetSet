@@ -50,7 +50,7 @@ public class Race {
 
         DiceRoll diceRoll = diceRoller.rollDice();
 
-        DomainEventPublisher.instance().publish(new DiceRolled(diceRoll.firstDice(), diceRoll.secondDice()));
+        DomainEventPublisher.instance().publish(new DiceRolledEvent(diceRoll.firstDice(), diceRoll.secondDice()));
 
         Horse horseToMove = findHorse(diceRoll.sumAsHorseId());
 
@@ -64,7 +64,7 @@ public class Race {
         executeMove(horseToMove);
         int newPosition = horseToMove.position();
 
-        DomainEventPublisher.instance().publish(new HorseMoved(horseToMove.name(), horseToMove.position()));
+        DomainEventPublisher.instance().publish(new HorseMovedEvent(horseToMove.name(), horseToMove.position()));
         updateNumberOfHorsesAcrossBetLine(prevPosition, newPosition, horseToMove);
     }
 
@@ -72,10 +72,10 @@ public class Race {
         if (prevPosition < BET_LINE && newPosition > BET_LINE) {
             numberOfHorsesAcrossBettingLine++;
 
-            DomainEventPublisher.instance().publish(new HorseCrossedBetLine(horse.name()));
+            DomainEventPublisher.instance().publish(new HorseCrossedBetLineEvent(horse.name()));
         }
         if (numberOfHorsesAcrossBettingLine == 3) {
-            DomainEventPublisher.instance().publish(new BetsAreClosed());
+            DomainEventPublisher.instance().publish(new BetsAreClosedEvent());
         }
     }
 
@@ -91,7 +91,7 @@ public class Race {
 
     private void checkForWinner(Horse potentialWinnerHorse) {
         if (potentialWinnerHorse.position() == FINISH_LINE_INDEX) {
-            DomainEventPublisher.instance().publish(new RaceFinished(potentialWinnerHorse.name()));
+            DomainEventPublisher.instance().publish(new RaceFinishedEvent(potentialWinnerHorse.name()));
         }
     }
 

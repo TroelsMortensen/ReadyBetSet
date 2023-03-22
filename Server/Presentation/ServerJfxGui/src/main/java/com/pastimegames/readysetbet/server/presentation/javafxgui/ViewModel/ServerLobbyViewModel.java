@@ -1,8 +1,8 @@
 package com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel;
 
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
-import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobby;
+import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobbyEvent;
+import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobbyEvent;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.Model.Model;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -26,13 +26,13 @@ public class ServerLobbyViewModel
 
   private void playerLeave(PropertyChangeEvent event)
   {
-    String name = ((PlayerLeftLobby) event.getNewValue()).name();
+    String name = ((PlayerLeftLobbyEvent) event.getNewValue()).name();
     players.remove(name);
   }
 
   private void playerJoin(PropertyChangeEvent event)
   {
-    String name = ((PlayerJoinedLobby) event.getNewValue()).name();
+    String name = ((PlayerJoinedLobbyEvent) event.getNewValue()).name();
     Platform.runLater( ()-> players.add(name) );
   }
 

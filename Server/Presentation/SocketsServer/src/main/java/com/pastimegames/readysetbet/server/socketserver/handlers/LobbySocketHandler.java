@@ -3,10 +3,9 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobby;
-import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobby;
-import com.pastimegames.readysetbet.core.domain.events.LobbyFinalized;
+import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobbyEvent;
+import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobbyEvent;
+import com.pastimegames.readysetbet.core.domain.events.LobbyFinalizedEvent;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 import com.pastimegames.shared.datatransferobjects.PlayerJoinedLobbyDto;
 import com.pastimegames.shared.datatransferobjects.PlayerLeftLobbyDto;
@@ -24,19 +23,19 @@ public class LobbySocketHandler extends SocketHandlerBase {
 
     @Override
     protected void setupListeners() {
-        subscribe(PlayerJoinedLobby.type(), (DomainEventListener<PlayerJoinedLobby>) event ->{
+        subscribe(PlayerJoinedLobbyEvent.type(), (DomainEventListener<PlayerJoinedLobbyEvent>) event ->{
             PlayerJoinedLobbyDto dto = new PlayerJoinedLobbyDto(event.name(), event.colorCode());
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Lobby.PLAYER_JOINED, dto));
+            writeToClient(SocketMessages.Events.Lobby.PLAYER_JOINED, dto);
         });
 
-        subscribe(PlayerLeftLobby.type(), (DomainEventListener<PlayerLeftLobby>) event -> {
+        subscribe(PlayerLeftLobbyEvent.type(), (DomainEventListener<PlayerLeftLobbyEvent>) event -> {
             PlayerLeftLobbyDto dto = new PlayerLeftLobbyDto(event.name());
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Lobby.PLAYER_LEFT, dto));
+            writeToClient(SocketMessages.Events.Lobby.PLAYER_LEFT, dto);
         });
-        subscribe(LobbyFinalized.type(), (DomainEventListener<LobbyFinalized>) event -> {
+        subscribe(LobbyFinalizedEvent.type(), (DomainEventListener<LobbyFinalizedEvent>) event -> {
             RaceOptions op = event.options();
             RaceOptionsDto options = new RaceOptionsDto(op.numberOfRaces(), op.moveTickTime(), op.numberOfAllowedBidsPerCell());
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Lobby.LOBBY_FINALIZED, options));
+            writeToClient(SocketMessages.Events.Lobby.LOBBY_FINALIZED, options);
         });
     }
 

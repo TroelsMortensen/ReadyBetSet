@@ -4,8 +4,8 @@ import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
-import com.pastimegames.readysetbet.core.domain.events.RaceStarted;
+import com.pastimegames.readysetbet.core.domain.events.RaceFinishedEvent;
+import com.pastimegames.readysetbet.core.domain.events.RaceStartedEvent;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 
 public class RaceRunner {
@@ -16,7 +16,7 @@ public class RaceRunner {
 
     public RaceRunner(RaceOptions options) {
         moveTickTime = options.moveTickTime();
-        DomainEventPublisher.instance().subscribe(RaceFinished.type(), (DomainEventListener<RaceFinished>) raceFinished -> {
+        DomainEventPublisher.instance().subscribe(RaceFinishedEvent.type(), (DomainEventListener<RaceFinishedEvent>) raceFinished -> {
             raceIsFinished = true;
             thread.interrupt();
         });
@@ -24,7 +24,7 @@ public class RaceRunner {
 
     public void run(Race race, DiceRoller diceRoller) {
 
-        DomainEventPublisher.instance().publish(new RaceStarted());
+        DomainEventPublisher.instance().publish(new RaceStartedEvent());
 
         thread = new Thread(() -> runRace(race, diceRoller));
         thread.setDaemon(true);

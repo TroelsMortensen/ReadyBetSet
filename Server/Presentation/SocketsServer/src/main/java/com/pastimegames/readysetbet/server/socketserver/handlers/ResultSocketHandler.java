@@ -2,8 +2,7 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.ResultsCalculated;
+import com.pastimegames.readysetbet.core.domain.events.ResultsCalculatedEvent;
 import com.pastimegames.shared.datatransferobjects.ResultsCalculatedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
@@ -17,8 +16,8 @@ public class ResultSocketHandler extends SocketHandlerBase {
 
     @Override
     protected void setupListeners() {
-        subscribe(ResultsCalculated.type(), (DomainEventListener<ResultsCalculated>) event -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Result.RESULTS_CALCULATED, new ResultsCalculatedDto(event.playerSaldos())));
+        subscribe(ResultsCalculatedEvent.type(), (DomainEventListener<ResultsCalculatedEvent>) event -> {
+            writeToClient(SocketMessages.Events.Result.RESULTS_CALCULATED, new ResultsCalculatedDto(event.playerSaldos()));
         });
     }
 

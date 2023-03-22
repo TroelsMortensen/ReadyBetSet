@@ -1,16 +1,5 @@
 package com.pastimegames.readysetbet.server.presentation.consoleui;
 
-import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
-import com.pastimegames.readysetbet.core.domain.events.RaceFinished;
-import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class ConsoleUi {
 //    private final GameManager gameManager;
 //    private List<HorseDto> horses = new ArrayList<>();

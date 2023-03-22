@@ -1,23 +1,23 @@
 package com.pastimegames.readysetbet.core.domain.eventpublisher;
 
-import com.pastimegames.readysetbet.core.domain.events.HorseMoved;
+import com.pastimegames.readysetbet.core.domain.events.HorseMovedEvent;
 import org.junit.jupiter.api.Test;
 
 class DomainEventPublisherTest {
 
     @Test
     public void testGenericStuff() {
-        DomainEventPublisher.instance().subscribe(HorseMoved.type(), (DomainEventListener<HorseMoved>) event -> {
+        DomainEventPublisher.instance().subscribe(HorseMovedEvent.type(), (DomainEventListener<HorseMovedEvent>) event -> {
             System.out.println("Here");
         });
 
-        DomainEventPublisher.instance().publish(new HorseMoved("4", 3));
+        DomainEventPublisher.instance().publish(new HorseMovedEvent("4", 3));
 
     }
 
     @Test
     public void testGenericType() {
-        DomainEventListener<HorseMoved> lambda = event -> {
+        DomainEventListener<HorseMovedEvent> lambda = event -> {
             System.out.println("Here");
         };
         method(lambda);

@@ -2,15 +2,13 @@ package com.pastimegames.readysetbet.server.socketserver.handlers;
 
 import com.pastimegames.readysetbet.core.application.gamemanager.GameManager;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
-import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
-import com.pastimegames.readysetbet.core.domain.events.BetPlacedOnCell;
-import com.pastimegames.readysetbet.core.domain.events.BetsAreClosed;
+import com.pastimegames.readysetbet.core.domain.events.BetPlacedOnCellEvent;
+import com.pastimegames.readysetbet.core.domain.events.BetsAreClosedEvent;
 import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.BetPlacedOnCellDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
-import java.io.OutputStream;
 import java.util.function.Consumer;
 
 public class BettingSocketHandler extends SocketHandlerBase {
@@ -21,14 +19,14 @@ public class BettingSocketHandler extends SocketHandlerBase {
 
     @Override
     protected void setupListeners() {
-        subscribe(BetPlacedOnCell.type(), (DomainEventListener<BetPlacedOnCell>) event -> {
+        subscribe(BetPlacedOnCellEvent.type(), (DomainEventListener<BetPlacedOnCellEvent>) event -> {
             BetPlacedOnCellDto content = new BetPlacedOnCellDto(event.index(), event.coinValue(), event.owningPlayer(), event.color());
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Betting.BET_PLACED, content));
+            writeToClient(SocketMessages.Events.Betting.BET_PLACED, content);
         });
 
 
-        subscribe(BetsAreClosed.type(), (DomainEventListener<BetsAreClosed>) event -> {
-            writeToClient.accept(new SocketDto(SocketMessages.Events.Betting.BETS_ARE_CLOSED, null));
+        subscribe(BetsAreClosedEvent.type(), (DomainEventListener<BetsAreClosedEvent>) event -> {
+            writeToClient(SocketMessages.Events.Betting.BETS_ARE_CLOSED, null);
         });
     }
 
