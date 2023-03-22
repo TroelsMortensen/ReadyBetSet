@@ -32,7 +32,7 @@ public class BettingBoardViewController {
         for (CoinRepresentation coin : coinRepresentationList)
         {
             Button buttonForCoin = new Button(Integer.toString(coin.getValue()));
-            buttonForCoin.disableProperty().bind(coin.isAvailable());
+            buttonForCoin.disableProperty().bind(coin.isUsed());
             hBoxCoins.getChildren().add(buttonForCoin);
             buttonForCoin.setOnAction(event -> setSelectedCoin(coin));
         }

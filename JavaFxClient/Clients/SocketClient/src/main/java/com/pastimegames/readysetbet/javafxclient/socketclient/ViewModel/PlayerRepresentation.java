@@ -17,10 +17,15 @@ public class PlayerRepresentation
   {
     this.name = new SimpleStringProperty();
     this.colour = new SimpleStringProperty();
+
+    //FOR TESTING PURPOSES NAME AND COLOR IS SET
+    this.name.set("DEFAULT");
+    this.colour.set("BLACK");
+    //this.name.set(name);
+    //this.colour.set(colour);
+    //------------------------------------------
     coins = FXCollections.observableArrayList();
     initializeCoins();
-    this.name.set(name);
-    this.colour.set(colour);
   }
 
   private void initializeCoins()
@@ -57,5 +62,17 @@ public class PlayerRepresentation
   public List<CoinRepresentation> getCoins()
   {
     return coins;
+  }
+
+  public void markCoinAsUsed(int valueOfCoin)
+  {
+    for (CoinRepresentation coin : coins)
+    {
+      if (coin.getValue() == valueOfCoin)
+      {
+        coin.isUsed().set(true);
+        break;
+      }
+    }
   }
 }

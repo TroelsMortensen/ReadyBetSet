@@ -25,7 +25,7 @@ public class CoinRepresentation
     return value;
   }
 
-  public BooleanProperty isAvailable()
+  public BooleanProperty isUsed()
   {
       return isUsed;
   }
