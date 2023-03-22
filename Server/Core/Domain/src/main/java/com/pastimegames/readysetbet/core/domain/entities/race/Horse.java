@@ -1,5 +1,7 @@
 package com.pastimegames.readysetbet.core.domain.entities.race;
 
+import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
+
 public class Horse {
 
     private final String name;
@@ -12,6 +14,12 @@ public class Horse {
         this.color = color;
         this.bonusMoves = bonusMoves;
         position = 0;
+        validate();
+    }
+
+    private void validate() {
+        if(name == null || "".equals(name)) throw new DomainLogicException("Horse cannot be created without name");
+        if(color == null) throw new DomainLogicException("Horse must have a color");
     }
 
     public void move() {
