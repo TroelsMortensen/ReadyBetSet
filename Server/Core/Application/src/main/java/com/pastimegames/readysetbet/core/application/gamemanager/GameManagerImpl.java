@@ -59,7 +59,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void lobbyFinalized(RaceOptions options) {
+    public void finalizeLobby(RaceOptions options) {
         this.options = options;
         if(currentGameState != GameState.IN_LOBBY){
             throw new GameLogicException("Cannot initialize a race outside of the lobby");
