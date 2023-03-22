@@ -45,7 +45,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void joinPlayer(PlayerDto playerDto) {
+    public void joinLobby(PlayerDto playerDto) {
         if(currentGameState != GameState.IN_LOBBY){
             throw new GameLogicException("Cannot join a game, when it is not in lobby");
         }
@@ -55,6 +55,13 @@ public class GameManagerImpl implements GameManager {
 
         synchronized (lobby) {
             lobby.join(player);
+        }
+    }
+
+    @Override
+    public void leaveLobby(String playerName) {
+        synchronized (lobby) {
+            lobby.leave(playerName);
         }
     }
 
@@ -77,13 +84,6 @@ public class GameManagerImpl implements GameManager {
         currentGameState = GameState.RACE_IN_PROGRESS;
         RaceRunner raceRunner = new RaceRunner(options);
         raceRunner.run(race, diceRoller);
-    }
-
-    @Override
-    public void removePlayerFromLobby(String playerName) {
-        synchronized (lobby) {
-            lobby.leave(playerName);
-        }
     }
 
     @Override

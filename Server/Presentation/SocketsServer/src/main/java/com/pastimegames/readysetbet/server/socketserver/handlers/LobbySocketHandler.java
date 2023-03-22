@@ -53,10 +53,10 @@ public class LobbySocketHandler extends SocketHandlerBase {
     }
 
     private void leave(PlayerDto content) {
-        gameManager.removePlayerFromLobby(content.playerName());
+        gameManager.leaveLobby(content.playerName());
     }
 
     private void join(PlayerDto playerDto) {
-        gameManager.joinPlayer(playerDto);
+        gameManager.joinLobby(playerDto);
     }
 }

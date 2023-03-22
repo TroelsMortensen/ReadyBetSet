@@ -5,7 +5,7 @@ import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
 public interface GameManager {
-    void joinPlayer(PlayerDto playerdto);
+    void joinLobby(PlayerDto playerdto);
 
     /**
      * Use when lobby stuff is done, and you want to start the races
@@ -18,7 +18,7 @@ public interface GameManager {
      */
     void startRace();
 
-    void removePlayerFromLobby(String playerName);
+    void leaveLobby(String playerName);
 
     void placeBet(BetDto betDto);
 
