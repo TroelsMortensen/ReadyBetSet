@@ -1,5 +1,6 @@
 package com.pastimegames.readysetbet.core.domain.entities.race;
 
+import com.pastimegames.readysetbet.core.domain.valueobjects.RaceResult;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

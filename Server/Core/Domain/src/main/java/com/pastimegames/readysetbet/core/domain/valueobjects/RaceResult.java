@@ -1,4 +1,6 @@
-package com.pastimegames.readysetbet.core.domain.entities.race;
+package com.pastimegames.readysetbet.core.domain.valueobjects;
+
+import com.pastimegames.readysetbet.core.domain.entities.race.HorseColor;
 
 import java.util.ArrayList;
 import java.util.List;

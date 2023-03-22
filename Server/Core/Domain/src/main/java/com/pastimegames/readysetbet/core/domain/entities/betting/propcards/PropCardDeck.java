@@ -1,7 +1,7 @@
 package com.pastimegames.readysetbet.core.domain.entities.betting.propcards;
 
 import com.pastimegames.readysetbet.core.domain.entities.race.HorseColor;
-import com.pastimegames.readysetbet.core.domain.entities.race.RaceResult;
+import com.pastimegames.readysetbet.core.domain.valueobjects.RaceResult;
 
 import java.util.Arrays;
 import java.util.List;

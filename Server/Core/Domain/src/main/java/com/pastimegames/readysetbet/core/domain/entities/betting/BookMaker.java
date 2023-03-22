@@ -2,7 +2,7 @@ package com.pastimegames.readysetbet.core.domain.entities.betting;
 
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
-import com.pastimegames.readysetbet.core.domain.entities.race.RaceResult;
+import com.pastimegames.readysetbet.core.domain.valueobjects.RaceResult;
 
 import java.util.LinkedList;
 import java.util.List;

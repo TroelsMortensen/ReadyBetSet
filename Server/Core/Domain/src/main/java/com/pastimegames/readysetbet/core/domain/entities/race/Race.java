@@ -4,6 +4,7 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublis
 import com.pastimegames.readysetbet.core.domain.domainservices.DiceRoller;
 import com.pastimegames.readysetbet.core.domain.events.*;
 import com.pastimegames.readysetbet.core.domain.valueobjects.DiceRoll;
+import com.pastimegames.readysetbet.core.domain.valueobjects.RaceResult;
 
 import java.util.*;
 import java.util.stream.Collectors;
