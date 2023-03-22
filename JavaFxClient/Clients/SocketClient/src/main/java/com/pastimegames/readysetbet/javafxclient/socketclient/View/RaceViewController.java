@@ -1,11 +1,9 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.View;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.RaceViewModel;
-import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ViewModelHorse;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.HorseRepresentation;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -42,7 +40,7 @@ public class RaceViewController {
     }
 
     private void registerListeners() {
-        for (ViewModelHorse horse : raceViewModel.getViewModelHorses())
+        for (HorseRepresentation horse : raceViewModel.getViewModelHorses())
         {
             horse.positionProperty().addListener((observable, oldValue, newValue) -> updateHorseLabels(horse.getName(), oldValue, newValue));
         }

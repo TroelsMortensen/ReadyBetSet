@@ -3,6 +3,7 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.Core;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.BettingBoardViewModel;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.JoinLobbyViewModel;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.PlayerRepresentation;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.RaceViewModel;
 
 public class ViewModelFactory
@@ -11,17 +12,19 @@ public class ViewModelFactory
   private RaceViewModel raceViewModel;
   private JoinLobbyViewModel joinLobbyViewModel;
   private BettingBoardViewModel bettingBoardViewModel;
+  private PlayerRepresentation player;
 
   public ViewModelFactory(Model model)
   {
     this.model = model;
+    player = new PlayerRepresentation(null, null);
   }
 
   public JoinLobbyViewModel getJoinLobbyViewModel()
   {
     if(joinLobbyViewModel == null)
     {
-      joinLobbyViewModel = new JoinLobbyViewModel(model);
+      joinLobbyViewModel = new JoinLobbyViewModel(model, player);
     }
     return joinLobbyViewModel;
   }
@@ -39,7 +42,7 @@ public class ViewModelFactory
   {
     if(bettingBoardViewModel == null)
     {
-      bettingBoardViewModel = new BettingBoardViewModel(model);
+      bettingBoardViewModel = new BettingBoardViewModel(model, player);
     }
     return bettingBoardViewModel;
   }
