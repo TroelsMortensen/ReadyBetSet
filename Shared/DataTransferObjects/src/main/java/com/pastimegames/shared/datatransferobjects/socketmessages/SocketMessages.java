@@ -5,6 +5,8 @@ public class SocketMessages
 
   public class Events
   {
+    public static final String ERROR = "error";
+
     public class Race
     {
       public static final String HORSE_MOVED = "horse_moved";
