@@ -1,8 +1,8 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
-import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Bet;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
-import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.PlayerRepresentation;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.CoinRepresentation;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.PlayerRepresentation;
 import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.CoinDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
@@ -62,9 +62,9 @@ public class NetworkModel implements Model {
     }
 
     @Override
-    public void placeBet(Bet bet) {
-        CoinDto coinDto = new CoinDto(bet.bettingCoin().getValue(), bet.bettingCoin().getPlayerName(), bet.bettingCoin().getColour());
-        BetDto betDto = new BetDto(bet.betPosition(), coinDto);
+    public void placeBet(int indexOfBet, CoinRepresentation coinRepresentation) {
+        CoinDto coinDto = new CoinDto(coinRepresentation.getValue(), coinRepresentation.getPlayerName(), coinRepresentation.getColour());
+        BetDto betDto = new BetDto(indexOfBet, coinDto);
         clientConnection.sendData(new SocketDto(SocketMessages.Commands.Betting.BET_ON_CELL, betDto));
     }
 

@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
+package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -47,7 +47,6 @@ public class PlayerRepresentation
     return name;
   }
 
-
   public String getColour()
   {
     return colour.get();
@@ -57,7 +56,6 @@ public class PlayerRepresentation
   {
     return colour;
   }
-
 
   public List<CoinRepresentation> getCoins()
   {

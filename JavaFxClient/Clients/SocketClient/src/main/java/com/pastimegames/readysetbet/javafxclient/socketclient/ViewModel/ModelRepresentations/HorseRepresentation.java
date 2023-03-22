@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
+package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

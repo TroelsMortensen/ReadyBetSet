@@ -1,7 +1,7 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.View;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.RaceViewModel;
-import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.HorseRepresentation;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.HorseRepresentation;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

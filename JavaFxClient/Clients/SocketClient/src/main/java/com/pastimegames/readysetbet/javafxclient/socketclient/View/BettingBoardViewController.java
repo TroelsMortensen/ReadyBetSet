@@ -2,7 +2,7 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.View;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.BettingBoardViewModel;
-import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.CoinRepresentation;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.CoinRepresentation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;

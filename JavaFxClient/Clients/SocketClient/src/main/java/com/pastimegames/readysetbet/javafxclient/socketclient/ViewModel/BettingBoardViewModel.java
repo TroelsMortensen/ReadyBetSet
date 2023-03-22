@@ -1,8 +1,9 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.BetPlacedEvent;
-import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Bet;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.CoinRepresentation;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.PlayerRepresentation;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -30,8 +31,7 @@ public class BettingBoardViewModel {
     }
 
     public void placeBet(int bettingPosition) {
-        Bet betToPlace = new Bet(bettingPosition, selectedCoin);
-        model.placeBet(betToPlace);
+        model.placeBet(bettingPosition, selectedCoin);
     }
 
     public List<CoinRepresentation> getCoins()
