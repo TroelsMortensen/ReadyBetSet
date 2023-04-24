@@ -60,5 +60,6 @@
          </children>
       </GridPane>
       <Button fx:id="buttonStartRace" layoutX="26.0" layoutY="14.0" mnemonicParsing="false" onAction="#onButtonStartRace" text="START RACE" />
+      <Button layoutX="647.0" layoutY="14.0" mnemonicParsing="false" onAction="#onButtonViewResults" text="VIEW RESULTS" />
    </children>
 </AnchorPane>
