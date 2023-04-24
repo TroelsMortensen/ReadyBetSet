@@ -12,6 +12,7 @@ import com.pastimegames.readysetbet.core.domain.events.NextRaceReadyEvent;
 import com.pastimegames.readysetbet.core.domain.events.LobbyFinalizedEvent;
 import com.pastimegames.readysetbet.core.domain.events.ResultsCalculatedEvent;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
+import com.pastimegames.readysetbet.core.domain.valueobjects.PlayerBalances;
 import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.CoinDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
@@ -93,7 +94,8 @@ public class GameManagerImpl implements GameManager {
         }
         CoinDto coin = betDto.coin();
         synchronized (bookMaker) {
-            bookMaker.betOnCell(betDto.betPosition(), new Coin(coin.value(), coin.playerName(), coin.color()));
+            Coin coinToPlace = new Coin(coin.value(), coin.playerName(), coin.color());
+            bookMaker.betOnCell(betDto.betPosition(), coinToPlace);
         }
     }
 
@@ -101,7 +103,7 @@ public class GameManagerImpl implements GameManager {
     public void displayResults() {
         bookMaker.deliverWinnings(race.getRaceResult(), lobby);
         bookMaker.deliverPenalties(race.getRaceResult(), lobby);
-        Map<String, Integer> saldos = lobby.getPlayerBalances();
+        PlayerBalances saldos = lobby.getPlayerBalances();
         DomainEventPublisher.instance().publish(new ResultsCalculatedEvent(saldos));
     }
 

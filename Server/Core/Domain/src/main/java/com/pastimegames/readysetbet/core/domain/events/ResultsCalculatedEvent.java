@@ -1,8 +1,8 @@
 package com.pastimegames.readysetbet.core.domain.events;
 
-import java.util.Map;
+import com.pastimegames.readysetbet.core.domain.valueobjects.PlayerBalances;
 
-public record ResultsCalculatedEvent(Map<String, Integer> playerBalances) {
+public record ResultsCalculatedEvent(PlayerBalances playerBalances) {
     public static String type(){
         return ResultsCalculatedEvent.class.getName();
     }
