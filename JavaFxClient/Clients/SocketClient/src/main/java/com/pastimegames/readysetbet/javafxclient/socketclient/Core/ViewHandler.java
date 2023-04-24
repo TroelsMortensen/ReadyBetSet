@@ -25,11 +25,11 @@ public class ViewHandler
   {
     mainStage = stage;
     //openRaceView();
-    //openViewLobby();
-    openBettingView();
+    openViewLobby();
+    //openBettingView();
   }
 
-  private void openBettingView() {
+  public void openBettingView() {
     FXMLLoader fxmlLoader = new FXMLLoader(
             RunClient.class.getResource("BettingBoardView.fxml"));
     Scene scene = null;

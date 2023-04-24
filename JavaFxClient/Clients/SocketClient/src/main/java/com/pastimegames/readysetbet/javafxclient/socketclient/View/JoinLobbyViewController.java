@@ -2,9 +2,12 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.View;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.JoinLobbyViewModel;
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class JoinLobbyViewController {
@@ -12,6 +15,10 @@ public class JoinLobbyViewController {
     private ComboBox<String> comboBoxPlayerColour;
     @FXML
     private TextField textFieldPlayerName;
+    @FXML
+    private Label labelSystemResponse;
+    @FXML
+    private Button buttonJoinLobby;
 
     private ViewHandler viewHandler;
     private JoinLobbyViewModel joinLobbyViewModel;
@@ -27,6 +34,10 @@ public class JoinLobbyViewController {
             String pickedColour = comboBoxPlayerColour.getValue();
             joinLobbyViewModel.getColour().set(pickedColour);
         });
+        labelSystemResponse.textProperty().bind(joinLobbyViewModel.systemResponseProperty());
+        textFieldPlayerName.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
+        comboBoxPlayerColour.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
+        buttonJoinLobby.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
     }
 
     private void initializeColours() {

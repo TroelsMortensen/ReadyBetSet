@@ -3,12 +3,13 @@ package com.pastimegames.readysetbet.server.presentation.javafxgui.View;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.Core.ViewHandler;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.ResultViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class ResultsViewController {
 
     @FXML
-    private TextField testResults;
+    private TextArea textAreaResults;
 
     private ResultViewModel resultsViewModel;
     private ViewHandler viewHandler;
@@ -17,7 +18,7 @@ public class ResultsViewController {
     {
         this.resultsViewModel = resultsViewModel;
         this.viewHandler = viewHandler;
-        testResults.textProperty().bind(resultsViewModel.resultsProperty());
+        textAreaResults.textProperty().bind(resultsViewModel.resultsProperty());
     }
 
     @FXML

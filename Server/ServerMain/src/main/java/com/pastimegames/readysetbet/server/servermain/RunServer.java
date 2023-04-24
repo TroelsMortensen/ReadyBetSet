@@ -34,8 +34,8 @@ public class RunServer extends Application {
         viewHandler.start(primaryStage);
 
         //skip straight to race
-        model.initializeRace(new RaceOptions());
-        model.startRace();
+        //model.initializeRace(new RaceOptions());
+        //model.startRace();
     }
 
     private void startSocketServer(GameManager gameManager) {

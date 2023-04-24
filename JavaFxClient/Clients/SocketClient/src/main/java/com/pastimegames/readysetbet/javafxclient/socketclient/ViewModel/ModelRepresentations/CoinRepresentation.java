@@ -8,14 +8,10 @@ public class CoinRepresentation
 
   private int value;
   private BooleanProperty isUsed;
-  private String playerName;
-  private String colour;
 
-  public CoinRepresentation(int value, String playerName, String colour)
+  public CoinRepresentation(int value)
   {
     this.value = value;
-    this.playerName = playerName;
-    this.colour = colour;
     this.isUsed = new SimpleBooleanProperty();
     this.isUsed.set(false);
   }
@@ -28,15 +24,5 @@ public class CoinRepresentation
   public BooleanProperty isUsed()
   {
       return isUsed;
-  }
-
-  public String getPlayerName()
-  {
-    return playerName;
-  }
-
-  public String getColour()
-  {
-    return colour;
   }
 }

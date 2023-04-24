@@ -2,9 +2,11 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.BetPlacedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.HorseMovedEvent;
+import com.pastimegames.readysetbet.javafxclient.socketclient.Events.PlayerJoinedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.PropertyChangeSubject;
 import com.pastimegames.shared.datatransferobjects.BetPlacedOnCellDto;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
+import com.pastimegames.shared.datatransferobjects.PlayerJoinedLobbyDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
 
@@ -47,6 +49,9 @@ public class ClientConnection implements Runnable, PropertyChangeSubject {
                         case SocketMessages.Events.Betting.BET_PLACED:
                             betPlaced((BetPlacedOnCellDto) response.content());
                             break;
+                        case SocketMessages.Events.Lobby.PLAYER_JOINED:
+                            playerJoined((PlayerJoinedLobbyDto) response.content());
+                            break;
                     }
                 }
             } catch (IOException e) {
@@ -56,9 +61,14 @@ public class ClientConnection implements Runnable, PropertyChangeSubject {
             }
     }
 
+    private void playerJoined(PlayerJoinedLobbyDto content) {
+        PlayerJoinedEvent playerJoinedLobbyEvent = new PlayerJoinedEvent(content.name(), content.color());
+        propertyChangeSupport.firePropertyChange("PLAYER_JOINED", null, playerJoinedLobbyEvent);
+    }
+
     private void betPlaced(BetPlacedOnCellDto betPlaced)
     {
-        BetPlacedEvent betPlacedEvent = new BetPlacedEvent(betPlaced.index(), betPlaced.coinValue(), betPlaced.owningPlayer(), betPlaced.color());
+        BetPlacedEvent betPlacedEvent = new BetPlacedEvent(betPlaced.index(), betPlaced.coinValue(), betPlaced.color(), betPlaced.owningPlayer());
         propertyChangeSupport.firePropertyChange("BET_PLACED", null, betPlacedEvent);
     }
 

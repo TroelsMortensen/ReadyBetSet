@@ -17,7 +17,6 @@
         <option value="$PROJECT_DIR$/Core.Application/pom.xml" />
         <option value="$PROJECT_DIR$/Core.Domain/pom.xml" />
         <option value="$PROJECT_DIR$/Domain/pom.xml" />
-        <option value="$PROJECT_DIR$/JavaFxClient/Clients/SocketClient/pom.xml" />
         <option value="$PROJECT_DIR$/Server/Core/pom.xml" />
         <option value="$PROJECT_DIR$/Server/Infrastructure/pom.xml" />
         <option value="$PROJECT_DIR$/Server/pom.xml" />
@@ -27,7 +26,7 @@
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="liberica-19" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="liberica-19 (2)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

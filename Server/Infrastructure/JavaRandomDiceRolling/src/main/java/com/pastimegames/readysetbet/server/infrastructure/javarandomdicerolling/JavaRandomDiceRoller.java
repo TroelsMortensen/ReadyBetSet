@@ -6,7 +6,7 @@ import com.pastimegames.readysetbet.core.domain.valueobjects.DiceRoll;
 import java.util.Random;
 
 public class JavaRandomDiceRoller implements DiceRoller {
-    private Random random = new Random(System.currentTimeMillis());
+    private Random random = new Random(1);//TODO: Change back to actual randomness //System.currentTimeMillis());
     @Override
     public DiceRoll rollDice() {
         int firstRoll = random.nextInt(6) + 1;

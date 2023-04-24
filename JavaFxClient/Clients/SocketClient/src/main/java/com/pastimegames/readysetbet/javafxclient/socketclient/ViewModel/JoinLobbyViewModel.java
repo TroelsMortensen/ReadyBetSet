@@ -2,8 +2,9 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
-import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.PlayerRepresentation;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -13,41 +14,59 @@ public class JoinLobbyViewModel {
 
     private Model model;
     private ViewHandler viewHandler;
-    private PlayerRepresentation player;
     private StringProperty name;
     private StringProperty colour;
+    private StringProperty systemResponse;
 
-    public JoinLobbyViewModel(Model model, PlayerRepresentation player) {
+
+    private BooleanProperty joinRequestAccepted;
+
+    public JoinLobbyViewModel(Model model) {
         this.model = model;
-        this.player = player;
+
         name = new SimpleStringProperty();
         colour = new SimpleStringProperty();
-        player.nameProperty().bindBidirectional(name);
-        player.colourProperty().bindBidirectional(colour);
+        systemResponse = new SimpleStringProperty();
+        joinRequestAccepted = new SimpleBooleanProperty(false);
+
         model.addPropertyChangeListener("LOBBY_CLOSED", this::onLobbyClosed);
+        model.addPropertyChangeListener("PLAYER_JOIN_REQUEST_ACCEPTED", this::onPlayerJoinRequestAccepted);
+    }
+
+    private void onPlayerJoinRequestAccepted(PropertyChangeEvent propertyChangeEvent) {
+        Platform.runLater(() ->
+                {
+                    systemResponse.set("JOIN REQUEST ACCEPTED");
+                    joinRequestAccepted.set(true);
+                }
+        );
     }
 
     private void onLobbyClosed(PropertyChangeEvent propertyChangeEvent) {
-        Platform.runLater(()->viewHandler.openRaceView());
+        Platform.runLater(() -> viewHandler.openBettingView());
     }
 
     public void join() {
-        model.joinLobby(player);
+        model.joinLobby(name.getValue(), colour.getValue());
     }
 
-    public void setViewHandler(ViewHandler viewHandler)
-    {
+    public void setViewHandler(ViewHandler viewHandler) {
         this.viewHandler = viewHandler;
     }
 
-    public StringProperty getColour()
-    {
+    public StringProperty getColour() {
         return colour;
     }
 
-    public StringProperty getName()
-    {
+    public StringProperty getName() {
         return name;
     }
 
+    public StringProperty systemResponseProperty() {
+        return systemResponse;
+    }
+
+    public BooleanProperty joinRequestAcceptedProperty() {
+        return joinRequestAccepted;
+    }
 }

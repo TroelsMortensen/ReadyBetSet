@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.View;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
+import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Coin;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.BettingBoardViewModel;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.CoinRepresentation;
 import javafx.fxml.FXML;
@@ -47,17 +48,16 @@ public class BettingBoardViewController {
 
     private void createButtonsForCoins()
     {
-        List<CoinRepresentation> coinRepresentationList = bettingBoardViewModel.getCoins();
-        for (CoinRepresentation coin : coinRepresentationList)
+        for (Coin coin : bettingBoardViewModel.getCoins())
         {
             Button buttonForCoin = new Button(Integer.toString(coin.getValue()));
-            buttonForCoin.disableProperty().bind(coin.isUsed());
+            buttonForCoin.disableProperty().bind(bettingBoardViewModel.getIsUsedPropertyForCoinWithID(coin.getID()));
             hBoxCoins.getChildren().add(buttonForCoin);
             buttonForCoin.setOnAction(event -> setSelectedCoin(coin));
         }
     }
 
-    private void setSelectedCoin(CoinRepresentation coin)
+    private void setSelectedCoin(Coin coin)
     {
         bettingBoardViewModel.setSelectedCoin(coin);
     }
