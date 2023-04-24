@@ -15,6 +15,7 @@ import com.pastimegames.readysetbet.core.domain.events.RaceFinishedEvent;
 import com.pastimegames.readysetbet.core.domain.events.ResultsCalculatedEvent;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.readysetbet.core.domain.valueobjects.PlayerBalances;
+import com.pastimegames.readysetbet.core.domain.valueobjects.RaceResult;
 import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.CoinDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
@@ -110,10 +111,11 @@ public class GameManagerImpl implements GameManager {
         if(gameState.currentGameState() != GameState.State.RACE_FINISHED){
             throw new GameLogicException("Cannot display results if race is not in finished state");
         }
-        bookMaker.deliverWinnings(race.getRaceResult(), lobby);
-        bookMaker.deliverPenalties(race.getRaceResult(), lobby);
+        RaceResult raceResult = race.getRaceResult();
+        bookMaker.deliverWinnings(raceResult, lobby);
+        bookMaker.deliverPenalties(raceResult, lobby);
         PlayerBalances saldos = lobby.getPlayerBalances();
-        DomainEventPublisher.instance().publish(new ResultsCalculatedEvent(saldos));
+        DomainEventPublisher.instance().publish(new ResultsCalculatedEvent(saldos, raceResult));
     }
 
     @Override

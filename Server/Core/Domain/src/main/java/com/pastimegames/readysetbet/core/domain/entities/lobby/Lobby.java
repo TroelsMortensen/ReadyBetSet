@@ -4,6 +4,7 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublis
 import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobbyEvent;
 import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobbyEvent;
 import com.pastimegames.readysetbet.core.domain.exceptions.DomainLogicException;
+import com.pastimegames.readysetbet.core.domain.valueobjects.PlayerBalance;
 import com.pastimegames.readysetbet.core.domain.valueobjects.PlayerBalances;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class Lobby {
     }
 
     public PlayerBalances getPlayerBalances() {
-        Map<String, Integer> mapOfBalances = lobbyPlayerList.stream().collect(Collectors.toMap(Player::name, Player::balance));
+        List<PlayerBalance> mapOfBalances = lobbyPlayerList.stream().map(player -> new PlayerBalance(player.balance(), player.name())).collect(Collectors.toList());
         PlayerBalances pb = new PlayerBalances(mapOfBalances);
         return pb;
     }
