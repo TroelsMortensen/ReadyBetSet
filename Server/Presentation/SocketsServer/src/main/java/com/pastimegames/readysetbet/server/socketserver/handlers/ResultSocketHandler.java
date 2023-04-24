@@ -17,7 +17,8 @@ public class ResultSocketHandler extends SocketHandlerBase {
     @Override
     protected void setupListeners() {
         subscribe(ResultsCalculatedEvent.type(), (DomainEventListener<ResultsCalculatedEvent>) event -> {
-            writeToClient(SocketMessages.Events.Result.RESULTS_CALCULATED, new ResultsCalculatedDto(event.playerBalances()));
+           // writeToClient(SocketMessages.Events.Result.RESULTS_CALCULATED, new ResultsCalculatedDto(event.playerBalances()));
+            System.out.println("Maybe TODO, send results to clients, ResultSocketHandler class");
         });
     }
 

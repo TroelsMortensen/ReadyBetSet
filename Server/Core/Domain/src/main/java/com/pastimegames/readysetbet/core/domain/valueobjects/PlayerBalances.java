@@ -12,11 +12,12 @@ public class PlayerBalances {
     }
 
 
-    public int getBalanceOfPlayer(String playerName){
+    public int balanceOfPlayer(String playerName){
         return balances.get(playerName);
     }
 
-    public Iterable<String> getPlayerNames(){
+    public Iterable<String> playerNames(){
         return balances.keySet();
     }
+
 }
