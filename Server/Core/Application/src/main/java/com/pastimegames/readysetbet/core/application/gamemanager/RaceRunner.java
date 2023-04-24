@@ -41,6 +41,7 @@ public class RaceRunner {
             }
         } catch (InterruptedException ignored) {
         }
+
     }
 
 }

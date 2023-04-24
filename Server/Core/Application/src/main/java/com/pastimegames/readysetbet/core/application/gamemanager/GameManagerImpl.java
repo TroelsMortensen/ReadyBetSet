@@ -7,9 +7,11 @@ import com.pastimegames.readysetbet.core.domain.entities.lobby.Lobby;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.Player;
 import com.pastimegames.readysetbet.core.domain.entities.lobby.RaceOptions;
 import com.pastimegames.readysetbet.core.domain.entities.race.Race;
+import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventListener;
 import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublisher;
 import com.pastimegames.readysetbet.core.domain.events.NextRaceReadyEvent;
 import com.pastimegames.readysetbet.core.domain.events.LobbyFinalizedEvent;
+import com.pastimegames.readysetbet.core.domain.events.RaceFinishedEvent;
 import com.pastimegames.readysetbet.core.domain.events.ResultsCalculatedEvent;
 import com.pastimegames.readysetbet.core.domain.exceptions.GameLogicException;
 import com.pastimegames.readysetbet.core.domain.valueobjects.PlayerBalances;
@@ -28,6 +30,7 @@ public class GameManagerImpl implements GameManager {
         IN_LOBBY,
         RACE_READY,
         RACE_IN_PROGRESS,
+        RACE_FINISHED,
         IN_RESULTS;
     }
     private final DiceRoller diceRoller;
@@ -43,6 +46,10 @@ public class GameManagerImpl implements GameManager {
         this.diceRoller = diceRoller;
         currentGameState = GameState.IN_LOBBY;
         lobby = new Lobby();
+
+        DomainEventPublisher.instance().subscribe(RaceFinishedEvent.type(), (DomainEventListener<RaceFinishedEvent>) raceFinished -> {
+            currentGameState = GameState.RACE_FINISHED;
+        });
     }
 
     @Override
@@ -101,6 +108,9 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public void displayResults() {
+        if(currentGameState != GameState.RACE_FINISHED){
+            throw new GameLogicException("Cannot display results if race is not in finished state");
+        }
         bookMaker.deliverWinnings(race.getRaceResult(), lobby);
         bookMaker.deliverPenalties(race.getRaceResult(), lobby);
         PlayerBalances saldos = lobby.getPlayerBalances();
