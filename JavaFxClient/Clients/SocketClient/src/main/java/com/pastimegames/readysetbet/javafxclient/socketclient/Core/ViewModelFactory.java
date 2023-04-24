@@ -7,7 +7,8 @@ import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.RaceView
 
 public class ViewModelFactory
 {
-  private Model model;
+  private final Model model;
+
   private RaceViewModel raceViewModel;
   private JoinLobbyViewModel joinLobbyViewModel;
   private BettingBoardViewModel bettingBoardViewModel;

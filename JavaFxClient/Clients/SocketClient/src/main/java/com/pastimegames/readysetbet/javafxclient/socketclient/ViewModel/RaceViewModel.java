@@ -10,8 +10,8 @@ import java.util.List;
 
 public class RaceViewModel
 {
-  private List<HorseRepresentation> horses;
-  private Model model;
+  private final List<HorseRepresentation> horses;
+  private final Model model;
 
   public RaceViewModel(Model model)
   {

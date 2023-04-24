@@ -2,7 +2,7 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.View;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.JoinLobbyViewModel;
-import javafx.beans.property.BooleanProperty;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,18 +26,23 @@ public class JoinLobbyViewController {
     public void init(ViewHandler viewHandler, JoinLobbyViewModel joinLobbyViewModel) {
         this.viewHandler = viewHandler;
         this.joinLobbyViewModel = joinLobbyViewModel;
-        joinLobbyViewModel.setViewHandler(viewHandler);
         initializeColours();
 
-        textFieldPlayerName.textProperty().bindBidirectional(joinLobbyViewModel.getName());
+        textFieldPlayerName.textProperty().bindBidirectional(joinLobbyViewModel.getNameProperty());
         comboBoxPlayerColour.setOnAction(event -> {
             String pickedColour = comboBoxPlayerColour.getValue();
-            joinLobbyViewModel.getColour().set(pickedColour);
+            joinLobbyViewModel.getColourProperty().set(pickedColour);
         });
         labelSystemResponse.textProperty().bind(joinLobbyViewModel.systemResponseProperty());
         textFieldPlayerName.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
         comboBoxPlayerColour.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
         buttonJoinLobby.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
+        joinLobbyViewModel.setOnLobbyClosed(this::onLobbyClosed);
+    }
+
+    private void onLobbyClosed(Object o) {
+        System.out.println("Lobby closed in view");
+        Platform.runLater(() -> viewHandler.openViewBetting());
     }
 
     private void initializeColours() {

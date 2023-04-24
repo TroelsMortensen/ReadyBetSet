@@ -24,7 +24,7 @@ public class RaceViewController {
 
         initializeUIHorses();
         initializeGridPane();
-        registerListeners();
+        registerListenersForHorses();
     }
 
     private void initializeGridPane() {
@@ -39,15 +39,15 @@ public class RaceViewController {
         gridRace.add(horsesAsLabels.get(8), 0,9);
     }
 
-    private void registerListeners() {
+    private void registerListenersForHorses() {
         for (HorseRepresentation horse : raceViewModel.getViewModelHorses())
         {
-            horse.positionProperty().addListener((observable, oldValue, newValue) -> updateHorseLabels(horse.getName(), oldValue, newValue));
+            horse.getPositionProperty().addListener((observable, oldValue, newValue) -> updateHorseLabels(horse.getName(), newValue));
         }
     }
 
     //Pretty dirty...
-    private void updateHorseLabels(String horseName, Number oldValue, Number newValue) {
+    private void updateHorseLabels(String horseName, Number newValue) {
         for (Label horseLabel : horsesAsLabels) {
             if(horseLabel.getText().equals(horseName))
             {

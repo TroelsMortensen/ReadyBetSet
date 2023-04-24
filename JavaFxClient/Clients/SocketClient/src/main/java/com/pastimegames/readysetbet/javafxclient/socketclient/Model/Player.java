@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private String name;
-    private String colour;
-    private List<Coin> coins;
-
+    private final String name;
+    private final String colour;
+    private final List<Coin> coins;
 
     public Player(String name, String colour) {
         this.name = name;
@@ -29,16 +28,8 @@ public class Player {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getColour() {
         return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
     }
 
     public List<Coin> getCoins() {

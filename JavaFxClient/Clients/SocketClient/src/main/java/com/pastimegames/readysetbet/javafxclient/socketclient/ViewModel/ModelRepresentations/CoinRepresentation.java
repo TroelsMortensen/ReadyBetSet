@@ -3,26 +3,28 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRe
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
-public class CoinRepresentation
-{
+public class CoinRepresentation {
 
-  private int value;
-  private BooleanProperty isUsed;
+    private final int value;
+    private final BooleanProperty isUsed;
+    private final int ID;
 
-  public CoinRepresentation(int value)
-  {
-    this.value = value;
-    this.isUsed = new SimpleBooleanProperty();
-    this.isUsed.set(false);
-  }
+    public CoinRepresentation(int value, int id) {
+        this.value = value;
+        ID = id;
+        this.isUsed = new SimpleBooleanProperty();
+        this.isUsed.set(false);
+    }
 
-  public int getValue()
-  {
-    return value;
-  }
+    public int getValue() {
+        return value;
+    }
 
-  public BooleanProperty isUsed()
-  {
-      return isUsed;
-  }
+    public BooleanProperty getIsUsedProperty() {
+        return isUsed;
+    }
+
+    public int getID() {
+        return ID;
+    }
 }

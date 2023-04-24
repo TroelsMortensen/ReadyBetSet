@@ -7,8 +7,8 @@ import javafx.beans.property.StringProperty;
 
 public class HorseRepresentation
 {
-  private StringProperty name;
-  private IntegerProperty position;
+  private final StringProperty name;
+  private final IntegerProperty position;
 
   public HorseRepresentation(String name, int position)
   {
@@ -23,22 +23,7 @@ public class HorseRepresentation
     return name.get();
   }
 
-  public StringProperty nameProperty()
-  {
-    return name;
-  }
-
-  public void setName(String name)
-  {
-    this.name.set(name);
-  }
-
-  public int getPosition()
-  {
-    return position.get();
-  }
-
-  public IntegerProperty positionProperty()
+  public IntegerProperty getPositionProperty()
   {
     return position;
   }

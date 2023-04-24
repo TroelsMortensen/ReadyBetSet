@@ -2,9 +2,9 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.Model;
 
 public class Coin {
 
-    private int value;
+    private final int value;
     private boolean isUsed;
-    private int ID; //TODO: Test again without, and if it works, remove
+    private final int ID; //TODO: Ensure uniqueness
 
     public Coin(int value, boolean isUsed, int id) {
         this.value = value;

@@ -4,42 +4,57 @@ import com.pastimegames.readysetbet.javafxclient.socketclient.Events.BetPlacedEv
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Coin;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.CoinRepresentation;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class BettingBoardViewModel {
-    private Model model;
+    private final Model model;
+
+    private final List<CoinRepresentation> coinRepresentations;
+    private CoinRepresentation selectedCoin;
+
     private Consumer<Integer> onBetPlaced;
-    private Map<Integer, BooleanProperty> bettingCoinsStatus;
-    private Coin selectedCoin;
 
     public BettingBoardViewModel(Model model)
     {
         this.model = model;
-        model.addPropertyChangeListener("BET_ACCEPTED", this::onBetAccepted);
-        model.addPropertyChangeListener("COIN_USED", this::onCoinUsed);
-        bettingCoinsStatus = new HashMap<>();
+        coinRepresentations = new ArrayList<>();
         populateBettingCoinsStatus();
+        initializeListeners();
     }
 
-    private void onCoinUsed(PropertyChangeEvent propertyChangeEvent) {
-        Coin coin = (Coin) propertyChangeEvent.getNewValue();
-        bettingCoinsStatus.get(coin.getID()).setValue(true);
+    private void initializeListeners() {
+        model.addPropertyChangeListener("BET_ACCEPTED", this::onBetAccepted);
+        model.addPropertyChangeListener("BET_PLACED", this::onBetPlaced);
+        model.addPropertyChangeListener("COIN_USED", this::onCoinUsed);
     }
 
     private void populateBettingCoinsStatus() {
         List<Coin> coins = model.getCoins();
         for(Coin coin : coins)
         {
-            bettingCoinsStatus.put(coin.getID(), new SimpleBooleanProperty());
+            CoinRepresentation coinRepresentation = new CoinRepresentation(coin.getValue(), coin.getID());
+            coinRepresentations.add(coinRepresentation);
+        }
+    }
+
+    private void onBetPlaced(PropertyChangeEvent propertyChangeEvent) {
+        BetPlacedEvent betPlacedEvent = (BetPlacedEvent) propertyChangeEvent.getNewValue();
+        onBetPlaced.accept(betPlacedEvent.index()); //Fire event to the view using Java Consumer functional interface
+    }
+
+    private void onCoinUsed(PropertyChangeEvent propertyChangeEvent) {
+        int coinID = (int) propertyChangeEvent.getNewValue();
+        for(CoinRepresentation coinRepresentation : coinRepresentations)
+        {
+            if(coinRepresentation.getID() == coinID)
+            {
+                coinRepresentation.getIsUsedProperty().set(true);
+                break;
+            }
         }
     }
 
@@ -59,12 +74,7 @@ public class BettingBoardViewModel {
         model.placeBet(bettingPosition, selectedCoin.getValue());
     }
 
-    public List<Coin> getCoins()
-    {
-        return model.getCoins();
-    }
-
-    public void setSelectedCoin(Coin coin)
+    public void setSelectedCoin(CoinRepresentation coin)
     {
         selectedCoin = coin;
     }
@@ -74,7 +84,7 @@ public class BettingBoardViewModel {
         this.onBetPlaced = onBetPlaced;
     }
 
-    public ObservableValue<Boolean> getIsUsedPropertyForCoinWithID(int id) {
-        return bettingCoinsStatus.get(id);
+    public List<CoinRepresentation> getCoinRepresentations() {
+        return coinRepresentations;
     }
 }

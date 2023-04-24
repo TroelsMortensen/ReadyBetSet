@@ -1,7 +1,5 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.View;
 
-import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
-import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Coin;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.BettingBoardViewModel;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.CoinRepresentation;
 import javafx.fxml.FXML;
@@ -18,14 +16,15 @@ public class BettingBoardViewController {
     private HBox hBoxCoins;
     @FXML
     private GridPane gridPaneBettingBoard;
+
     private BettingBoardViewModel bettingBoardViewModel;
     private List<Button> bettingButtons;
 
     public void init(BettingBoardViewModel bettingBoardViewModel) {
-        createBettingGrid();
         this.bettingBoardViewModel = bettingBoardViewModel;
+        createBettingGrid();
         createButtonsForCoins();
-        bettingBoardViewModel.setOnBetPlaced(index -> disableButtonForBet(index));
+        bettingBoardViewModel.setOnBetPlaced(this::disableButtonForBet);
     }
 
     private void createBettingGrid()
@@ -48,16 +47,17 @@ public class BettingBoardViewController {
 
     private void createButtonsForCoins()
     {
-        for (Coin coin : bettingBoardViewModel.getCoins())
+        List<CoinRepresentation> coinRepresentations = bettingBoardViewModel.getCoinRepresentations();
+        for (CoinRepresentation coinRepresentation : coinRepresentations)
         {
-            Button buttonForCoin = new Button(Integer.toString(coin.getValue()));
-            buttonForCoin.disableProperty().bind(bettingBoardViewModel.getIsUsedPropertyForCoinWithID(coin.getID()));
+            Button buttonForCoin = new Button(Integer.toString(coinRepresentation.getValue()));
+            buttonForCoin.disableProperty().bind(coinRepresentation.getIsUsedProperty());
             hBoxCoins.getChildren().add(buttonForCoin);
-            buttonForCoin.setOnAction(event -> setSelectedCoin(coin));
+            buttonForCoin.setOnAction(event -> setSelectedCoin(coinRepresentation));
         }
     }
 
-    private void setSelectedCoin(Coin coin)
+    private void setSelectedCoin(CoinRepresentation coin)
     {
         bettingBoardViewModel.setSelectedCoin(coin);
     }
@@ -69,6 +69,7 @@ public class BettingBoardViewController {
 
     private void disableButtonForBet(int index)
     {
-        bettingButtons.get(index).setDisable(true);
+        Button button = bettingButtons.get(index);
+        button.setDisable(true);
     }
 }
