@@ -19,24 +19,22 @@ import com.pastimegames.shared.datatransferobjects.BetDto;
 import com.pastimegames.shared.datatransferobjects.CoinDto;
 import com.pastimegames.shared.datatransferobjects.PlayerDto;
 
-import java.util.Map;
-
 public class GameManagerImpl implements GameManager {
 
 
     private BookMaker bookMaker;
 
-    private enum GameState {
-        IN_LOBBY,
-        RACE_READY,
-        RACE_IN_PROGRESS,
-        RACE_FINISHED,
-        IN_RESULTS;
-    }
+//    private enum GameState {
+//        IN_LOBBY,
+//        RACE_READY,
+//        RACE_IN_PROGRESS,
+//        RACE_FINISHED,
+//        IN_RESULTS;
+//    }
     private final DiceRoller diceRoller;
 
     private final Lobby lobby;
-    private GameState currentGameState;
+    private GameState gameState;
     private Race race;
     private RaceOptions options;
 
@@ -44,17 +42,18 @@ public class GameManagerImpl implements GameManager {
 
     public GameManagerImpl(DiceRoller diceRoller) {
         this.diceRoller = diceRoller;
-        currentGameState = GameState.IN_LOBBY;
+        gameState = new GameState();
+        gameState.updateState(GameState.State.IN_LOBBY);
         lobby = new Lobby();
 
         DomainEventPublisher.instance().subscribe(RaceFinishedEvent.type(), (DomainEventListener<RaceFinishedEvent>) raceFinished -> {
-            currentGameState = GameState.RACE_FINISHED;
+            gameState.updateState(GameState.State.RACE_FINISHED);
         });
     }
 
     @Override
     public void joinLobby(PlayerDto playerDto) {
-        if(currentGameState != GameState.IN_LOBBY){
+        if(gameState.currentGameState() != GameState.State.IN_LOBBY){
             throw new GameLogicException("Cannot join a game, when it is not in lobby");
         }
 
@@ -76,7 +75,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void finalizeLobby(RaceOptions options) {
         this.options = options;
-        if(currentGameState != GameState.IN_LOBBY){
+        if(gameState.currentGameState() != GameState.State.IN_LOBBY){
             throw new GameLogicException("Cannot initialize a race outside of the lobby");
         }
 
@@ -86,17 +85,17 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public void startRace() {
-        if(currentGameState != GameState.RACE_READY){
+        if(gameState.currentGameState() != GameState.State.RACE_READY){
             throw new GameLogicException("Cannot start er race, before it is ready");
         }
-        currentGameState = GameState.RACE_IN_PROGRESS;
+        gameState.updateState(GameState.State.RACE_IN_PROGRESS);
         RaceRunner raceRunner = new RaceRunner(options);
         raceRunner.run(race, diceRoller);
     }
 
     @Override
     public void placeBet(BetDto betDto) {
-        if(currentGameState != GameState.RACE_IN_PROGRESS) {
+        if(gameState.currentGameState() != GameState.State.RACE_IN_PROGRESS) {
             throw new GameLogicException("Cannot bet when race is not in progress.");
         }
         CoinDto coin = betDto.coin();
@@ -108,7 +107,7 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public void displayResults() {
-        if(currentGameState != GameState.RACE_FINISHED){
+        if(gameState.currentGameState() != GameState.State.RACE_FINISHED){
             throw new GameLogicException("Cannot display results if race is not in finished state");
         }
         bookMaker.deliverWinnings(race.getRaceResult(), lobby);
@@ -130,7 +129,7 @@ public class GameManagerImpl implements GameManager {
     private void setupRace() {
         race = new Race();
         race.initializeRace();
-        currentGameState = GameState.RACE_READY;
+        gameState.updateState(GameState.State.RACE_READY);
         bookMaker = new BookMaker();
         // TODO reset noget betting mht coins?
     }
