@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
+package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -25,7 +25,7 @@ public class CoinRepresentation
     return value;
   }
 
-  public BooleanProperty isAvailable()
+  public BooleanProperty isUsed()
   {
       return isUsed;
   }

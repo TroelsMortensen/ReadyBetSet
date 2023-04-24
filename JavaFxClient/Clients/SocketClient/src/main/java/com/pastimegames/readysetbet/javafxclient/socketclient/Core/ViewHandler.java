@@ -42,8 +42,8 @@ public class ViewHandler
       throw new RuntimeException(e);
     }
     BettingBoardViewController bettingBoardViewController = fxmlLoader.getController();
-    bettingBoardViewController.init(this, viewModelFactory.getBettingBoardViewModel());
-    mainStage.setTitle("Lobby");
+    bettingBoardViewController.init(viewModelFactory.getBettingBoardViewModel());
+    mainStage.setTitle("Betting");
     mainStage.setScene(scene);
     mainStage.show();
   }

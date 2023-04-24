@@ -3,7 +3,7 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.Core;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.BettingBoardViewModel;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.JoinLobbyViewModel;
-import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.PlayerRepresentation;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.PlayerRepresentation;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.RaceViewModel;
 
 public class ViewModelFactory

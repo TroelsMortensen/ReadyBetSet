@@ -1,4 +1,4 @@
-package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
+package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,10 +17,15 @@ public class PlayerRepresentation
   {
     this.name = new SimpleStringProperty();
     this.colour = new SimpleStringProperty();
+
+    //FOR TESTING PURPOSES NAME AND COLOR IS SET
+    this.name.set("DEFAULT");
+    this.colour.set("BLACK");
+    //this.name.set(name);
+    //this.colour.set(colour);
+    //------------------------------------------
     coins = FXCollections.observableArrayList();
     initializeCoins();
-    this.name.set(name);
-    this.colour.set(colour);
   }
 
   private void initializeCoins()
@@ -42,7 +47,6 @@ public class PlayerRepresentation
     return name;
   }
 
-
   public String getColour()
   {
     return colour.get();
@@ -53,9 +57,20 @@ public class PlayerRepresentation
     return colour;
   }
 
-
   public List<CoinRepresentation> getCoins()
   {
     return coins;
+  }
+
+  public void markCoinAsUsed(int valueOfCoin)
+  {
+    for (CoinRepresentation coin : coins)
+    {
+      if (coin.getValue() == valueOfCoin && coin.isUsed().get() == false)
+      {
+        coin.isUsed().set(true);
+        break;
+      }
+    }
   }
 }

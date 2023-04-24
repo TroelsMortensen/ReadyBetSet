@@ -1,7 +1,9 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.Networking;
 
+import com.pastimegames.readysetbet.javafxclient.socketclient.Events.BetPlacedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.HorseMovedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.PropertyChangeSubject;
+import com.pastimegames.shared.datatransferobjects.BetPlacedOnCellDto;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketDto;
 import com.pastimegames.shared.datatransferobjects.socketmessages.SocketMessages;
@@ -42,6 +44,9 @@ public class ClientConnection implements Runnable, PropertyChangeSubject {
                         case SocketMessages.Events.Race.HORSE_MOVED:
                             horsemoved((HorseMovedDto) response.content());
                             break;
+                        case SocketMessages.Events.Betting.BET_PLACED:
+                            betPlaced((BetPlacedOnCellDto) response.content());
+                            break;
                     }
                 }
             } catch (IOException e) {
@@ -49,6 +54,12 @@ public class ClientConnection implements Runnable, PropertyChangeSubject {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+    }
+
+    private void betPlaced(BetPlacedOnCellDto betPlaced)
+    {
+        BetPlacedEvent betPlacedEvent = new BetPlacedEvent(betPlaced.index(), betPlaced.coinValue(), betPlaced.owningPlayer(), betPlaced.color());
+        propertyChangeSupport.firePropertyChange("BET_PLACED", null, betPlacedEvent);
     }
 
     private void horsemoved(HorseMovedDto horseMovedDto) {

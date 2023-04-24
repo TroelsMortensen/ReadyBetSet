@@ -2,6 +2,7 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.HorseMovedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.HorseRepresentation;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;

@@ -2,6 +2,7 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Core.ViewHandler;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.PlayerRepresentation;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
