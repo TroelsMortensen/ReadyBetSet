@@ -24,7 +24,7 @@ public class RaceViewController
   private ViewHandler viewHandler;
   private List<Label> horsesAsLabels;
 
-  public void init(RaceViewModel raceViewModel, ViewHandler viewHandler)
+  public void init(ViewHandler viewHandler, RaceViewModel raceViewModel)
   {
     this.raceViewModel = raceViewModel;
     this.viewHandler = viewHandler;

@@ -24,15 +24,9 @@ public class Model implements PropertyChangeSubject
     initializeListeners();
   }
 
-  public void playerJoin(String name)
-  {
-    propertyChangeSupport.firePropertyChange("PLAYER_JOIN", null, name);
-  }
-
-  public void playerLeave(String name)
-  {
-    propertyChangeSupport.firePropertyChange("PLAYER_LEAVE", null, name);
-  }
+  /*
+    * methods used by view to interact with game manager
+   */
 
   public void initializeRace(RaceOptions raceOptions)
   {
@@ -43,10 +37,19 @@ public class Model implements PropertyChangeSubject
     gameManager.startRace();
   }
 
+  public void goToNextRace() {
+    gameManager.nextRace();
+  }
+
   public void displayResults()
   {
     gameManager.displayResults();
   }
+
+  /*
+    * PropertyChangeSubject implementation
+    * methods for adding and removing listeners
+   */
 
   @Override
   public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
@@ -73,6 +76,10 @@ public class Model implements PropertyChangeSubject
   public void removePropertyChangeListener(PropertyChangeListener listener) {
     propertyChangeSupport.removePropertyChangeListener(listener);
   }
+
+  /*
+    * methods for initializing listeners
+   */
 
   private void initializeListeners() {
     DomainEventPublisher.instance().subscribe(HorseMovedEvent.type(), (DomainEventListener<HorseMovedEvent>) horseMovedEvent -> {

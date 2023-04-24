@@ -29,12 +29,19 @@ public class ResultViewModel {
         ResultsCalculatedEvent resultsCalculatedEvent = (ResultsCalculatedEvent) propertyChangeEvent.getNewValue();
         PlayerBalances playerBalances = resultsCalculatedEvent.playerBalances();
         for (String playerName : playerBalances.playerNames()) {
-            results += playerName + " : " + playerBalances.balanceOfPlayer(playerName) + "/n";
+            results += playerName + " : " + playerBalances.balanceOfPlayer(playerName) + "\n";
         }
+        results += "Winning horse: " + resultsCalculatedEvent.raceResult().getNameOfWinnerHorse() + "\n";
+        results += "Show horses: " + resultsCalculatedEvent.raceResult().getNamesOfShowHorses() + "\n";
+        results += "Place horses: " + resultsCalculatedEvent.raceResult().getNamesOfPlaceHorses() + "\n";
         this.results.set(results);
     }
 
     public StringProperty resultsProperty() {
         return results;
+    }
+
+    public void goToNextRace() {
+        model.goToNextRace();
     }
 }

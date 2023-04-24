@@ -4,109 +4,93 @@ import com.pastimegames.readysetbet.server.presentation.javafxgui.View.RaceViewC
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ResultsViewController;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerLobbyViewController;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerMainViewController;
-import com.pastimegames.readysetbet.server.presentation.javafxgui.RunServerGui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ViewHandler
-{
+public class ViewHandler {
 
-  private Stage mainStage;
-  private ViewModelFactory viewModelFactory;
+    private Stage mainStage;
+    private ViewModelFactory viewModelFactory;
 
-  public ViewHandler(ViewModelFactory viewModelFactory)
-  {
-    this.viewModelFactory = viewModelFactory;
-  }
+    private ServerMainViewController serverMainViewController;
+    private ServerLobbyViewController serverLobbyViewController;
+    private RaceViewController raceViewController;
+    private ResultsViewController resultsViewController;
 
-  public void start(Stage stage)
-  {
-    mainStage = stage;
-    //openRaceView();
-    //openResultsView();
-    openViewLobby();
-  }
+    private Map<String, Scene> scenes;
 
-  public void openViewMain()
-  {
-    FXMLLoader fxmlLoader = new FXMLLoader(
-        RunServerGui.class.getResource("ServerMainView.fxml"));
-    Scene scene = null;
-    try
-    {
-      scene = new Scene(fxmlLoader.load(), 320, 240);
+    public ViewHandler(ViewModelFactory viewModelFactory) {
+        this.viewModelFactory = viewModelFactory;
+        scenes = new HashMap<>();
     }
-    catch (IOException e)
-    {
-      throw new RuntimeException(e);
-    }
-    ServerMainViewController mainViewController = fxmlLoader.getController();
-    mainViewController.init(this);
-    mainStage.setTitle("Main");
-    mainStage.setScene(scene);
-    mainStage.show();
-  }
 
-  public void openViewLobby()
-  {
-    FXMLLoader fxmlLoader = new FXMLLoader(
-        RunServerGui.class.getResource("ServerLobbyView.fxml"));
-    Scene scene = null;
-    try
-    {
-      scene = new Scene(fxmlLoader.load(), 320, 240);
+    public void start(Stage stage) {
+        mainStage = stage;
+        //openRaceView();
+        //openResultsView();
+        //openViewLobby();
+        openViewMain();
     }
-    catch (IOException e)
-    {
-      throw new RuntimeException(e);
-    }
-    ServerLobbyViewController serverLobbyViewController = fxmlLoader.getController();
-    serverLobbyViewController.init(this, viewModelFactory.getServerLobbyViewModel());
-    mainStage.setTitle("Lobby");
-    mainStage.setScene(scene);
-    mainStage.show();
-  }
 
-  public void openRaceView()
-  {
-    FXMLLoader fxmlLoader = new FXMLLoader(
-        RunServerGui.class.getResource("RaceView.fxml"));
-    Scene scene = null;
-    try
-    {
-      scene = new Scene(fxmlLoader.load(), 600, 600);
+    public void openViewMain() {
+        if(serverMainViewController == null) {
+            serverMainViewController = loadFromFXML("ServerMainView", "Main");
+            serverMainViewController.init(this);
+        }
+        changeScene("Main");
     }
-    catch (IOException e)
-    {
-      throw new RuntimeException(e);
-    }
-    RaceViewController raceViewController = fxmlLoader.getController();
-    raceViewController.init(viewModelFactory.getRaceViewModel(), this);
-    mainStage.setTitle("Lobby");
-    mainStage.setScene(scene);
-    mainStage.show();
-  }
 
-  public void openResultsView()
-  {
-    FXMLLoader fxmlLoader = new FXMLLoader(
-            RunServerGui.class.getResource("ResultsView.fxml"));
-    Scene scene = null;
-    try
-    {
-      scene = new Scene(fxmlLoader.load(), 600, 600);
+    public void openViewLobby() {
+        if(serverLobbyViewController == null) {
+            serverLobbyViewController = loadFromFXML("ServerLobbyView", "Lobby");
+            serverLobbyViewController.init(this, viewModelFactory.getServerLobbyViewModel());
+        }
+        changeScene("Lobby");
     }
-    catch (IOException e)
-    {
-      throw new RuntimeException(e);
+
+    public void openRaceView() {
+        if(raceViewController == null) {
+            raceViewController = loadFromFXML("RaceView", "Race");
+            raceViewController.init(this, viewModelFactory.getRaceViewModel());
+        }
+        changeScene("Race");
     }
-    ResultsViewController resultsViewController = fxmlLoader.getController();
-    resultsViewController.init(viewModelFactory.getResultsViewModel());
-    mainStage.setTitle("Lobby");
-    mainStage.setScene(scene);
-    mainStage.show();
-  }
+
+    public void openResultsView() {
+        if(resultsViewController == null) {
+            resultsViewController = loadFromFXML("ResultsView", "Results");
+            resultsViewController.init(this, viewModelFactory.getResultsViewModel());
+        }
+        changeScene("Results");
+    }
+
+    private void changeScene(String title) {
+        mainStage.setTitle(title);
+        mainStage.setScene(scenes.get(title));
+        mainStage.show();
+    }
+
+    private <T> T loadFromFXML(String path, String title) {
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(ViewHandler.class.getResource("../" + path + ".fxml"));
+            if(scenes.get(title) == null)
+            {
+                Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+                scenes.put(title, scene);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fxmlLoader.getController();
+    }
+
+
+
+
 }
