@@ -7,6 +7,7 @@ import com.pastimegames.readysetbet.core.domain.eventpublisher.DomainEventPublis
 import com.pastimegames.readysetbet.core.domain.events.HorseMovedEvent;
 import com.pastimegames.readysetbet.core.domain.events.PlayerJoinedLobbyEvent;
 import com.pastimegames.readysetbet.core.domain.events.PlayerLeftLobbyEvent;
+import com.pastimegames.readysetbet.core.domain.events.ResultsCalculatedEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -40,6 +41,11 @@ public class Model implements PropertyChangeSubject
 
   public void startRace() {
     gameManager.startRace();
+  }
+
+  public void displayResults()
+  {
+    gameManager.displayResults();
   }
 
   @Override
@@ -77,6 +83,9 @@ public class Model implements PropertyChangeSubject
     });
     DomainEventPublisher.instance().subscribe(PlayerLeftLobbyEvent.type(), (DomainEventListener<PlayerLeftLobbyEvent>) playerLeftLobby -> {
       propertyChangeSupport.firePropertyChange("PLAYER_LEAVE", null, playerLeftLobby);
+    });
+    DomainEventPublisher.instance().subscribe(ResultsCalculatedEvent.type(), (DomainEventListener<ResultsCalculatedEvent>) resultsCalculatedEvent -> {
+      propertyChangeSupport.firePropertyChange("RESULTS_CALCULATED", null, resultsCalculatedEvent);
     });
   }
 

@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.server.presentation.javafxgui.Core;
 
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.RaceViewController;
+import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ResultsViewController;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerLobbyViewController;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.View.ServerMainViewController;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.RunServerGui;
@@ -25,6 +26,7 @@ public class ViewHandler
   {
     mainStage = stage;
     //openRaceView();
+    //openResultsView();
     openViewLobby();
   }
 
@@ -82,7 +84,27 @@ public class ViewHandler
       throw new RuntimeException(e);
     }
     RaceViewController raceViewController = fxmlLoader.getController();
-    raceViewController.init(viewModelFactory.getRaceViewModel());
+    raceViewController.init(viewModelFactory.getRaceViewModel(), this);
+    mainStage.setTitle("Lobby");
+    mainStage.setScene(scene);
+    mainStage.show();
+  }
+
+  public void openResultsView()
+  {
+    FXMLLoader fxmlLoader = new FXMLLoader(
+            RunServerGui.class.getResource("ResultsView.fxml"));
+    Scene scene = null;
+    try
+    {
+      scene = new Scene(fxmlLoader.load(), 600, 600);
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
+    ResultsViewController resultsViewController = fxmlLoader.getController();
+    resultsViewController.init(viewModelFactory.getResultsViewModel());
     mainStage.setTitle("Lobby");
     mainStage.setScene(scene);
     mainStage.show();

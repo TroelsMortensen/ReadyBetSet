@@ -1,5 +1,6 @@
 package com.pastimegames.readysetbet.server.presentation.javafxgui.View;
 
+import com.pastimegames.readysetbet.server.presentation.javafxgui.Core.ViewHandler;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.ViewModelHorse;
 import com.pastimegames.readysetbet.server.presentation.javafxgui.ViewModel.RaceViewModel;
 import javafx.application.Platform;
@@ -20,11 +21,13 @@ public class RaceViewController
   private Button buttonStartRace;
 
   private RaceViewModel raceViewModel;
+  private ViewHandler viewHandler;
   private List<Label> horsesAsLabels;
 
-  public void init(RaceViewModel raceViewModel)
+  public void init(RaceViewModel raceViewModel, ViewHandler viewHandler)
   {
     this.raceViewModel = raceViewModel;
+    this.viewHandler = viewHandler;
     buttonStartRace.disableProperty().bind(raceViewModel.getStartButtonProperty());
 
     initializeUIHorses();
@@ -92,6 +95,13 @@ public class RaceViewController
   private void onButtonStartRace()
   {
     raceViewModel.startRace();
+  }
+
+  @FXML
+  private void onButtonViewResults()
+  {
+     viewHandler.openResultsView();
+     raceViewModel.displayResults();
   }
 
 }

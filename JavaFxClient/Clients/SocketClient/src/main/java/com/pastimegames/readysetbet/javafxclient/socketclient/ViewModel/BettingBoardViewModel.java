@@ -33,8 +33,16 @@ public class BettingBoardViewModel {
     }
 
     public void placeBet(int bettingPosition) {
+        if(selectedCoin == null)
+        {
+            //TODO: Show error message in a popup
+            System.out.println("No betting chip selected");
+            return;
+        }
         model.placeBet(bettingPosition, selectedCoin);
+        selectedCoin = null;
     }
+
 
     public List<CoinRepresentation> getCoins()
     {

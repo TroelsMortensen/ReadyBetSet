@@ -61,6 +61,11 @@ public class RaceViewModel
     startButtonProperty.set(true);
   }
 
+  public void displayResults()
+  {
+    model.displayResults();
+  }
+
   public BooleanProperty getStartButtonProperty() {
     return startButtonProperty;
   }
