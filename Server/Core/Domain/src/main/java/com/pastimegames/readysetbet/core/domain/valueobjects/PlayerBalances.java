@@ -11,9 +11,6 @@ public class PlayerBalances {
         balances = mapOfBalances;
     }
 
-    public void put(String playerName, int balance){
-        balances.put(playerName, balance);
-    }
 
     public int getBalanceOfPlayer(String playerName){
         return balances.get(playerName);
