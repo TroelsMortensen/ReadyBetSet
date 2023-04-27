@@ -1,6 +1,7 @@
 package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
+import com.pastimegames.readysetbet.javafxclient.socketclient.Model.PropertyChangeSubject;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -8,9 +9,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.function.Consumer;
 
-public class JoinLobbyViewModel {
+public class JoinLobbyViewModel implements PropertyChangeSubject {
 
     private final Model model;
 
@@ -19,10 +22,12 @@ public class JoinLobbyViewModel {
     private final StringProperty systemResponse;
     private final BooleanProperty joinRequestAccepted;
 
-    private Consumer onLobbyClosed; //TODO: Could use PropertyChangeSubject instead, but is overkill. Is there another way?
+    private PropertyChangeSupport support;
 
     public JoinLobbyViewModel(Model model) {
         this.model = model;
+        support = new PropertyChangeSupport(this);
+
         name = new SimpleStringProperty();
         colour = new SimpleStringProperty();
         systemResponse = new SimpleStringProperty();
@@ -45,7 +50,7 @@ public class JoinLobbyViewModel {
     }
 
     private void onLobbyClosed(PropertyChangeEvent propertyChangeEvent) {
-        onLobbyClosed.accept(null);
+        support.firePropertyChange("LOBBY_CLOSED", null, null);
     }
 
     public void join() {
@@ -68,7 +73,32 @@ public class JoinLobbyViewModel {
         return joinRequestAccepted;
     }
 
-    public void setOnLobbyClosed(Consumer onLobbyClosed) {
-        this.onLobbyClosed = onLobbyClosed;
+    /*
+    PropertyChangeSubject interface implementation
+     */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        if (propertyName == null || propertyName.equals(""))
+            addPropertyChangeListener(listener);
+        else
+            support.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        if (propertyName == null || propertyName.equals(""))
+            removePropertyChangeListener(listener);
+        else
+            support.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 }

@@ -2,20 +2,27 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
 
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.HorseMovedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
+import com.pastimegames.readysetbet.javafxclient.socketclient.Model.PropertyChangeSubject;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.HorseRepresentation;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RaceViewModel
+public class RaceViewModel implements PropertyChangeSubject
 {
   private final List<HorseRepresentation> horses;
   private final Model model;
 
+  private PropertyChangeSupport support;
+
   public RaceViewModel(Model model)
   {
     this.model = model;
+    support = new PropertyChangeSupport(this);
+
     horses = initializeHorses();
     initializeListeners();
   }
@@ -51,6 +58,35 @@ public class RaceViewModel
         horse.setPosition(horseMovedEvent.position());
       }
     }
+  }
+
+  /*
+    PropertyChangeSubject interface implementation
+     */
+  @Override
+  public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    if (propertyName == null || propertyName.equals(""))
+      addPropertyChangeListener(listener);
+    else
+      support.addPropertyChangeListener(propertyName, listener);
+  }
+
+  @Override
+  public void addPropertyChangeListener(PropertyChangeListener listener) {
+    support.addPropertyChangeListener(listener);
+  }
+
+  @Override
+  public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    if (propertyName == null || propertyName.equals(""))
+      removePropertyChangeListener(listener);
+    else
+      support.removePropertyChangeListener(propertyName, listener);
+  }
+
+  @Override
+  public void removePropertyChangeListener(PropertyChangeListener listener) {
+    support.removePropertyChangeListener(listener);
   }
 
 }

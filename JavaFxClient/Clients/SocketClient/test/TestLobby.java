@@ -6,6 +6,7 @@ import com.pastimegames.readysetbet.javafxclient.socketclient.Events.PlayerJoine
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.ModelManager;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Networking.Client;
+import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.BettingBoardViewModel;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.JoinLobbyViewModel;
 import com.pastimegames.shared.datatransferobjects.HorseMovedDto;
 import javafx.application.Platform;
@@ -49,7 +50,7 @@ public class TestLobby {
     }
 
     @Test
-    public void testLogingWithNameNeoGeoAndLobbyFinalizing()
+    public void testLoginWithNameNeoGeoAndLobbyFinalizing()
     {
         //arrange
         JoinLobbyViewModel joinLobbyViewModel = viewModelFactory.getJoinLobbyViewModel();
@@ -58,7 +59,7 @@ public class TestLobby {
 
         //act
         boolean[] isLobbyFinalized = {false}; //wrapping in array to make it final for lambda
-        joinLobbyViewModel.setOnLobbyClosed((event) -> {
+        joinLobbyViewModel.addPropertyChangeListener("LOBBY_CLOSED", (event) -> {
             isLobbyFinalized[0] = true;
         });
         joinLobbyViewModel.join();
@@ -70,6 +71,30 @@ public class TestLobby {
 
 
         assertEquals(true, isLobbyFinalized[0]);
+    }
+
+    @Test
+    public void testDoesReceiveInformationWhenAnotherPlayerPlacesABet()
+    {
+        //arrange
+        JoinLobbyViewModel joinLobbyViewModel = viewModelFactory.getJoinLobbyViewModel();
+        joinLobbyViewModel.getNameProperty().set("NeoGeo");
+        joinLobbyViewModel.getColourProperty().set("Red");
+        joinLobbyViewModel.join();
+        waitForRunLater();
+        TestClient client = (TestClient) clientFactory.getClient();
+        client.lobbyFinalized();
+
+        BettingBoardViewModel bettingBoardViewModel = viewModelFactory.getBettingBoardViewModel();
+        final int[] betsPlaced = {0}; //wrapping in array to make it final for lambda
+        bettingBoardViewModel.addPropertyChangeListener("BET_PLACED_ON_INDEX", (event) -> {
+            betsPlaced[0] = (int) event.getNewValue();
+        });
+
+        client.placeBet(21, 4, "NeoGeo", "Red");
+
+        //assert
+        assertEquals(21, betsPlaced[0]);
     }
 
     public static void waitForRunLater() {

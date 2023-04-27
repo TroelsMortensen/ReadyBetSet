@@ -3,25 +3,30 @@ package com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Events.BetPlacedEvent;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Coin;
 import com.pastimegames.readysetbet.javafxclient.socketclient.Model.Model;
+import com.pastimegames.readysetbet.javafxclient.socketclient.Model.PropertyChangeSubject;
 import com.pastimegames.readysetbet.javafxclient.socketclient.ViewModel.ModelRepresentations.CoinRepresentation;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class BettingBoardViewModel {
+public class BettingBoardViewModel implements PropertyChangeSubject {
     private final Model model;
 
     private final List<CoinRepresentation> coinRepresentations;
     private CoinRepresentation selectedCoin;
 
-    private Consumer<Integer> onBetPlaced;
+    private PropertyChangeSupport support;
 
     public BettingBoardViewModel(Model model)
     {
         this.model = model;
         coinRepresentations = new ArrayList<>();
+        support = new PropertyChangeSupport(this);
+
         populateBettingCoinsStatus();
         initializeListeners();
     }
@@ -43,7 +48,7 @@ public class BettingBoardViewModel {
 
     private void onBetPlaced(PropertyChangeEvent propertyChangeEvent) {
         BetPlacedEvent betPlacedEvent = (BetPlacedEvent) propertyChangeEvent.getNewValue();
-        onBetPlaced.accept(betPlacedEvent.index()); //Fire event to the view using Java Consumer functional interface
+        support.firePropertyChange("BET_PLACED_ON_INDEX", null, betPlacedEvent.index());
     }
 
     private void onCoinUsed(PropertyChangeEvent propertyChangeEvent) {
@@ -60,7 +65,7 @@ public class BettingBoardViewModel {
 
     private void onBetAccepted(PropertyChangeEvent propertyChangeEvent) {
         BetPlacedEvent betPlacedEvent = (BetPlacedEvent) propertyChangeEvent.getNewValue();
-        onBetPlaced.accept(betPlacedEvent.index());
+        support.firePropertyChange("BET_PLACED_ON_INDEX", null, betPlacedEvent.index());
         selectedCoin = null;
     }
 
@@ -79,12 +84,36 @@ public class BettingBoardViewModel {
         selectedCoin = coin;
     }
 
-    public void setOnBetPlaced(Consumer<Integer> onBetPlaced)
-    {
-        this.onBetPlaced = onBetPlaced;
-    }
-
     public List<CoinRepresentation> getCoinRepresentations() {
         return coinRepresentations;
+    }
+
+    /*
+    PropertyChangeSubject interface implementation
+     */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        if (propertyName == null || propertyName.equals(""))
+            addPropertyChangeListener(listener);
+        else
+            support.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        if (propertyName == null || propertyName.equals(""))
+            removePropertyChangeListener(listener);
+        else
+            support.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 }

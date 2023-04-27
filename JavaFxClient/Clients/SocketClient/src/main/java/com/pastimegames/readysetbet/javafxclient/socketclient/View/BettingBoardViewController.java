@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class BettingBoardViewController {
         this.bettingBoardViewModel = bettingBoardViewModel;
         createBettingGrid();
         createButtonsForCoins();
-        bettingBoardViewModel.setOnBetPlaced(this::disableButtonForBet);
+        bettingBoardViewModel.addPropertyChangeListener("BET_PLACED_ON_INDEX", this::disableButtonForBet);
     }
 
     private void createBettingGrid()
@@ -67,8 +68,9 @@ public class BettingBoardViewController {
         bettingBoardViewModel.placeBet(index);
     }
 
-    private void disableButtonForBet(int index)
+    private void disableButtonForBet(PropertyChangeEvent propertyChangeEvent)
     {
+        int index = (int) propertyChangeEvent.getNewValue();
         Button button = bettingButtons.get(index);
         button.setDisable(true);
     }

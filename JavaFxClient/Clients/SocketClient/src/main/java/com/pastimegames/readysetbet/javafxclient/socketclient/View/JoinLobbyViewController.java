@@ -10,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.beans.PropertyChangeEvent;
+
 public class JoinLobbyViewController {
     @FXML
     private ComboBox<String> comboBoxPlayerColour;
@@ -37,10 +39,10 @@ public class JoinLobbyViewController {
         textFieldPlayerName.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
         comboBoxPlayerColour.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
         buttonJoinLobby.disableProperty().bind(joinLobbyViewModel.joinRequestAcceptedProperty());
-        joinLobbyViewModel.setOnLobbyClosed(this::onLobbyClosed);
+        joinLobbyViewModel.addPropertyChangeListener("LOBBY_CLOSED", this::onLobbyClosed);
     }
 
-    private void onLobbyClosed(Object o) {
+    private void onLobbyClosed(PropertyChangeEvent propertyChangeEvent) {
         Platform.runLater(() -> viewHandler.openViewBetting());
     }
 
