@@ -18,12 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestBetting {
 
     private static ViewModelFactory viewModelFactory;
-    private static ClientFactory clientFactory;
     private static TestClient client;
 
     @BeforeAll
     public static void setup() {
-        clientFactory = new TestClientFactory();
+        ClientFactory clientFactory = new TestClientFactory();
         Model model = new ModelManager(clientFactory);
         viewModelFactory = new ViewModelFactory(model);
         new JFXPanel(); //This is needed to initialize JavaFX Toolkit
@@ -42,9 +41,7 @@ public class TestBetting {
         //arrange
         BettingBoardViewModel bettingBoardViewModel = viewModelFactory.getBettingBoardViewModel();
         final int[] betsPlaced = {0}; //wrapping in array to make it final for lambda
-        bettingBoardViewModel.addPropertyChangeListener("BET_PLACED_ON_INDEX", (event) -> {
-            betsPlaced[0] = (int) event.getNewValue();
-        });
+        bettingBoardViewModel.addPropertyChangeListener("BET_PLACED_ON_INDEX", (event) -> betsPlaced[0] = (int) event.getNewValue());
 
         //act
         client.placeBet(21, 4, "NeoGeo", "Red");

@@ -16,10 +16,10 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestLobby {
 
-    private static ViewModelFactory viewModelFactory;
     private static ClientFactory clientFactory;
     private static JoinLobbyViewModel joinLobbyViewModel;
 
@@ -27,7 +27,7 @@ public class TestLobby {
     public static void setup() {
         clientFactory = new TestClientFactory();
         Model model = new ModelManager(clientFactory);
-        viewModelFactory = new ViewModelFactory(model);
+        ViewModelFactory viewModelFactory = new ViewModelFactory(model);
         new JFXPanel(); //This is needed to initialize JavaFX Toolkit
         joinLobbyViewModel = viewModelFactory.getJoinLobbyViewModel();
         joinLobbyViewModel.getNameProperty().set("NeoGeo");
@@ -55,15 +55,14 @@ public class TestLobby {
     {
         //arrange
         boolean[] isLobbyFinalized = {false}; //wrapping in array to make it final for lambda
-        joinLobbyViewModel.addPropertyChangeListener("LOBBY_CLOSED", (event) -> {
-            isLobbyFinalized[0] = true;
-        });
+        joinLobbyViewModel.addPropertyChangeListener("LOBBY_CLOSED", (event) -> isLobbyFinalized[0] = true);
         TestClient client = (TestClient) clientFactory.getClient();
 
         //act
         client.lobbyFinalized();
 
-        assertEquals(true, isLobbyFinalized[0]);
+        //assert
+        assertTrue(isLobbyFinalized[0]);
     }
 
 
