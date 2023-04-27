@@ -41,7 +41,6 @@ public class JoinLobbyViewController {
     }
 
     private void onLobbyClosed(Object o) {
-        System.out.println("Lobby closed in view");
         Platform.runLater(() -> viewHandler.openViewBetting());
     }
 

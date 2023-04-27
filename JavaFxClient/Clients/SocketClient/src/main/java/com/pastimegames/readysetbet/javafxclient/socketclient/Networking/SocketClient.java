@@ -34,7 +34,6 @@ public class SocketClient implements Runnable, Client {
         new Thread(this).start();
     }
 
-
     /*
     Client interface implementation
      */
